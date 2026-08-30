@@ -5,18 +5,143 @@
 <meta name="theme-color" content="#0d9488">
 <link rel="manifest" href="manifest.webmanifest"><title>タイ語トレーニング</title>
 <style>
-:root{--bg:#f4faf9;--card:#fff;--ink:#152329;--muted:#66757b;--main:#0d9488;--soft:#e5f6f3;--line:#d8e7e4;--good:#dff6e5;--bad:#ffe2e2;--warn:#fff1c9}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:820px;margin:auto;padding:16px 14px calc(90px + env(safe-area-inset-bottom))}
-h1{font-size:27px;margin:4px 0}.sub{margin:0;color:var(--muted)}button{border:0;border-radius:15px;padding:12px 13px;font-size:15px;font-weight:800;min-height:44px;touch-action:manipulation}.main{background:var(--main);color:white}.soft{background:var(--soft);color:#08736b}.good{background:var(--good);color:#17662b}.bad{background:var(--bad);color:#922}.warn{background:var(--warn);color:#745700}
-.nav{display:flex;gap:7px;overflow-x:auto;position:sticky;top:0;background:rgba(244,250,249,.96);backdrop-filter:blur(10px);padding:9px 0;z-index:5;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav button{flex:0 0 auto;min-width:86px;min-height:44px}.card{background:white;border:1px solid var(--line);border-radius:22px;padding:15px;margin:13px 0;box-shadow:0 3px 14px #173c3220}.title{font-weight:900;font-size:20px;margin-bottom:10px}.small{font-size:13px;color:var(--muted)}.hidden{display:none!important}
-input,textarea,select{width:100%;font-size:18px;border:1px solid #c9dad6;border-radius:14px;padding:12px;background:#fff}.thai{font-size:32px;line-height:1.5}.bigthai{font-size:92px;text-align:center;line-height:1.1}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.stat{background:#f1f7f6;border-radius:14px;padding:10px;text-align:center}.stat b{display:block;font-size:20px}.bar{height:10px;border-radius:99px;background:#e9eeee;overflow:hidden}.bar i{display:block;height:100%;background:var(--main)}.answer{border:1px dashed #b9ceca;border-radius:15px;padding:12px;margin-top:10px}audio{width:100%}.pill{display:inline-block;background:#edf7f5;padding:6px 9px;border-radius:999px;margin:3px;color:#176c65;font-size:13px}.roman{font-size:18px;color:#075e59;font-weight:800;letter-spacing:.2px}.kana{font-size:14px;color:var(--muted);margin-top:3px}.metaGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0}.metaBox{background:#f2f8f7;border-radius:13px;padding:9px}.metaBox span{display:block;font-size:11px;color:var(--muted)}.metaBox b{font-size:16px}.toggleRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0}.switchBtn{background:#eef6f4;color:#176c65;padding:8px 11px;border-radius:999px;font-size:13px}canvas{width:100%;height:270px;border:2px dashed #abcac4;border-radius:18px;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;background:#fff}
+:root{
+ --bg:#f7fbf7;--card:#fff;--ink:#153237;--muted:#708184;
+ --main:#148f83;--main2:#0d756c;--soft:#e9f6f2;--line:#dcece7;
+ --good:#e1f5e7;--bad:#fde3e3;--warn:#fff3cf;--gold:#d8a63a;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{
+ margin:0;
+ background:
+   radial-gradient(circle at 15% 0%,rgba(231,244,225,.95),transparent 34%),
+   radial-gradient(circle at 95% 4%,rgba(215,239,233,.95),transparent 32%),
+   linear-gradient(180deg,#fbfdf9 0%,#f2faf7 100%);
+ color:var(--ink);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.wrap{max-width:820px;margin:auto;padding:14px 14px calc(110px + env(safe-area-inset-bottom))}
+.appHero{
+ display:flex;align-items:center;gap:14px;
+ padding:12px 14px 16px;
+ margin:2px 0 12px;
+ border-radius:26px;
+ background:linear-gradient(135deg,#f6fbef 0%,#eaf8f4 55%,#fff8e9 100%);
+ border:1px solid #e0eee7;
+ box-shadow:0 8px 28px rgba(29,98,83,.08);
+}
+.appHero img{
+ width:72px;height:72px;border-radius:22px;object-fit:cover;
+ box-shadow:0 6px 16px rgba(33,93,78,.16);
+}
+.heroText h1{font-size:29px;margin:0 0 4px;line-height:1.08}
+.heroText .sub{margin:0;color:var(--muted);font-size:14px;line-height:1.4}
+.heroBadge{
+ display:inline-block;margin-top:7px;padding:5px 9px;border-radius:999px;
+ background:#fff7d8;color:#7b5a00;font-size:12px;font-weight:800
+}
+h1{font-size:27px;margin:4px 0}
+.sub{margin:0;color:var(--muted)}
+button{
+ border:0;border-radius:16px;padding:12px 13px;font-size:15px;font-weight:800;
+ min-height:46px;touch-action:manipulation
+}
+.main{background:linear-gradient(135deg,var(--main),var(--main2));color:white}
+.soft{background:var(--soft);color:#0b736a}
+.good{background:var(--good);color:#17662b}
+.bad{background:var(--bad);color:#922}
+.warn{background:var(--warn);color:#745700}
 
-.modeSwitch{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#edf6f4;padding:5px;border-radius:15px;margin:10px 0}.modeSwitch button{background:transparent;color:#08736b}.modeSwitch button.active{background:var(--main);color:#fff}.choiceList{display:grid;gap:8px;margin-top:10px}.choiceBtn{width:100%;text-align:left;background:#fff;border:1px solid #bfd6d1;color:var(--ink);padding:12px 14px}.choiceThai{font-size:25px;font-weight:800;line-height:1.35}.choiceRoman{font-size:16px;color:#08736b;font-weight:800;margin-top:3px}.choiceKana{font-size:13px;color:var(--muted);margin-top:2px}.choiceBtn.correct{background:var(--good);border-color:#8cc99a}.choiceBtn.wrong{background:var(--bad);border-color:#e7a6a6}.inputRow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}.micBtn{min-width:64px;background:var(--soft);color:#08736b;font-size:21px}
+.nav{
+ position:fixed;left:50%;bottom:0;transform:translateX(-50%);
+ width:min(820px,100%);z-index:40;
+ display:flex;gap:6px;overflow-x:auto;
+ padding:8px 12px calc(8px + env(safe-area-inset-bottom));
+ background:rgba(250,253,251,.96);backdrop-filter:blur(18px);
+ border-top:1px solid #dcebe6;box-shadow:0 -8px 28px rgba(25,83,70,.08);
+ scrollbar-width:none
+}
+.nav::-webkit-scrollbar{display:none}
+.nav button{
+ flex:0 0 auto;min-width:92px;min-height:54px;
+ border-radius:18px;background:transparent;color:#33776f;
+ padding:9px 12px
+}
+.nav button.main{background:#e2f3ee;color:#0b756c;box-shadow:none}
+.nav button[data-tab="home"]::before{content:"🏠 ";font-size:16px}
+.nav button[data-tab="letters"]::before{content:"✍️ ";font-size:16px}
+.nav button[data-tab="study"]::before{content:"🐘 ";font-size:16px}
+.nav button[data-tab="record"]::before{content:"📊 ";font-size:16px}
+
+.card{
+ background:rgba(255,255,255,.96);border:1px solid var(--line);
+ border-radius:26px;padding:17px;margin:14px 0;
+ box-shadow:0 8px 24px rgba(31,91,77,.07)
+}
+.title{font-weight:900;font-size:22px;margin-bottom:10px;letter-spacing:.01em}
+.small{font-size:13px;color:var(--muted)}
+.hidden{display:none!important}
+
+#homeTab>.card:nth-of-type(2){background:linear-gradient(135deg,#ffffff,#f7fcfa)}
+#homeTab .grid2 button{min-height:68px;font-size:17px}
+#homeTab .grid2 button.soft{background:linear-gradient(135deg,#edf8f5,#e7f5f1)}
+#homeTab .grid2 button.main{background:linear-gradient(135deg,#18a092,#0d796f)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stat{background:#f0f8f5;border:1px solid #e0efea;border-radius:17px;padding:11px 7px;text-align:center}
+.stat b{display:block;font-size:22px;color:#0d756c}
+@media(max-width:520px){
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .heroText h1{font-size:25px}
+ .appHero img{width:64px;height:64px}
+}
+
+input,textarea,select{
+ width:100%;font-size:18px;border:1px solid #cfe1dc;border-radius:16px;
+ padding:13px;background:#fff;outline:none
+}
+input:focus,textarea:focus,select:focus{border-color:#7cc0b5;box-shadow:0 0 0 3px rgba(20,143,131,.09)}
+.thai{font-size:34px;line-height:1.5}
+.bigthai{font-size:96px;text-align:center;line-height:1.1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bar{height:10px;border-radius:99px;background:#e9eeee;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--main)}
+.answer{border:1px dashed #b9ceca;border-radius:17px;padding:13px;margin-top:10px;background:#fbfefd}
+audio{width:100%}
+.pill{display:inline-block;background:#edf7f5;padding:6px 9px;border-radius:999px;margin:3px;color:#176c65;font-size:13px}
+.roman{font-size:18px;color:#0a746a;font-weight:800;letter-spacing:.2px}
+.kana{font-size:14px;color:var(--muted);margin-top:3px}
+.metaGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.metaBox{background:#f2f8f7;border-radius:15px;padding:10px;border:1px solid #e1efeb}
+.metaBox span{display:block;font-size:11px;color:var(--muted)}
+.metaBox b{font-size:16px}
+.toggleRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0}
+.switchBtn{background:#eef6f4;color:#176c65;padding:8px 11px;border-radius:999px;font-size:13px}
+canvas{width:100%;height:270px;border:2px dashed #9ccac0;border-radius:22px;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;background:linear-gradient(180deg,#fff,#fcfefd)}
+.modeSwitch{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#edf6f4;padding:5px;border-radius:16px;margin:10px 0}
+.modeSwitch button{background:transparent;color:#08736b}
+.modeSwitch button.active{background:linear-gradient(135deg,var(--main),var(--main2));color:#fff}
+.choiceList{display:grid;gap:9px;margin-top:10px}
+.choiceBtn{width:100%;text-align:left;background:#fff;border:1px solid #bfd6d1;color:var(--ink);padding:13px 14px;border-radius:17px}
+.choiceThai{font-size:26px;font-weight:800;line-height:1.35}
+.choiceRoman{font-size:16px;color:#08736b;font-weight:800;margin-top:3px}
+.choiceKana{font-size:13px;color:var(--muted);margin-top:2px}
+.choiceBtn.correct{background:var(--good);border-color:#8cc99a}
+.choiceBtn.wrong{background:var(--bad);border-color:#e7a6a6}
+.inputRow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.micBtn{min-width:64px;background:var(--soft);color:#08736b;font-size:21px}
 </style>
 <script src="jszip.min.js"></script>
 </head><body><div class="wrap">
-<h1>タイ語トレーニング <span class="small">v1.5</span></h1>
-<p class="sub">教材データは端末内に保存。公開アプリ本体には市販教材を含みません。</p>
+<div class="appHero">
+<img src="icon-192.png" alt="タイ語トレーニング">
+<div class="heroText">
+<h1>タイ語トレーニング <span class="small">v1.7</span></h1>
+<p class="sub">読む・書く・聞く・話すを、1つのアプリで。</p>
+<span class="heroBadge">🇹🇭 Thai Study</span>
+</div>
+</div>
 <div class="nav">
 <button class="main" data-tab="home" onclick="tab('home')">ホーム</button>
 <button class="soft" data-tab="letters" onclick="tab('letters')">文字練習</button>
@@ -35,8 +160,8 @@ input,textarea,select{width:100%;font-size:18px;border:1px solid #c9dad6;border-
 <div class="card"><div class="title">今日の学習</div>
 <div class="stats"><div class="stat"><span class="small">総回答</span><b id="totalAttempts">0</b></div><div class="stat"><span class="small">ミス</span><b id="totalWrong">0</b></div><div class="stat"><span class="small">正答率</span><b id="accuracy">—</b></div><div class="stat"><span class="small">要復習</span><b id="weakCount">0</b></div></div>
 <div class="grid2" style="margin-top:12px"><button class="main" onclick="startWeak()">苦手から復習</button><button class="soft" onclick="tab('study')">自由に練習</button></div></div>
-<div class="card"><div class="title">教材の状態</div><div class="small">ニューエクスプレス Lesson 1〜20 構造化済み / 音声83本 / 本文画像157枚</div><div id="appStatus" class="answer">v0.9 最終チェック版</div></div>
-<div class="card"><div class="title">学習メニュー</div><div class="grid2">
+<div class="card"><div class="title">教材の状態</div><div class="small">ニューエクスプレス Lesson 1〜20 構造化済み / 音声83本 / 本文画像157枚</div><div id="appStatus" class="answer">v1.7 タイ風UI</div></div>
+<div class="card"><div class="title">今日なにする？</div><div class="small" style="margin-bottom:10px">気分に合わせて練習を選ぶ</div><div class="grid2">
 <button class="soft" onclick="tab('letters')">✍️ タイ文字</button><button class="soft" onclick="openMode('word')">🔤 単語・チャンク</button>
 <button class="soft" onclick="openMode('pron')">🎤 発音</button><button class="soft" onclick="openMode('comp')">📝 タイ作文</button>
 </div></div>
@@ -78,9 +203,12 @@ input,textarea,select{width:100%;font-size:18px;border:1px solid #c9dad6;border-
 <div style="position:relative;margin:12px 0"><canvas id="cv"></canvas><div id="ghost" class="bigthai" style="position:absolute;inset:65px 0 auto;opacity:.12;pointer-events:none">ก</div></div>
 <div class="grid3"><button class="soft" onclick="clearCv()">消す</button><button class="soft" onclick="letterSound()">🔊</button><button class="warn" onclick="revealSmallLetterAnswer()">正解表示</button></div><div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradeCurrent(false)">不正解</button><button class="good" onclick="gradeCurrent(true)">正解</button></div><div id="itemMiniStats" class="answer"></div></div>
 
-<div id="wordMode" class="card hidden"><div class="title">単語・チャンク</div><div class="small">日本語を見てタイ語を答える</div><select id="wordLessonFilter" onchange="wordI=0;showWord()"><option value="all">全Lesson</option></select><div class="small" id="wordCountInfo"></div><div id="wordPrompt" style="font-size:24px;font-weight:800;margin:10px 0"></div><div class="modeSwitch"><button id="wordChoiceModeBtn" class="active" onclick="setWordAnswerMode('choice')">選択式</button><button id="wordInputModeBtn" onclick="setWordAnswerMode('input')">入力式</button></div><div id="wordChoiceArea"><select id="choiceAssist" onchange="saveChoiceAssist();renderWordChoices()"><option value="roman">タイ文字＋発音記号＋カタカナ</option><option value="romanOnly">タイ文字＋発音記号</option><option value="thai">タイ文字のみ</option></select><div id="wordChoices" class="choiceList"></div></div><div id="wordInputArea" class="hidden"><div class="small">タイ語を入力。マイクでも入力できます。</div><div class="inputRow"><input id="wordInput" placeholder="タイ語を入力"><button class="micBtn" onclick="recognizeWordInput()">🎤</button></div><button class="main" style="width:100%;margin-top:8px" onclick="checkWord()">判定</button><div id="wordVoiceStatus" class="small" style="margin-top:8px"></div></div><div id="wordResult" class="answer hidden"></div><button id="wordNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="wordI++;showWord()">次の問題 →</button></div>
+<div id="wordMode" class="card hidden"><div class="title">単語・チャンク</div><div class="small">日本語を見てタイ語を答える</div><select id="wordLessonFilter" onchange="wordI=0;showWord()"><option value="all">全Lesson</option></select><div class="small" id="wordCountInfo"></div><div id="wordPrompt" style="font-size:24px;font-weight:800;margin:10px 0"></div><div class="modeSwitch"><button id="wordChoiceModeBtn" class="active" onclick="setWordAnswerMode('choice')">選択式</button><button id="wordInputModeBtn" onclick="setWordAnswerMode('input')">入力式</button></div><div id="wordChoiceArea"><select id="choiceAssist" onchange="saveChoiceAssist();renderWordChoices()"><option value="roman">タイ文字＋発音記号＋カタカナ</option><option value="romanOnly">タイ文字＋発音記号</option><option value="thai">タイ文字のみ</option></select><div id="wordChoices" class="choiceList"></div></div><div id="wordInputArea" class="hidden"><div class="small">タイ語を入力。音声入力はiPhoneキーボードのマイクを使えます。</div><div class="inputRow"><input id="wordInput" placeholder="タイ語を入力"><button class="micBtn" onclick="openNativeDictationHint()">🎤</button></div><button class="main" style="width:100%;margin-top:8px" onclick="checkWord()">判定</button><div id="wordVoiceStatus" class="small" style="margin-top:8px"></div></div><div id="wordResult" class="answer hidden"></div><button id="wordNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="wordI++;showWord()">次の問題 →</button></div>
 
-<div id="pronMode" class="card hidden"><div class="title">発音チェック</div><select id="pronLessonFilter" onchange="showPron()"><option value="all">全Lesson</option></select><div class="small" id="pronCountInfo"></div><div id="pronThai" class="thai"></div><div id="pronRoman" class="roman"></div><div id="pronKana" class="kana"></div><div id="pronJP"></div><div class="grid2" style="margin-top:10px"><button class="soft" onclick="playPron()">🔊 模範</button><button class="main" onclick="recognizePron()">🎤 発音する</button></div><div id="pronResult" class="answer"><span class="small">発音したタイ語を音声認識し、正解文との一致度を判定します。</span></div></div>
+<div id="pronMode" class="card hidden"><div class="title">発音練習</div><select id="pronLessonFilter" onchange="showPron()"><option value="all">全Lesson</option></select><div class="small" id="pronCountInfo"></div><div id="pronThai" class="thai"></div><div id="pronRoman" class="roman"></div><div id="pronKana" class="kana"></div><div id="pronJP"></div>
+<div class="grid2" style="margin-top:10px"><button class="soft" onclick="playPron()">🔊 模範</button><button id="recordPronBtn" class="main" onclick="togglePronRecording()">🎤 録音する</button></div>
+<div id="pronRecordBox" class="answer hidden"><b>自分の発音</b><audio id="pronPlayback" controls style="margin-top:8px"></audio><div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradePronManual(false)">もう一度</button><button class="good" onclick="gradePronManual(true)">できた</button></div></div>
+<div id="pronResult" class="answer"><span class="small">模範音声を聞いて録音し、自分の発音を聞き比べます。録音は端末内で処理し、サーバーへ送信しません。</span></div></div>
 
 <div id="compMode" class="card hidden"><div class="title">タイ作文</div><div class="small">判定後、模範解答と発音記号を表示</div><select id="compLessonFilter" onchange="showComp()"><option value="all">全Lesson</option></select><div class="small" id="compCountInfo"></div><div class="small">日本語 → タイ語</div><div id="compJP" style="font-size:23px;font-weight:800;margin:10px 0"></div><textarea id="compInput" rows="4" placeholder="タイ語で書く"></textarea><button class="main" style="width:100%;margin-top:8px" onclick="checkComp()">正誤判定</button><div id="compResult" class="answer hidden"></div></div>
 </section>
@@ -175,7 +303,12 @@ function choiceAssistMode(){return localStorage.getItem('thai_choice_assist_v1')
 function buildWordChoices(){const pool=lessonFiltered(buildWords(),'word').filter(x=>x.id!==currentItem.id);let candidates=pool.filter(x=>x.lesson===currentItem.lesson);if(candidates.length<3)candidates=pool;return shuffle([currentItem,...shuffle(candidates).slice(0,3)])}
 function renderWordChoices(){if(!currentItem||wordAnswerMode!=='choice'||!window.wordChoices)return;const mode=choiceAssistMode();if(window.choiceAssist)choiceAssist.value=mode;currentWordOptions=buildWordChoices();wordChoices.innerHTML=currentWordOptions.map((x,i)=>{const r=(mode==='roman'||mode==='romanOnly')?`<div class="choiceRoman">${escapeHtml(x.roman||'')}</div>`:'';const k=(mode==='roman'&&x.kana)?`<div class="choiceKana">${escapeHtml(x.kana)}</div>`:'';return `<button class="choiceBtn" onclick="chooseWord(${i})"><div class="choiceThai">${escapeHtml(x.th)}</div>${r}${k}</button>`}).join('')}
 function chooseWord(i){const s=currentWordOptions[i];if(!s||!currentItem)return;const ok=normalizeThai(s.th)===normalizeThai(currentItem.th);register(currentItem.id,ok,'chunk');document.querySelectorAll('#wordChoices .choiceBtn').forEach((b,idx)=>{b.disabled=true;const x=currentWordOptions[idx];if(normalizeThai(x.th)===normalizeThai(currentItem.th))b.classList.add('correct');else if(idx===i)b.classList.add('wrong')});wordResult.classList.remove('hidden');wordResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}</b><div class="thai">${escapeHtml(currentItem.th)}</div><div class="roman">${escapeHtml(currentItem.roman||'')}</div>${currentItem.kana?`<div class="kana">${escapeHtml(currentItem.kana)}</div>`:''}<div>${mini(currentItem.id)}</div>`;wordNextBtn.classList.remove('hidden')}
-function recognizeWordInput(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){wordVoiceStatus.textContent='アプリ内音声入力を利用できません。iPhoneキーボードのマイクも使えます。';wordInput.focus();return}const r=new SR();r.lang='th-TH';r.interimResults=false;r.maxAlternatives=3;r.onstart=()=>wordVoiceStatus.textContent='🎤 タイ語を話してください…';r.onresult=e=>{const txt=e.results[0][0].transcript||'';wordInput.value=txt;wordVoiceStatus.textContent=`認識：${txt}`};r.onerror=e=>{wordVoiceStatus.textContent=`音声入力できませんでした（${e.error||'unknown'}）。キーボードのマイクも使えます。`;wordInput.focus()};try{r.start()}catch(e){wordVoiceStatus.textContent='音声入力を開始できませんでした';wordInput.focus()}}
+function openNativeDictationHint(){
+  if(window.wordInput){
+    wordInput.focus();
+    if(window.wordVoiceStatus)wordVoiceStatus.textContent='キーボードをタイ語に切り替え、iPhoneキーボードのマイクをタップして話してください。';
+  }
+}
 
 function getLessonFilter(mode){const el=document.getElementById(mode+'LessonFilter');return el?el.value:'all'}
 function lessonFiltered(arr, mode){const f=getLessonFilter(mode);return f==='all'?arr:arr.filter(x=>(x.lesson||'')===f)}
@@ -223,56 +356,64 @@ function buildWords(){
 }
 function showWord(){const all=lessonFiltered(buildWords(),'word');if(!all.length){wordPrompt.textContent='データなし';wordResult.classList.add('hidden');return}currentItem=all[wordI%all.length];wordPrompt.textContent=currentItem.jp;wordInput.value='';wordResult.classList.add('hidden');wordNextBtn.classList.add('hidden');wordCountInfo.textContent=`対象 ${all.length}件 / ${getLessonFilter('word')==='all'?'全Lesson':getLessonFilter('word')}`;if(window.wordVoiceStatus)wordVoiceStatus.textContent='';setWordAnswerMode(wordAnswerMode)}
 function checkWord(){const a=normalizeThai(wordInput.value),b=normalizeThai(currentItem.th),ok=a===b;register(currentItem.id,ok,'chunk');wordResult.classList.remove('hidden');wordResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}</b><div class="thai">${escapeHtml(currentItem.th)}</div><div class="roman">${escapeHtml(currentItem.roman||'')}</div>${currentItem.kana?`<div class="kana">${escapeHtml(currentItem.kana)}</div>`:''}<div>${mini(currentItem.id)}</div>`;wordNextBtn.classList.remove('hidden')}
-function showPron(){const all=lessonFiltered(buildPhraseList(),'pron'); if(!all.length){pronThai.textContent=''; pronResult.innerHTML='<span class="small">データなし</span>'; return;} currentItem=all[pronI%all.length];pronThai.textContent=currentItem.th;pronRoman.textContent=currentItem.roman||'';pronKana.textContent=currentItem.kana||'';pronJP.textContent=currentItem.jp;pronCountInfo.textContent=`対象 ${all.length}件 / ${getLessonFilter('pron')==='all'?'全Lesson':getLessonFilter('pron')}`;pronResult.innerHTML='<span class="small">発音したタイ語を聞き取り、正解文との一致度を判定します。</span>'}
+function showPron(){const all=lessonFiltered(buildPhraseList(),'pron'); if(!all.length){pronThai.textContent=''; pronResult.innerHTML='<span class="small">データなし</span>'; return;} currentItem=all[pronI%all.length];pronThai.textContent=currentItem.th;pronRoman.textContent=currentItem.roman||'';pronKana.textContent=currentItem.kana||'';pronJP.textContent=currentItem.jp;pronCountInfo.textContent=`対象 ${all.length}件 / ${getLessonFilter('pron')==='all'?'全Lesson':getLessonFilter('pron')}`;pronResult.innerHTML='<span class="small">模範音声を聞いて録音し、自分の発音を聞き比べます。</span>'; if(window.pronRecordBox)pronRecordBox.classList.add('hidden');}
 function nextPron(){showPron()}
 function playPron(){const u=new SpeechSynthesisUtterance(currentItem.th);u.lang='th-TH';u.rate=.78;speechSynthesis.speak(u)}
-let recognitionBusy=false;
-function recognizePron(){
- if(recognitionBusy)return;
- const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
- if(!SR){pronResult.innerHTML='<b>この環境ではタイ語音声認識を利用できません</b>';return}
- recognitionBusy=true;
- let finished=false;
- const run=(retry=0)=>{
-   const r=new SR();
-   r.lang='th-TH';r.interimResults=false;r.continuous=false;r.maxAlternatives=5;
-   r.onstart=()=>{pronResult.innerHTML='<b>🎤 発音してください</b><div class="small">聞き取り中…</div>'};
-   r.onresult=e=>{
-     finished=true;
-     let best={score:0,text:'',conf:0};
-     for(let i=0;i<e.results[0].length;i++){
-       const x=e.results[0][i],z=lev(x.transcript,currentItem.th);let score=z.score;const conf=x.confidence||0;
-       if(conf)score=Math.round(score*.88+conf*100*.12);
-       if(z.dist>0)score=Math.max(0,score-Math.min(10,z.dist*2));
-       if(score>best.score)best={score,text:x.transcript,conf};
-     }
-     const ok=best.score>=90;register('pron:'+currentItem.id,ok,'pron');
-     pronResult.innerHTML=`<b>${ok?'✅ 合格':'❌ 要練習'}　${best.score}点</b><div class="small">認識結果</div><div class="thai">${best.text}</div><div class="small">${mini('pron:'+currentItem.id)}</div><button class="soft" style="width:100%;margin-top:8px" onclick="nextPron()">次の問題 →</button>`;
-     pronI++;recognitionBusy=false;
-   };
-   r.onerror=e=>{
-     if(finished)return;
-     const err=e.error||'unknown';
-     // iOS Safari sometimes rejects the first start with service-not-allowed/not-allowed,
-     // then succeeds immediately on the next direct SpeechRecognition start.
-     const retryable=['service-not-allowed','not-allowed','no-speech','aborted','network','audio-capture'].includes(err);
-     if(retry<1 && retryable){
-       pronResult.innerHTML='<b>🎤 音声認識を再試行中…</b><div class="small">そのまま少し待ってください。</div>';
-       try{r.abort()}catch(_e){}
-       setTimeout(()=>run(retry+1),650);
-       return;
-     }
-     recognitionBusy=false;
-     pronResult.innerHTML=`<b>音声認識に失敗しました（${err}）</b><div class="small">もう一度「発音する」を押してください。</div>`;
-   };
-   r.onend=()=>{ if(!finished && retry>0) recognitionBusy=false; };
-   try{r.start()}catch(e){
-     if(retry<1){setTimeout(()=>run(retry+1),650)}
-     else{recognitionBusy=false;pronResult.innerHTML='<b>音声認識を開始できませんでした</b>'}
-   }
- };
- run(0);
+
+let pronRecorder=null,pronStream=null,pronChunks=[],pronRecording=false,pronObjectUrl=null;
+async function togglePronRecording(){
+  if(pronRecording){ stopPronRecording(); return; }
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder){
+    pronResult.innerHTML='<b>このSafariでは録音機能を利用できません</b>';
+    return;
+  }
+  try{
+    pronStream=await navigator.mediaDevices.getUserMedia({audio:true});
+    const types=['audio/mp4','audio/webm;codecs=opus','audio/webm'];
+    const mime=types.find(t=>MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t))||'';
+    pronRecorder=mime?new MediaRecorder(pronStream,{mimeType:mime}):new MediaRecorder(pronStream);
+    pronChunks=[];
+    pronRecorder.ondataavailable=e=>{if(e.data&&e.data.size)pronChunks.push(e.data)};
+    pronRecorder.onstop=()=>{
+      const blob=new Blob(pronChunks,{type:pronRecorder.mimeType||'audio/mp4'});
+      if(pronObjectUrl)URL.revokeObjectURL(pronObjectUrl);
+      pronObjectUrl=URL.createObjectURL(blob);
+      pronPlayback.src=pronObjectUrl;
+      pronRecordBox.classList.remove('hidden');
+      pronResult.innerHTML='<b>録音できました</b><div class="small">模範 → 自分の録音の順に聞き比べてください。</div>';
+      cleanupPronStream();
+    };
+    pronRecorder.onerror=()=>{pronRecording=false;recordPronBtn.textContent='🎤 録音する';cleanupPronStream();pronResult.innerHTML='<b>録音に失敗しました</b>'};
+    pronRecorder.start();
+    pronRecording=true;
+    recordPronBtn.textContent='⏹ 録音停止';
+    pronResult.innerHTML='<b>🎤 録音中…</b><div class="small">発音したら「録音停止」を押してください。</div>';
+  }catch(e){
+    cleanupPronStream();
+    pronRecording=false;
+    recordPronBtn.textContent='🎤 録音する';
+    pronResult.innerHTML=`<b>マイクを開始できませんでした</b><div class="small">${escapeHtml(e.name||'error')}</div>`;
+  }
 }
+function stopPronRecording(){
+  if(pronRecorder && pronRecorder.state!=='inactive')pronRecorder.stop();
+  pronRecording=false;
+  recordPronBtn.textContent='🎤 録音する';
+}
+function cleanupPronStream(){
+  if(pronStream){pronStream.getTracks().forEach(t=>t.stop());pronStream=null}
+}
+function gradePronManual(ok){
+  register('pron:'+currentItem.id,ok,'pron');
+  if(ok){
+    pronI++;
+    showPron();
+  }else{
+    pronRecordBox.classList.add('hidden');
+    pronResult.innerHTML='<b>もう一度やってみよう</b><div class="small">模範音声を聞いてから録音してください。</div>';
+  }
+}
+
 function showComp(){const all=lessonFiltered(DATA.compositions||[],'comp'); if(!all.length){compJP.textContent='データなし'; compResult.classList.add('hidden'); return;} currentItem=all[compI%all.length];compJP.textContent=currentItem.jp;compInput.value='';compResult.classList.add('hidden'); compCountInfo.textContent=`対象 ${all.length}件 / ${getLessonFilter('comp')==='all'?'全Lesson':getLessonFilter('comp')}`}
 function checkComp(){const val=compInput.value;let best={score:0,ans:''};for(const ans of currentItem.answers){const z=lev(val,ans);if(z.score>best.score)best={score:z.score,ans}}const ok=best.score>=94;register(currentItem.id,ok,'composition');compResult.classList.remove('hidden');compResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}　類似度 ${best.score}%</b><div class="small">模範解答例</div><div class="thai">${best.ans}</div><div class="roman">${currentItem.roman||''}</div><div class="kana">${currentItem.kana||''}</div><div class="small">※現β版は登録済みの自然な別解との照合。自由作文の意味・文法判定は次段階でAI判定へ拡張予定。</div><div>${mini(currentItem.id)}</div><button class="soft" style="width:100%;margin-top:8px" onclick="nextComp()">次の問題 →</button>`;compI++}
 function nextComp(){showComp()}
