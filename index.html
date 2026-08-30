@@ -9,11 +9,11 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:820px;margin:auto;padding:16px 14px calc(90px + env(safe-area-inset-bottom))}
 h1{font-size:27px;margin:4px 0}.sub{margin:0;color:var(--muted)}button{border:0;border-radius:15px;padding:12px 13px;font-size:15px;font-weight:800;min-height:44px;touch-action:manipulation}.main{background:var(--main);color:white}.soft{background:var(--soft);color:#08736b}.good{background:var(--good);color:#17662b}.bad{background:var(--bad);color:#922}.warn{background:var(--warn);color:#745700}
 .nav{display:flex;gap:7px;overflow-x:auto;position:sticky;top:0;background:rgba(244,250,249,.96);backdrop-filter:blur(10px);padding:9px 0;z-index:5;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav button{flex:0 0 auto;min-width:86px;min-height:44px}.card{background:white;border:1px solid var(--line);border-radius:22px;padding:15px;margin:13px 0;box-shadow:0 3px 14px #173c3220}.title{font-weight:900;font-size:20px;margin-bottom:10px}.small{font-size:13px;color:var(--muted)}.hidden{display:none!important}
-input,textarea,select{width:100%;font-size:18px;border:1px solid #c9dad6;border-radius:14px;padding:12px;background:#fff}.thai{font-size:32px;line-height:1.5}.bigthai{font-size:92px;text-align:center;line-height:1.1}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.stat{background:#f1f7f6;border-radius:14px;padding:10px;text-align:center}.stat b{display:block;font-size:20px}.bar{height:10px;border-radius:99px;background:#e9eeee;overflow:hidden}.bar i{display:block;height:100%;background:var(--main)}.answer{border:1px dashed #b9ceca;border-radius:15px;padding:12px;margin-top:10px}audio{width:100%}.pill{display:inline-block;background:#edf7f5;padding:6px 9px;border-radius:999px;margin:3px;color:#176c65;font-size:13px}.roman{font-size:18px;color:#075e59;font-weight:800;letter-spacing:.2px}.kana{font-size:14px;color:var(--muted);margin-top:3px}.metaGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0}.metaBox{background:#f2f8f7;border-radius:13px;padding:9px}.metaBox span{display:block;font-size:11px;color:var(--muted)}.metaBox b{font-size:16px}.toggleRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0}.switchBtn{background:#eef6f4;color:#176c65;padding:8px 11px;border-radius:999px;font-size:13px}canvas{width:100%;height:270px;border:2px dashed #abcac4;border-radius:18px;touch-action:none;background:#fff}
+input,textarea,select{width:100%;font-size:18px;border:1px solid #c9dad6;border-radius:14px;padding:12px;background:#fff}.thai{font-size:32px;line-height:1.5}.bigthai{font-size:92px;text-align:center;line-height:1.1}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.stat{background:#f1f7f6;border-radius:14px;padding:10px;text-align:center}.stat b{display:block;font-size:20px}.bar{height:10px;border-radius:99px;background:#e9eeee;overflow:hidden}.bar i{display:block;height:100%;background:var(--main)}.answer{border:1px dashed #b9ceca;border-radius:15px;padding:12px;margin-top:10px}audio{width:100%}.pill{display:inline-block;background:#edf7f5;padding:6px 9px;border-radius:999px;margin:3px;color:#176c65;font-size:13px}.roman{font-size:18px;color:#075e59;font-weight:800;letter-spacing:.2px}.kana{font-size:14px;color:var(--muted);margin-top:3px}.metaGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0}.metaBox{background:#f2f8f7;border-radius:13px;padding:9px}.metaBox span{display:block;font-size:11px;color:var(--muted)}.metaBox b{font-size:16px}.toggleRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0}.switchBtn{background:#eef6f4;color:#176c65;padding:8px 11px;border-radius:999px;font-size:13px}canvas{width:100%;height:270px;border:2px dashed #abcac4;border-radius:18px;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;background:#fff}
 </style>
 <script src="jszip.min.js"></script>
 </head><body><div class="wrap">
-<h1>タイ語トレーニング <span class="small">v1.0</span></h1>
+<h1>タイ語トレーニング <span class="small">v1.2</span></h1>
 <p class="sub">教材データは端末内に保存。公開アプリ本体には市販教材を含みません。</p>
 <div class="nav">
 <button class="main" data-tab="home" onclick="tab('home')">ホーム</button>
@@ -45,7 +45,7 @@ input,textarea,select{width:100%;font-size:18px;border:1px solid #c9dad6;border-
 <div class="card">
 <div class="title">タイ文字トレーニング</div>
 <div class="toggleRow"><span class="small">発音記号は常時表示</span><button class="switchBtn" onclick="toggleKana()">カタカナ補助 ON/OFF</button></div>
-<div id="letterPageChar" class="bigthai">ก</div>
+<div id="letterPageChar" class="bigthai">？</div>
 <div style="text-align:center">
 <div id="letterPageName" style="font-size:21px;font-weight:900"></div>
 <div id="letterPageRoman" class="roman"></div>
@@ -61,7 +61,7 @@ input,textarea,select{width:100%;font-size:18px;border:1px solid #c9dad6;border-
 <div class="grid3">
 <button class="soft" onclick="clearLetterCv()">消す</button>
 <button class="soft" onclick="letterPageSound()">🔊 発音</button>
-<button class="warn" onclick="letterGhost.classList.toggle('hidden')">お手本</button>
+<button class="warn" onclick="revealLetterAnswer()">正解表示</button>
 </div>
 <div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradeLetterPage(false)">まだ無理</button><button class="good" onclick="gradeLetterPage(true)">できた</button></div>
 <div id="letterPageStats" class="answer"></div>
@@ -74,7 +74,7 @@ input,textarea,select{width:100%;font-size:18px;border:1px solid #c9dad6;border-
 
 <div id="letterMode" class="card hidden"><div class="title">タイ文字・書き取り</div><div id="letterChar" class="bigthai">ก</div><div style="text-align:center"><b id="letterName"></b><div id="letterRoman" class="roman"></div><div id="letterKana" class="kana"></div><div id="letterWord" class="thai"></div><div id="letterJP"></div></div>
 <div style="position:relative;margin:12px 0"><canvas id="cv"></canvas><div id="ghost" class="bigthai" style="position:absolute;inset:65px 0 auto;opacity:.12;pointer-events:none">ก</div></div>
-<div class="grid3"><button class="soft" onclick="clearCv()">消す</button><button class="soft" onclick="letterSound()">🔊</button><button class="warn" onclick="ghost.classList.toggle('hidden')">正解表示</button></div><div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradeCurrent(false)">不正解</button><button class="good" onclick="gradeCurrent(true)">正解</button></div><div id="itemMiniStats" class="answer"></div></div>
+<div class="grid3"><button class="soft" onclick="clearCv()">消す</button><button class="soft" onclick="letterSound()">🔊</button><button class="warn" onclick="revealSmallLetterAnswer()">正解表示</button></div><div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradeCurrent(false)">不正解</button><button class="good" onclick="gradeCurrent(true)">正解</button></div><div id="itemMiniStats" class="answer"></div></div>
 
 <div id="wordMode" class="card hidden"><div class="title">単語・チャンク</div><div class="small">日本語を見てタイ語を入力</div><select id="wordLessonFilter" onchange="showWord()"><option value="all">全Lesson</option></select><div class="small" id="wordCountInfo"></div><div id="wordPrompt" style="font-size:24px;font-weight:800;margin:10px 0"></div><div class="small">答えには発音記号も表示します</div><input id="wordInput" placeholder="タイ語を入力"><button class="main" style="width:100%;margin-top:8px" onclick="checkWord()">判定</button><div id="wordResult" class="answer hidden"></div><button id="wordNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="wordI++;showWord()">次の問題 →</button></div>
 
@@ -172,15 +172,25 @@ const getRec=()=>JSON.parse(localStorage.getItem(KEY)||'{}');
 const saveRec=r=>{localStorage.setItem(KEY,JSON.stringify(r));updateHome()};
 function stat(id){const r=getRec()[id]||{};return {attempts:r.attempts||0,correct:r.correct||0,wrong:r.wrong||0,streak:r.streak||0,last:r.last||'',next:r.next||''}}
 function register(id,ok,type){const R=getRec(),x=R[id]||{attempts:0,correct:0,wrong:0,streak:0,type};x.attempts++;if(ok){x.correct++;x.streak=(x.streak||0)+1}else{x.wrong++;x.streak=0}x.last=new Date().toISOString();const d=new Date();d.setDate(d.getDate()+(ok?Math.min(14,Math.max(2,x.streak*2)):1));x.next=d.toISOString().slice(0,10);R[id]=x;saveRec(R);return x}
-function tab(t){if(!MATERIAL_READY && !['home','material','backup'].includes(t)){document.getElementById('materialNeeded').classList.remove('hidden');t='home';}['home','letters','study','record','audio','lessons','pages','books','material','backup'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('hidden',x!==t));document.querySelectorAll('.nav button').forEach(b=>b.className=b.dataset.tab===t?'main':'soft');if(t==='letters')showLetterPage();if(t==='record')renderRecord();if(t==='audio')renderAudio();if(t==='lessons')renderLessons();if(t==='pages')renderPage();if(t==='books')renderBooks()}
+function tab(t){if(!MATERIAL_READY && !['home','material','backup'].includes(t)){document.getElementById('materialNeeded').classList.remove('hidden');t='home';}['home','letters','study','record','audio','lessons','pages','books','material','backup'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('hidden',x!==t));document.querySelectorAll('.nav button').forEach(b=>b.className=b.dataset.tab===t?'main':'soft');if(t==='letters'){showLetterPage();resizeDrawingCanvases();}if(t==='record')renderRecord();if(t==='audio')renderAudio();if(t==='lessons')renderLessons();if(t==='pages')renderPage();if(t==='books')renderBooks()}
 function hideModes(){['letter','word','pron','comp'].forEach(x=>document.getElementById(x+'Mode').classList.add('hidden'))}
-function openMode(m){tab('study');hideModes();currentMode=m;document.getElementById(m+'Mode').classList.remove('hidden');if(m==='letter')showLetter();if(m==='word')showWord();if(m==='pron')showPron();if(m==='comp')showComp()}
+function openMode(m){tab('study');hideModes();currentMode=m;document.getElementById(m+'Mode').classList.remove('hidden');if(m==='letter'){showLetter();resizeDrawingCanvases();}if(m==='word')showWord();if(m==='pron')showPron();if(m==='comp')showComp()}
 function normalizeThai(s){return(s||'').trim().replace(/[\s\u200bๆฯ,.!?'"“”\-]/g,'')}
 function lev(a,b){a=normalizeThai(a);b=normalizeThai(b);const m=a.length,n=b.length,d=Array.from({length:m+1},()=>Array(n+1).fill(0));for(let i=0;i<=m;i++)d[i][0]=i;for(let j=0;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return {dist:d[m][n],score:Math.max(0,Math.round((1-d[m][n]/Math.max(1,m,n))*100))}}
 function mini(id){const s=stat(id),a=s.attempts?Math.round(s.correct/s.attempts*100):0;return `累計 ${s.attempts}回 / 正解 ${s.correct} / ミス ${s.wrong} / 正答率 ${s.attempts?a+'%':'—'} / 連続正解 ${s.streak}`}
 function updateHome(){const R=getRec(),vals=Object.values(R),att=vals.reduce((a,x)=>a+(x.attempts||0),0),cor=vals.reduce((a,x)=>a+(x.correct||0),0),wr=vals.reduce((a,x)=>a+(x.wrong||0),0);totalAttempts.textContent=att;totalWrong.textContent=wr;accuracy.textContent=att?Math.round(cor/att*100)+'%':'—';weakCount.textContent=vals.filter(x=>(x.wrong||0)>0 && ((x.correct||0)/(x.attempts||1)<.8)).length}
-function showLetter(){currentItem=DATA.letters[letterI%DATA.letters.length];letterChar.textContent=currentItem.ch;ghost.textContent=currentItem.ch;letterName.textContent=currentItem.name;letterRoman.textContent=`${currentItem.roman||''}　頭:${currentItem.initial||'—'} / 末:${currentItem.final||'—'}`;letterKana.textContent=currentItem.kana||'';letterWord.textContent=currentItem.word;letterJP.textContent=currentItem.jp;itemMiniStats.textContent=mini(currentItem.id);clearCv()}
-function letterSound(){const u=new SpeechSynthesisUtterance(currentItem.word);u.lang='th-TH';u.rate=.75;speechSynthesis.speak(u)}
+function thaiLetterSpokenName(x){return `${x.ch}อ ${x.word}`}
+function speakThai(text,rate=.72){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=rate;speechSynthesis.speak(u)}
+function showLetter(){
+ currentItem=DATA.letters[letterI%DATA.letters.length];
+ letterChar.textContent='？';ghost.textContent=currentItem.ch;ghost.classList.add('hidden');
+ letterName.textContent=`${currentItem.name}（${currentItem.jp}）`;
+ letterRoman.textContent=`${currentItem.roman||''}　頭:${currentItem.initial||'—'} / 末:${currentItem.final||'—'}`;
+ letterKana.textContent=currentItem.kana||'';letterWord.textContent='';letterJP.textContent='タイ文字を書いてから「正解表示」';
+ itemMiniStats.textContent=mini(currentItem.id);clearCv();
+}
+function revealSmallLetterAnswer(){if(!currentItem)return;letterChar.textContent=currentItem.ch;letterWord.textContent=`${currentItem.word}（${currentItem.jp}）`;letterJP.textContent='';ghost.classList.remove('hidden')}
+function letterSound(){if(currentItem)speakThai(thaiLetterSpokenName(currentItem),.68)}
 function gradeCurrent(ok){register(currentItem.id,ok,'letter');letterI++;showLetter()}
 function buildWords(){
  const arr=[]; const seen=new Set();
@@ -202,7 +212,25 @@ function checkWord(){const a=normalizeThai(wordInput.value),b=normalizeThai(curr
 function showPron(){const all=lessonFiltered(buildPhraseList(),'pron'); if(!all.length){pronThai.textContent=''; pronResult.innerHTML='<span class="small">データなし</span>'; return;} currentItem=all[pronI%all.length];pronThai.textContent=currentItem.th;pronRoman.textContent=currentItem.roman||'';pronKana.textContent=currentItem.kana||'';pronJP.textContent=currentItem.jp;pronCountInfo.textContent=`対象 ${all.length}件 / ${getLessonFilter('pron')==='all'?'全Lesson':getLessonFilter('pron')}`;pronResult.innerHTML='<span class="small">90点以上を合格。脱落・置換・余分な語を厳しめに減点します。</span>'}
 function nextPron(){showPron()}
 function playPron(){const u=new SpeechSynthesisUtterance(currentItem.th);u.lang='th-TH';u.rate=.78;speechSynthesis.speak(u)}
-function recognizePron(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return alert('この環境ではタイ語音声認識を利用できません');const r=new SR();r.lang='th-TH';r.interimResults=false;r.maxAlternatives=3;r.onresult=e=>{let best={score:0,text:'',conf:0};for(let i=0;i<e.results[0].length;i++){const x=e.results[0][i],z=lev(x.transcript,currentItem.th);let score=z.score;const conf=x.confidence||0;if(conf)score=Math.round(score*.88+conf*100*.12);if(z.dist>0)score=Math.max(0,score-Math.min(10,z.dist*2));if(score>best.score)best={score,text:x.transcript,conf};}const ok=best.score>=90;register('pron:'+currentItem.id,ok,'pron');pronResult.innerHTML=`<b>${ok?'✅ 合格':'❌ 要練習'}　${best.score}点</b><div class="small">認識結果</div><div class="thai">${best.text}</div><div class="small">${mini('pron:'+currentItem.id)}</div><button class="soft" style="width:100%;margin-top:8px" onclick="nextPron()">次の問題 →</button>`;pronI++};r.onerror=()=>alert('音声認識に失敗しました');r.start()}
+let recognitionBusy=false;
+async function ensureMicReady(){
+ if(!navigator.mediaDevices?.getUserMedia)return;
+ const s=await navigator.mediaDevices.getUserMedia({audio:true});
+ await new Promise(r=>setTimeout(r,180));s.getTracks().forEach(t=>t.stop());
+}
+async function recognizePron(){
+ if(recognitionBusy)return;const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){pronResult.innerHTML='<b>この環境ではタイ語音声認識を利用できません</b>';return}
+ recognitionBusy=true;pronResult.innerHTML='<b>🎤 マイク準備中…</b>';
+ try{await ensureMicReady()}catch(e){recognitionBusy=false;pronResult.innerHTML='<b>マイクを利用できません</b><div class="small">Safariのマイク権限を確認してください。</div>';return}
+ const run=(retry=0)=>{
+  const r=new SR();r.lang='th-TH';r.interimResults=false;r.continuous=false;r.maxAlternatives=5;
+  r.onstart=()=>{pronResult.innerHTML='<b>🎤 発音してください</b><div class="small">聞き取り中…</div>'};
+  r.onresult=e=>{let best={score:0,text:'',conf:0};for(let i=0;i<e.results[0].length;i++){const x=e.results[0][i],z=lev(x.transcript,currentItem.th);let score=z.score;const conf=x.confidence||0;if(conf)score=Math.round(score*.88+conf*100*.12);if(z.dist>0)score=Math.max(0,score-Math.min(10,z.dist*2));if(score>best.score)best={score,text:x.transcript,conf};}const ok=best.score>=90;register('pron:'+currentItem.id,ok,'pron');pronResult.innerHTML=`<b>${ok?'✅ 合格':'❌ 要練習'}　${best.score}点</b><div class="small">認識結果</div><div class="thai">${best.text}</div><div class="small">${mini('pron:'+currentItem.id)}</div><button class="soft" style="width:100%;margin-top:8px" onclick="nextPron()">次の問題 →</button>`;pronI++;recognitionBusy=false};
+  r.onerror=e=>{const transient=['no-speech','aborted','network','audio-capture'].includes(e.error);if(retry<1&&transient){pronResult.innerHTML='<b>🎤 再接続中…</b>';setTimeout(()=>run(retry+1),450);return}recognitionBusy=false;const msg=e.error==='not-allowed'?'マイク権限がありません':`音声認識に失敗しました（${e.error||'unknown'}）`;pronResult.innerHTML=`<b>${msg}</b><div class="small">もう一度「発音する」を押してください。</div>`};
+  setTimeout(()=>{try{r.start()}catch(e){recognitionBusy=false;pronResult.innerHTML='<b>音声認識を開始できませんでした</b>'}},220);
+ };run(0);
+}
 function showComp(){const all=lessonFiltered(DATA.compositions||[],'comp'); if(!all.length){compJP.textContent='データなし'; compResult.classList.add('hidden'); return;} currentItem=all[compI%all.length];compJP.textContent=currentItem.jp;compInput.value='';compResult.classList.add('hidden'); compCountInfo.textContent=`対象 ${all.length}件 / ${getLessonFilter('comp')==='all'?'全Lesson':getLessonFilter('comp')}`}
 function checkComp(){const val=compInput.value;let best={score:0,ans:''};for(const ans of currentItem.answers){const z=lev(val,ans);if(z.score>best.score)best={score:z.score,ans}}const ok=best.score>=94;register(currentItem.id,ok,'composition');compResult.classList.remove('hidden');compResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}　類似度 ${best.score}%</b><div class="small">模範解答例</div><div class="thai">${best.ans}</div><div class="roman">${currentItem.roman||''}</div><div class="kana">${currentItem.kana||''}</div><div class="small">※現β版は登録済みの自然な別解との照合。自由作文の意味・文法判定は次段階でAI判定へ拡張予定。</div><div>${mini(currentItem.id)}</div><button class="soft" style="width:100%;margin-top:8px" onclick="nextComp()">次の問題 →</button>`;compI++}
 function nextComp(){showComp()}
@@ -210,18 +238,17 @@ function nextComp(){showComp()}
 let letterPageI=0,kanaVisible=true;
 function toggleKana(){kanaVisible=!kanaVisible;letterPageKana.classList.toggle('hidden',!kanaVisible);letterKana&&letterKana.classList.toggle('hidden',!kanaVisible);pronKana&&pronKana.classList.toggle('hidden',!kanaVisible)}
 function showLetterPage(){
- if(!DATA)return;
- const x=DATA.letters[letterPageI%DATA.letters.length];
- currentItem=x;
- letterPageChar.textContent=x.ch;letterGhost.textContent=x.ch;letterPageName.textContent=`${x.name}　${x.word}（${x.jp}）`;
+ if(!DATA)return;resizeDrawingCanvases();const x=DATA.letters[letterPageI%DATA.letters.length];currentItem=x;
+ letterPageChar.textContent='？';letterGhost.textContent=x.ch;letterGhost.classList.add('hidden');
+ letterPageName.textContent=`${x.name}（${x.jp}）`;
  letterPageRoman.textContent=`${x.roman||''}　｜ 頭子音 ${x.initial||'—'}　末子音 ${x.final||'—'}`;
- letterPageKana.textContent=x.kana||'';
- letterClass.textContent=x.class||'—';letterInitial.textContent=x.initial||'—';letterFinal.textContent=x.final||'—';letterExample.textContent=`${x.word}（${x.jp}）`;
+ letterPageKana.textContent=x.kana||'';letterClass.textContent=x.class||'—';letterInitial.textContent=x.initial||'—';letterFinal.textContent=x.final||'—';letterExample.textContent=`意味：${x.jp}`;
  letterPageStats.textContent=mini(x.id);clearLetterCv();
 }
+function revealLetterAnswer(){const x=DATA.letters[letterPageI%DATA.letters.length];letterPageChar.textContent=x.ch;letterGhost.classList.remove('hidden');letterExample.textContent=`${x.word}（${x.jp}）`}
 function nextLetterPage(){letterPageI=(letterPageI+1)%DATA.letters.length;showLetterPage()}
 function prevLetterPage(){letterPageI=(letterPageI-1+DATA.letters.length)%DATA.letters.length;showLetterPage()}
-function letterPageSound(){const x=DATA.letters[letterPageI%DATA.letters.length],u=new SpeechSynthesisUtterance(x.word);u.lang='th-TH';u.rate=.72;speechSynthesis.speak(u)}
+function letterPageSound(){const x=DATA.letters[letterPageI%DATA.letters.length];speakThai(thaiLetterSpokenName(x),.68)}
 function gradeLetterPage(ok){const x=DATA.letters[letterPageI%DATA.letters.length];register(x.id,ok,'letter');nextLetterPage()}
 
 function renderRecord(){const R=getRec(),rows=Object.entries(R).sort((a,b)=>(b[1].wrong||0)-(a[1].wrong||0));recordList.innerHTML=rows.length?rows.map(([id,x])=>{const a=x.attempts?Math.round(x.correct/x.attempts*100):0;return `<div class="answer"><b>${id}</b><div>${x.type||''}　${x.attempts||0}回 / ミス ${x.wrong||0} / 正答率 ${a}% / 連続 ${x.streak||0}</div><div class="bar"><i style="width:${a}%"></i></div><div class="small">次回 ${x.next||'—'}</div></div>`}).join(''):'<span class="small">まだ記録なし</span>'}
@@ -288,7 +315,23 @@ function openLessonPage(){
 function renderBooks(){bookList.innerHTML=DATA.materials.map(b=>`<div class="answer"><b>${b.title}</b><div>${b.description}</div><div class="small">${b.lessons.length}セクション</div></div>`).join('')}
 function exportData(){const blob=new Blob([JSON.stringify({records:getRec()},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='thai_training_backup.json';a.click()}
 function restoreData(){const f=restoreFile.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);localStorage.setItem(KEY,JSON.stringify(x.records||x));updateHome();alert('読み込みました')}catch(e){alert('読み込み失敗')}};r.readAsText(f)}
-function bindCanvas(c,clearName){const ctx=c.getContext('2d');let draw=false,last=null;function size(){const r=c.getBoundingClientRect(),d=devicePixelRatio;c.width=r.width*d;c.height=r.height*d;ctx.setTransform(d,0,0,d,0,0);ctx.lineWidth=5;ctx.lineCap='round';ctx.strokeStyle='#17302d'}size();window.addEventListener('resize',size);function p(e){const r=c.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}c.onpointerdown=e=>{draw=true;last=p(e);c.setPointerCapture(e.pointerId)};c.onpointermove=e=>{if(!draw)return;const q=p(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(q.x,q.y);ctx.stroke();last=q};c.onpointerup=()=>draw=false;window[clearName]=()=>ctx.clearRect(0,0,c.width,c.height)}
+function bindCanvas(c,clearName){
+ const ctx=c.getContext('2d');let draw=false,last=null,lastTouch=0;
+ function size(){const r=c.getBoundingClientRect();if(r.width<10||r.height<10)return;const d=Math.min(window.devicePixelRatio||1,3),w=Math.round(r.width*d),h=Math.round(r.height*d);if(c.width===w&&c.height===h)return;c.width=w;c.height=h;ctx.setTransform(d,0,0,d,0,0);ctx.lineWidth=7;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#17302d'}
+ function pos(x,y){const r=c.getBoundingClientRect();return{x:x-r.left,y:y-r.top}}
+ function begin(x,y){size();draw=true;last=pos(x,y);ctx.beginPath();ctx.arc(last.x,last.y,3,0,Math.PI*2);ctx.fillStyle='#17302d';ctx.fill()}
+ function move(x,y){if(!draw)return;const q=pos(x,y);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(q.x,q.y);ctx.stroke();last=q}
+ function end(){draw=false;last=null}
+ c.addEventListener('touchstart',e=>{lastTouch=Date.now();e.preventDefault();const t=e.changedTouches[0];if(t)begin(t.clientX,t.clientY)},{passive:false});
+ c.addEventListener('touchmove',e=>{lastTouch=Date.now();e.preventDefault();const t=e.changedTouches[0];if(t)move(t.clientX,t.clientY)},{passive:false});
+ c.addEventListener('touchend',e=>{lastTouch=Date.now();e.preventDefault();end()},{passive:false});
+ c.addEventListener('touchcancel',end,{passive:false});
+ c.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'||Date.now()-lastTouch<500)return;e.preventDefault();begin(e.clientX,e.clientY)});
+ c.addEventListener('pointermove',e=>{if(e.pointerType==='touch'||Date.now()-lastTouch<500)return;if(draw){e.preventDefault();move(e.clientX,e.clientY)}});
+ c.addEventListener('pointerup',e=>{if(e.pointerType!=='touch')end()});c.addEventListener('pointercancel',end);
+ window.addEventListener('resize',size);window[clearName]=()=>{size();ctx.clearRect(0,0,c.width,c.height)};c._resizeDrawingCanvas=size;
+}
+function resizeDrawingCanvases(){requestAnimationFrame(()=>{cv?._resizeDrawingCanvas?.();letterCv?._resizeDrawingCanvas?.()})}
 function setupCanvas(){bindCanvas(cv,'clearCv');bindCanvas(letterCv,'clearLetterCv')}
 
 const DB_NAME='thai_training_materials_v1', DB_VERSION=1;
