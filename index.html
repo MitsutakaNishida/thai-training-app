@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d9488">
+<link rel="manifest" href="manifest.webmanifest"><title>タイ語トレーニング</title>
+<style>
+:root{--bg:#f4faf9;--card:#fff;--ink:#152329;--muted:#66757b;--main:#0d9488;--soft:#e5f6f3;--line:#d8e7e4;--good:#dff6e5;--bad:#ffe2e2;--warn:#fff1c9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:820px;margin:auto;padding:16px 14px calc(90px + env(safe-area-inset-bottom))}
+h1{font-size:27px;margin:4px 0}.sub{margin:0;color:var(--muted)}button{border:0;border-radius:15px;padding:12px 13px;font-size:15px;font-weight:800;min-height:44px;touch-action:manipulation}.main{background:var(--main);color:white}.soft{background:var(--soft);color:#08736b}.good{background:var(--good);color:#17662b}.bad{background:var(--bad);color:#922}.warn{background:var(--warn);color:#745700}
+.nav{display:flex;gap:7px;overflow-x:auto;position:sticky;top:0;background:rgba(244,250,249,.96);backdrop-filter:blur(10px);padding:9px 0;z-index:5;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav button{flex:0 0 auto;min-width:86px;min-height:44px}.card{background:white;border:1px solid var(--line);border-radius:22px;padding:15px;margin:13px 0;box-shadow:0 3px 14px #173c3220}.title{font-weight:900;font-size:20px;margin-bottom:10px}.small{font-size:13px;color:var(--muted)}.hidden{display:none!important}
+input,textarea,select{width:100%;font-size:18px;border:1px solid #c9dad6;border-radius:14px;padding:12px;background:#fff}.thai{font-size:32px;line-height:1.5}.bigthai{font-size:92px;text-align:center;line-height:1.1}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.stat{background:#f1f7f6;border-radius:14px;padding:10px;text-align:center}.stat b{display:block;font-size:20px}.bar{height:10px;border-radius:99px;background:#e9eeee;overflow:hidden}.bar i{display:block;height:100%;background:var(--main)}.answer{border:1px dashed #b9ceca;border-radius:15px;padding:12px;margin-top:10px}audio{width:100%}.pill{display:inline-block;background:#edf7f5;padding:6px 9px;border-radius:999px;margin:3px;color:#176c65;font-size:13px}.roman{font-size:18px;color:#075e59;font-weight:800;letter-spacing:.2px}.kana{font-size:14px;color:var(--muted);margin-top:3px}.metaGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0}.metaBox{background:#f2f8f7;border-radius:13px;padding:9px}.metaBox span{display:block;font-size:11px;color:var(--muted)}.metaBox b{font-size:16px}.toggleRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0}.switchBtn{background:#eef6f4;color:#176c65;padding:8px 11px;border-radius:999px;font-size:13px}canvas{width:100%;height:270px;border:2px dashed #abcac4;border-radius:18px;touch-action:none;background:#fff}
+</style>
+<script src="jszip.min.js"></script>
+</head><body><div class="wrap">
+<h1>タイ語トレーニング <span class="small">v1.0</span></h1>
+<p class="sub">教材データは端末内に保存。公開アプリ本体には市販教材を含みません。</p>
+<div class="nav">
+<button class="main" data-tab="home" onclick="tab('home')">ホーム</button>
+<button class="soft" data-tab="letters" onclick="tab('letters')">文字練習</button>
+<button class="soft" data-tab="study" onclick="tab('study')">トレーニング</button>
+<button class="soft" data-tab="record" onclick="tab('record')">成績</button>
+<button class="soft" data-tab="audio" onclick="tab('audio')">音声</button>
+<button class="soft" data-tab="lessons" onclick="tab('lessons')">レッスン</button>
+<button class="soft" data-tab="pages" onclick="tab('pages')">本文</button>
+<button class="soft" data-tab="books" onclick="tab('books')">教材</button>
+<button class="soft" data-tab="material" onclick="tab('material')">教材読込</button>
+<button class="soft" data-tab="backup" onclick="tab('backup')">データ</button>
+</div>
+
+<section id="homeTab">
+<div id="materialNeeded" class="card hidden"><div class="title">教材データを読み込んでください</div><p>初回だけ、専用の教材パックZIPを読み込みます。画像・音声・Lessonデータはこの端末内に保存され、GitHubにはアップロードされません。</p><button class="main" style="width:100%" onclick="tab('material')">教材パックを読み込む</button></div>
+<div class="card"><div class="title">今日の学習</div>
+<div class="stats"><div class="stat"><span class="small">総回答</span><b id="totalAttempts">0</b></div><div class="stat"><span class="small">ミス</span><b id="totalWrong">0</b></div><div class="stat"><span class="small">正答率</span><b id="accuracy">—</b></div><div class="stat"><span class="small">要復習</span><b id="weakCount">0</b></div></div>
+<div class="grid2" style="margin-top:12px"><button class="main" onclick="startWeak()">苦手から復習</button><button class="soft" onclick="tab('study')">自由に練習</button></div></div>
+<div class="card"><div class="title">教材の状態</div><div class="small">ニューエクスプレス Lesson 1〜20 構造化済み / 音声83本 / 本文画像157枚</div><div id="appStatus" class="answer">v0.9 最終チェック版</div></div>
+<div class="card"><div class="title">学習メニュー</div><div class="grid2">
+<button class="soft" onclick="tab('letters')">✍️ タイ文字</button><button class="soft" onclick="openMode('word')">🔤 単語・チャンク</button>
+<button class="soft" onclick="openMode('pron')">🎤 発音</button><button class="soft" onclick="openMode('comp')">📝 タイ作文</button>
+</div></div>
+</section>
+
+
+<section id="lettersTab" class="hidden">
+<div class="card">
+<div class="title">タイ文字トレーニング</div>
+<div class="toggleRow"><span class="small">発音記号は常時表示</span><button class="switchBtn" onclick="toggleKana()">カタカナ補助 ON/OFF</button></div>
+<div id="letterPageChar" class="bigthai">ก</div>
+<div style="text-align:center">
+<div id="letterPageName" style="font-size:21px;font-weight:900"></div>
+<div id="letterPageRoman" class="roman"></div>
+<div id="letterPageKana" class="kana"></div>
+</div>
+<div class="metaGrid">
+<div class="metaBox"><span>子音クラス</span><b id="letterClass">—</b></div>
+<div class="metaBox"><span>頭子音</span><b id="letterInitial">—</b></div>
+<div class="metaBox"><span>末子音</span><b id="letterFinal">—</b></div>
+<div class="metaBox"><span>代表語</span><b id="letterExample">—</b></div>
+</div>
+<div style="position:relative;margin:12px 0"><canvas id="letterCv"></canvas><div id="letterGhost" class="bigthai" style="position:absolute;inset:65px 0 auto;opacity:.12;pointer-events:none">ก</div></div>
+<div class="grid3">
+<button class="soft" onclick="clearLetterCv()">消す</button>
+<button class="soft" onclick="letterPageSound()">🔊 発音</button>
+<button class="warn" onclick="letterGhost.classList.toggle('hidden')">お手本</button>
+</div>
+<div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradeLetterPage(false)">まだ無理</button><button class="good" onclick="gradeLetterPage(true)">できた</button></div>
+<div id="letterPageStats" class="answer"></div>
+<div class="grid2" style="margin-top:10px"><button class="soft" onclick="prevLetterPage()">← 前</button><button class="soft" onclick="nextLetterPage()">次 →</button></div>
+</div>
+</section>
+
+<section id="studyTab" class="hidden">
+<div class="card"><div class="title">モード</div><div class="grid2"><button class="soft" onclick="openMode('letter')">文字</button><button class="soft" onclick="openMode('word')">単語・チャンク</button><button class="soft" onclick="openMode('pron')">発音</button><button class="soft" onclick="openMode('comp')">タイ作文</button></div></div>
+
+<div id="letterMode" class="card hidden"><div class="title">タイ文字・書き取り</div><div id="letterChar" class="bigthai">ก</div><div style="text-align:center"><b id="letterName"></b><div id="letterRoman" class="roman"></div><div id="letterKana" class="kana"></div><div id="letterWord" class="thai"></div><div id="letterJP"></div></div>
+<div style="position:relative;margin:12px 0"><canvas id="cv"></canvas><div id="ghost" class="bigthai" style="position:absolute;inset:65px 0 auto;opacity:.12;pointer-events:none">ก</div></div>
+<div class="grid3"><button class="soft" onclick="clearCv()">消す</button><button class="soft" onclick="letterSound()">🔊</button><button class="warn" onclick="ghost.classList.toggle('hidden')">正解表示</button></div><div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradeCurrent(false)">不正解</button><button class="good" onclick="gradeCurrent(true)">正解</button></div><div id="itemMiniStats" class="answer"></div></div>
+
+<div id="wordMode" class="card hidden"><div class="title">単語・チャンク</div><div class="small">日本語を見てタイ語を入力</div><select id="wordLessonFilter" onchange="showWord()"><option value="all">全Lesson</option></select><div class="small" id="wordCountInfo"></div><div id="wordPrompt" style="font-size:24px;font-weight:800;margin:10px 0"></div><div class="small">答えには発音記号も表示します</div><input id="wordInput" placeholder="タイ語を入力"><button class="main" style="width:100%;margin-top:8px" onclick="checkWord()">判定</button><div id="wordResult" class="answer hidden"></div><button id="wordNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="wordI++;showWord()">次の問題 →</button></div>
+
+<div id="pronMode" class="card hidden"><div class="title">発音チェック（厳しめ）</div><select id="pronLessonFilter" onchange="showPron()"><option value="all">全Lesson</option></select><div class="small" id="pronCountInfo"></div><div id="pronThai" class="thai"></div><div id="pronRoman" class="roman"></div><div id="pronKana" class="kana"></div><div id="pronJP"></div><div class="grid2" style="margin-top:10px"><button class="soft" onclick="playPron()">🔊 模範</button><button class="main" onclick="recognizePron()">🎤 発音する</button></div><div id="pronResult" class="answer"><span class="small">90点以上を「合格」とする厳しめ設定。ブラウザ音声認識ベースのため、声調の音高を直接測定しているわけではありません。</span></div></div>
+
+<div id="compMode" class="card hidden"><div class="title">タイ作文</div><div class="small">判定後、模範解答と発音記号を表示</div><select id="compLessonFilter" onchange="showComp()"><option value="all">全Lesson</option></select><div class="small" id="compCountInfo"></div><div class="small">日本語 → タイ語</div><div id="compJP" style="font-size:23px;font-weight:800;margin:10px 0"></div><textarea id="compInput" rows="4" placeholder="タイ語で書く"></textarea><button class="main" style="width:100%;margin-top:8px" onclick="checkComp()">正誤判定</button><div id="compResult" class="answer hidden"></div></div>
+</section>
+
+<section id="recordTab" class="hidden"><div class="card"><div class="title">学習履歴・弱点</div><div id="recordList"></div></div></section>
+
+<section id="audioTab" class="hidden"><div class="card"><div class="title">教材音声 83本</div><input id="audioSearch" placeholder="Lesson 3 / Pronunciation など" oninput="renderAudio()"><div id="audioList"></div></div></section>
+
+
+
+<section id="lessonsTab" class="hidden">
+<div class="card"><div class="title">ニューエクスプレス 20課</div>
+<p class="small">目次の印刷ページと付属音声をLesson単位で紐づけています。Lesson 1〜20の会話文を構造化済み。タイ文字・発音記号・日本語訳を併記。</p>
+<div id="lessonList"></div></div>
+<div id="lessonDetail" class="card hidden">
+<button class="soft" onclick="closeLesson()">← 一覧へ</button>
+<div class="title" id="lessonTitle" style="margin-top:12px"></div>
+<div id="lessonMeta" class="small"></div>
+<div class="grid2" style="margin-top:10px">
+<button class="main" onclick="playLessonAudio('dialogue')">🔊 Dialogue</button>
+<button class="soft" onclick="playLessonAudio('words')">🔊 Words</button>
+</div>
+<div id="lessonDialogue"></div><div id="lessonSummary" class="answer hidden"></div>
+<div class="grid2" style="margin-top:12px">
+<button class="soft" onclick="openLessonPage()">📖 本文画像</button>
+<button class="soft" onclick="openLessonPractice('pron')">🎤 発音練習</button>
+</div><div style="margin-top:8px"><button class="soft" style="width:100%" onclick="openLessonPractice('comp')">📝 このLessonの作文練習</button></div>
+</div>
+</section>
+
+<section id="pagesTab" class="hidden">
+<div class="card">
+<div class="title">ニューエクスプレス 撮影ページビューア</div>
+<p class="small">撮影画像157枚を収録しています。見開き撮影もあるため、撮影No.と本の印刷ページは別管理です。各Lessonから対応する本文画像へ移動できます。</p>
+<div class="grid2">
+<div>
+<label class="small">ページへ移動</label>
+<input id="pageJump" type="number" inputmode="numeric" min="1" max="157" value="1">
+</div>
+<div style="display:flex;align-items:end"><button class="main" style="width:100%" onclick="jumpPage()">移動</button></div>
+</div>
+<div class="grid3" style="margin-top:10px">
+<button class="soft" onclick="prevPage()">← 前</button>
+<button class="soft" onclick="fitPage()">全体表示</button>
+<button class="soft" onclick="nextPage()">次 →</button>
+</div>
+<div style="text-align:center;margin:12px 0"><b id="pageLabel">撮影 #1</b></div>
+<div id="pageFrame" style="overflow:auto;max-height:72vh;border:1px solid var(--line);border-radius:16px;background:#f2f4f4;text-align:center">
+<img id="pageImage" alt="教材ページ" style="max-width:100%;height:auto;display:block;margin:auto">
+</div>
+<div class="grid2" style="margin-top:10px">
+<button class="soft" onclick="zoomPage(1.25)">＋ 拡大</button>
+<button class="soft" onclick="zoomPage(.8)">− 縮小</button>
+</div>
+<div class="answer">
+<b>このページで学習</b>
+<div class="grid2" style="margin-top:8px">
+<button class="soft" onclick="tab('audio')">🔊 音声を探す</button>
+<button class="soft" onclick="tab('study')">✍️ 練習へ</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="booksTab" class="hidden"><div class="card"><div class="title">教材</div><div id="bookList"></div><p class="small">教材パック方式なので、今後は別のタイ語テキスト・検定問題集も端末内へ追加できる設計に拡張できます。</p></div></section>
+
+
+<section id="materialTab" class="hidden">
+<div class="card">
+<div class="title">教材データ（端末内）</div>
+<div id="materialStatus" class="answer">状態を確認中…</div>
+<label class="main" style="display:block;text-align:center;margin-top:12px;cursor:pointer">教材パックZIPを選ぶ
+<input id="materialZipInput" type="file" accept=".zip,application/zip" onchange="importMaterialPack(this.files[0])" style="display:none"></label>
+<div id="importProgress" class="small" style="margin-top:10px"></div>
+<div class="bar" style="margin-top:8px"><i id="importBar" style="width:0%"></i></div>
+<button class="bad" style="width:100%;margin-top:14px" onclick="deleteMaterialPack()">端末内の教材データを削除</button>
+<p class="small">※教材パックZIP自体は「ファイル」アプリに残しておいてください。iPhoneの空き容量管理などでWebサイトデータが削除された場合、再読み込みできます。</p>
+</div>
+</section>
+
+<section id="backupTab" class="hidden"><div class="card"><div class="title">データ管理</div><div class="grid2"><button class="soft" onclick="exportData()">JSONバックアップ</button><label class="soft" style="text-align:center;padding:12px;border-radius:15px;font-weight:800">読み込み<input type="file" id="restoreFile" accept=".json" onchange="restoreData()" style="display:none"></label></div><p class="small">学習履歴はこの端末のブラウザ内に保存されます。定期バックアップ推奨。</p></div></section>
+</div>
+<script>
+let DATA=null,currentMode='',currentItem=null,letterI=0,wordI=0,pronI=0,compI=0;
+function getLessonFilter(mode){const el=document.getElementById(mode+'LessonFilter');return el?el.value:'all'}
+function lessonFiltered(arr, mode){const f=getLessonFilter(mode);return f==='all'?arr:arr.filter(x=>(x.lesson||'')===f)}
+function buildPhraseList(){return DATA.phrases||[]}
+function fillLessonFilters(){const opts=['<option value="all">全Lesson</option>'].concat((DATA.materials?.[0]?.lessons||[]).filter(x=>/^lesson-/.test(x.id)).map((x,i)=>`<option value="Lesson ${i+1}">Lesson ${i+1}</option>`)).join(''); ['wordLessonFilter','pronLessonFilter','compLessonFilter'].forEach(id=>{const el=document.getElementById(id); if(el) el.innerHTML=opts;}); }
+const KEY='thai_training_records_v2';
+const getRec=()=>JSON.parse(localStorage.getItem(KEY)||'{}');
+const saveRec=r=>{localStorage.setItem(KEY,JSON.stringify(r));updateHome()};
+function stat(id){const r=getRec()[id]||{};return {attempts:r.attempts||0,correct:r.correct||0,wrong:r.wrong||0,streak:r.streak||0,last:r.last||'',next:r.next||''}}
+function register(id,ok,type){const R=getRec(),x=R[id]||{attempts:0,correct:0,wrong:0,streak:0,type};x.attempts++;if(ok){x.correct++;x.streak=(x.streak||0)+1}else{x.wrong++;x.streak=0}x.last=new Date().toISOString();const d=new Date();d.setDate(d.getDate()+(ok?Math.min(14,Math.max(2,x.streak*2)):1));x.next=d.toISOString().slice(0,10);R[id]=x;saveRec(R);return x}
+function tab(t){if(!MATERIAL_READY && !['home','material','backup'].includes(t)){document.getElementById('materialNeeded').classList.remove('hidden');t='home';}['home','letters','study','record','audio','lessons','pages','books','material','backup'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('hidden',x!==t));document.querySelectorAll('.nav button').forEach(b=>b.className=b.dataset.tab===t?'main':'soft');if(t==='letters')showLetterPage();if(t==='record')renderRecord();if(t==='audio')renderAudio();if(t==='lessons')renderLessons();if(t==='pages')renderPage();if(t==='books')renderBooks()}
+function hideModes(){['letter','word','pron','comp'].forEach(x=>document.getElementById(x+'Mode').classList.add('hidden'))}
+function openMode(m){tab('study');hideModes();currentMode=m;document.getElementById(m+'Mode').classList.remove('hidden');if(m==='letter')showLetter();if(m==='word')showWord();if(m==='pron')showPron();if(m==='comp')showComp()}
+function normalizeThai(s){return(s||'').trim().replace(/[\s\u200bๆฯ,.!?'"“”\-]/g,'')}
+function lev(a,b){a=normalizeThai(a);b=normalizeThai(b);const m=a.length,n=b.length,d=Array.from({length:m+1},()=>Array(n+1).fill(0));for(let i=0;i<=m;i++)d[i][0]=i;for(let j=0;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return {dist:d[m][n],score:Math.max(0,Math.round((1-d[m][n]/Math.max(1,m,n))*100))}}
+function mini(id){const s=stat(id),a=s.attempts?Math.round(s.correct/s.attempts*100):0;return `累計 ${s.attempts}回 / 正解 ${s.correct} / ミス ${s.wrong} / 正答率 ${s.attempts?a+'%':'—'} / 連続正解 ${s.streak}`}
+function updateHome(){const R=getRec(),vals=Object.values(R),att=vals.reduce((a,x)=>a+(x.attempts||0),0),cor=vals.reduce((a,x)=>a+(x.correct||0),0),wr=vals.reduce((a,x)=>a+(x.wrong||0),0);totalAttempts.textContent=att;totalWrong.textContent=wr;accuracy.textContent=att?Math.round(cor/att*100)+'%':'—';weakCount.textContent=vals.filter(x=>(x.wrong||0)>0 && ((x.correct||0)/(x.attempts||1)<.8)).length}
+function showLetter(){currentItem=DATA.letters[letterI%DATA.letters.length];letterChar.textContent=currentItem.ch;ghost.textContent=currentItem.ch;letterName.textContent=currentItem.name;letterRoman.textContent=`${currentItem.roman||''}　頭:${currentItem.initial||'—'} / 末:${currentItem.final||'—'}`;letterKana.textContent=currentItem.kana||'';letterWord.textContent=currentItem.word;letterJP.textContent=currentItem.jp;itemMiniStats.textContent=mini(currentItem.id);clearCv()}
+function letterSound(){const u=new SpeechSynthesisUtterance(currentItem.word);u.lang='th-TH';u.rate=.75;speechSynthesis.speak(u)}
+function gradeCurrent(ok){register(currentItem.id,ok,'letter');letterI++;showLetter()}
+function buildWords(){
+ const arr=[]; const seen=new Set();
+ // 全Lessonで発音記号を必ず表示できるよう、構造化済みの文を基本出題にする
+ for(const p of buildPhraseList()){
+   const id='phraseword:'+p.id;
+   arr.push({id,th:p.th,jp:p.jp,type:'phrase',lesson:p.lesson||'',roman:p.roman||'',kana:p.kana||''}); seen.add(p.th);
+ }
+ // 発音記号が登録済みの短いチャンクだけ追加
+ const meta=Object.fromEntries((DATA.chunks||[]).map(x=>[x.th,x]));
+ for(const p of buildPhraseList()) for(const c of p.chunks||[]){
+   const m=meta[c]||{}; if(!m.roman || seen.has(c)) continue;
+   arr.push({id:'chunk:'+c,th:c,jp:p.jp,type:'chunk',lesson:p.lesson||'',roman:m.roman||'',kana:m.kana||''}); seen.add(c);
+ }
+ return arr
+}
+function showWord(){const all=lessonFiltered(buildWords(),'word'); if(!all.length){wordPrompt.textContent='データなし';wordResult.classList.add('hidden');return;} currentItem=all[wordI%all.length];wordPrompt.textContent=currentItem.jp;wordInput.value='';wordResult.classList.add('hidden'); if(window.wordNextBtn) wordNextBtn.classList.add('hidden'); wordCountInfo.textContent=`対象 ${all.length}件 / ${getLessonFilter('word')==='all'?'全Lesson':getLessonFilter('word')}`}
+function checkWord(){const a=normalizeThai(wordInput.value),b=normalizeThai(currentItem.th),ok=a===b;register(currentItem.id,ok,'chunk');wordResult.classList.remove('hidden');wordResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}</b><div class="thai">${currentItem.th}</div><div class="roman">${currentItem.roman||''}</div><div>${mini(currentItem.id)}</div>`;wordNextBtn.classList.remove('hidden')}
+function showPron(){const all=lessonFiltered(buildPhraseList(),'pron'); if(!all.length){pronThai.textContent=''; pronResult.innerHTML='<span class="small">データなし</span>'; return;} currentItem=all[pronI%all.length];pronThai.textContent=currentItem.th;pronRoman.textContent=currentItem.roman||'';pronKana.textContent=currentItem.kana||'';pronJP.textContent=currentItem.jp;pronCountInfo.textContent=`対象 ${all.length}件 / ${getLessonFilter('pron')==='all'?'全Lesson':getLessonFilter('pron')}`;pronResult.innerHTML='<span class="small">90点以上を合格。脱落・置換・余分な語を厳しめに減点します。</span>'}
+function nextPron(){showPron()}
+function playPron(){const u=new SpeechSynthesisUtterance(currentItem.th);u.lang='th-TH';u.rate=.78;speechSynthesis.speak(u)}
+function recognizePron(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return alert('この環境ではタイ語音声認識を利用できません');const r=new SR();r.lang='th-TH';r.interimResults=false;r.maxAlternatives=3;r.onresult=e=>{let best={score:0,text:'',conf:0};for(let i=0;i<e.results[0].length;i++){const x=e.results[0][i],z=lev(x.transcript,currentItem.th);let score=z.score;const conf=x.confidence||0;if(conf)score=Math.round(score*.88+conf*100*.12);if(z.dist>0)score=Math.max(0,score-Math.min(10,z.dist*2));if(score>best.score)best={score,text:x.transcript,conf};}const ok=best.score>=90;register('pron:'+currentItem.id,ok,'pron');pronResult.innerHTML=`<b>${ok?'✅ 合格':'❌ 要練習'}　${best.score}点</b><div class="small">認識結果</div><div class="thai">${best.text}</div><div class="small">${mini('pron:'+currentItem.id)}</div><button class="soft" style="width:100%;margin-top:8px" onclick="nextPron()">次の問題 →</button>`;pronI++};r.onerror=()=>alert('音声認識に失敗しました');r.start()}
+function showComp(){const all=lessonFiltered(DATA.compositions||[],'comp'); if(!all.length){compJP.textContent='データなし'; compResult.classList.add('hidden'); return;} currentItem=all[compI%all.length];compJP.textContent=currentItem.jp;compInput.value='';compResult.classList.add('hidden'); compCountInfo.textContent=`対象 ${all.length}件 / ${getLessonFilter('comp')==='all'?'全Lesson':getLessonFilter('comp')}`}
+function checkComp(){const val=compInput.value;let best={score:0,ans:''};for(const ans of currentItem.answers){const z=lev(val,ans);if(z.score>best.score)best={score:z.score,ans}}const ok=best.score>=94;register(currentItem.id,ok,'composition');compResult.classList.remove('hidden');compResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}　類似度 ${best.score}%</b><div class="small">模範解答例</div><div class="thai">${best.ans}</div><div class="roman">${currentItem.roman||''}</div><div class="kana">${currentItem.kana||''}</div><div class="small">※現β版は登録済みの自然な別解との照合。自由作文の意味・文法判定は次段階でAI判定へ拡張予定。</div><div>${mini(currentItem.id)}</div><button class="soft" style="width:100%;margin-top:8px" onclick="nextComp()">次の問題 →</button>`;compI++}
+function nextComp(){showComp()}
+
+let letterPageI=0,kanaVisible=true;
+function toggleKana(){kanaVisible=!kanaVisible;letterPageKana.classList.toggle('hidden',!kanaVisible);letterKana&&letterKana.classList.toggle('hidden',!kanaVisible);pronKana&&pronKana.classList.toggle('hidden',!kanaVisible)}
+function showLetterPage(){
+ if(!DATA)return;
+ const x=DATA.letters[letterPageI%DATA.letters.length];
+ currentItem=x;
+ letterPageChar.textContent=x.ch;letterGhost.textContent=x.ch;letterPageName.textContent=`${x.name}　${x.word}（${x.jp}）`;
+ letterPageRoman.textContent=`${x.roman||''}　｜ 頭子音 ${x.initial||'—'}　末子音 ${x.final||'—'}`;
+ letterPageKana.textContent=x.kana||'';
+ letterClass.textContent=x.class||'—';letterInitial.textContent=x.initial||'—';letterFinal.textContent=x.final||'—';letterExample.textContent=`${x.word}（${x.jp}）`;
+ letterPageStats.textContent=mini(x.id);clearLetterCv();
+}
+function nextLetterPage(){letterPageI=(letterPageI+1)%DATA.letters.length;showLetterPage()}
+function prevLetterPage(){letterPageI=(letterPageI-1+DATA.letters.length)%DATA.letters.length;showLetterPage()}
+function letterPageSound(){const x=DATA.letters[letterPageI%DATA.letters.length],u=new SpeechSynthesisUtterance(x.word);u.lang='th-TH';u.rate=.72;speechSynthesis.speak(u)}
+function gradeLetterPage(ok){const x=DATA.letters[letterPageI%DATA.letters.length];register(x.id,ok,'letter');nextLetterPage()}
+
+function renderRecord(){const R=getRec(),rows=Object.entries(R).sort((a,b)=>(b[1].wrong||0)-(a[1].wrong||0));recordList.innerHTML=rows.length?rows.map(([id,x])=>{const a=x.attempts?Math.round(x.correct/x.attempts*100):0;return `<div class="answer"><b>${id}</b><div>${x.type||''}　${x.attempts||0}回 / ミス ${x.wrong||0} / 正答率 ${a}% / 連続 ${x.streak||0}</div><div class="bar"><i style="width:${a}%"></i></div><div class="small">次回 ${x.next||'—'}</div></div>`}).join(''):'<span class="small">まだ記録なし</span>'}
+function startWeak(){const R=getRec(),weak=Object.entries(R).filter(([id,x])=>(x.wrong||0)>0).sort((a,b)=>(b[1].wrong||0)-(a[1].wrong||0));if(!weak.length)return openMode('letter');const id=weak[0][0];if(id.startsWith('pron:'))openMode('pron');else if(id.startsWith('chunk:'))openMode('word');else if(id.startsWith('c'))openMode('comp');else openMode('letter')}
+function renderAudio(){if(!DATA)return;const q=(audioSearch.value||'').toLowerCase(),arr=(DATA.audio||[]).filter(x=>(x.track+' '+x.label).toLowerCase().includes(q));audioList.innerHTML=arr.map(x=>`<div class="answer"><b>${String(x.track).padStart(2,'0')} ${x.label}</b><button class="soft" style="width:100%;margin-top:8px" onclick="playAssetAudio('${x.file}')">▶︎ 再生</button></div>`).join('')}
+
+let PAGES=[],pageNo=1,pageZoom=1,LESSONS=[],activeLesson=null;
+async function renderPage(){
+ if(!PAGES.length)return;
+ const x=PAGES[pageNo-1]||PAGES[0];
+ pageJump.value=pageNo;pageLabel.textContent=`撮影 #${pageNo}`;
+ const url=await getAssetURL(x.file); if(url) pageImage.src=url;
+ pageImage.style.maxWidth=(100*pageZoom)+'%';pageImage.style.width=pageZoom>1?(100*pageZoom)+'%':'auto';
+}
+function jumpPage(){let n=parseInt(pageJump.value)||1;n=Math.max(1,Math.min(157,n));pageNo=n;pageZoom=1;renderPage()}
+function prevPage(){if(pageNo>1){pageNo--;pageZoom=1;renderPage()}}
+function nextPage(){if(pageNo<157){pageNo++;pageZoom=1;renderPage()}}
+function zoomPage(f){pageZoom=Math.max(.6,Math.min(3,pageZoom*f));renderPage()}
+function fitPage(){pageZoom=1;renderPage()}
+
+
+function renderLessons(){
+ if(!LESSONS.length)return;
+ lessonDetail.classList.add('hidden');lessonList.classList.remove('hidden');
+ lessonList.innerHTML=LESSONS.map(l=>`<div class="answer" onclick="openLesson(${l.lesson})" style="cursor:pointer">
+ <b>Lesson ${l.lesson}　${l.title}</b>
+ <div class="small">印刷 p.${l.print_start}〜${l.print_end}　🔊 DL ${l.dialogue_track}/${l.words_track}</div>
+ <div class="small">${l.structured_count?`✅ 構造化 ${l.structured_count}文`: '本文画像のみ'} </div>
+ </div>`).join('');
+}
+function openLesson(n){
+ activeLesson=LESSONS.find(x=>x.lesson===n); if(!activeLesson)return;
+ lessonList.classList.add('hidden');lessonDetail.classList.remove('hidden');
+ lessonTitle.textContent=`Lesson ${activeLesson.lesson}　${activeLesson.title}`;
+ lessonMeta.textContent=`印刷 p.${activeLesson.print_start}〜${activeLesson.print_end} / Dialogue DL ${activeLesson.dialogue_track} / Words DL ${activeLesson.words_track}`; lessonSummary.classList.add('hidden');
+ if(activeLesson.structured){
+   const s=activeLesson.structured;
+   lessonDialogue.innerHTML=`<div class="answer"><b>${s.scene}</b></div>`+s.dialogue.map(x=>`
+   <div class="answer"><div class="small">${x.speaker}</div><div class="thai">${x.th}</div><div class="roman">${x.roman}</div><div class="kana">${x.jp}</div></div>`).join(''); const phraseCount=(DATA.phrases||[]).filter(x=>x.lesson===`Lesson ${activeLesson.lesson}`).length; const compCount=(DATA.compositions||[]).filter(x=>x.lesson===`Lesson ${activeLesson.lesson}`).length; lessonSummary.classList.remove('hidden'); lessonSummary.innerHTML=`<b>このLessonで練習できる項目</b><div class="small">発音・会話文 ${phraseCount}件 / 作文 ${compCount}件 / 発音記号つき</div>`;
+ }else{
+   lessonDialogue.innerHTML=`<div class="answer"><b>本文は画像から学習できます</b><div class="small">このLessonの会話・単語・文法データは順次構造化中です。音声と本文画像はすでに利用できます。</div></div>`;
+ }
+}
+function openLessonPractice(mode){
+ if(!activeLesson)return;
+ openMode(mode);
+ const id=mode+'LessonFilter', el=document.getElementById(id);
+ if(el){el.value=`Lesson ${activeLesson.lesson}`; if(mode==='pron')showPron(); if(mode==='comp')showComp(); if(mode==='word')showWord();}
+}
+function closeLesson(){lessonDetail.classList.add('hidden');lessonList.classList.remove('hidden')}
+function playLessonAudio(kind){
+ if(!activeLesson)return; const t=kind==='dialogue'?activeLesson.dialogue_track:activeLesson.words_track;
+ playAssetAudio(`audio/${String(t).padStart(2,'0')}.mp3`);
+}
+function openLessonPage(){
+ if(!activeLesson)return;
+ pageNo=Math.max(1,activeLesson.capture_start-6+1); // capture file page-029 => displayed capture #23 under legacy manifest
+ // safer direct lookup by legacy stored page number:
+ const idx=PAGES.findIndex(x=>x.page===activeLesson.capture_start);
+ pageNo=idx>=0?idx+1:1;
+ tab('pages');renderPage();
+}
+
+function renderBooks(){bookList.innerHTML=DATA.materials.map(b=>`<div class="answer"><b>${b.title}</b><div>${b.description}</div><div class="small">${b.lessons.length}セクション</div></div>`).join('')}
+function exportData(){const blob=new Blob([JSON.stringify({records:getRec()},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='thai_training_backup.json';a.click()}
+function restoreData(){const f=restoreFile.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);localStorage.setItem(KEY,JSON.stringify(x.records||x));updateHome();alert('読み込みました')}catch(e){alert('読み込み失敗')}};r.readAsText(f)}
+function bindCanvas(c,clearName){const ctx=c.getContext('2d');let draw=false,last=null;function size(){const r=c.getBoundingClientRect(),d=devicePixelRatio;c.width=r.width*d;c.height=r.height*d;ctx.setTransform(d,0,0,d,0,0);ctx.lineWidth=5;ctx.lineCap='round';ctx.strokeStyle='#17302d'}size();window.addEventListener('resize',size);function p(e){const r=c.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}c.onpointerdown=e=>{draw=true;last=p(e);c.setPointerCapture(e.pointerId)};c.onpointermove=e=>{if(!draw)return;const q=p(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(q.x,q.y);ctx.stroke();last=q};c.onpointerup=()=>draw=false;window[clearName]=()=>ctx.clearRect(0,0,c.width,c.height)}
+function setupCanvas(){bindCanvas(cv,'clearCv');bindCanvas(letterCv,'clearLetterCv')}
+
+const DB_NAME='thai_training_materials_v1', DB_VERSION=1;
+let MATERIAL_READY=false, MATERIAL_META=null, ASSET_URLS=new Map();
+function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{const db=r.result;if(!db.objectStoreNames.contains('assets'))db.createObjectStore('assets');if(!db.objectStoreNames.contains('meta'))db.createObjectStore('meta')};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function dbPut(store,key,val){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(val,key);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
+async function dbGet(store,key){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly');const r=tx.objectStore(store).get(key);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function dbClear(){const db=await openDB();return Promise.all(['assets','meta'].map(store=>new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})))}
+async function getAssetURL(path){if(ASSET_URLS.has(path))return ASSET_URLS.get(path);const blob=await dbGet('assets',path);if(!blob)return null;const u=URL.createObjectURL(blob);ASSET_URLS.set(path,u);return u}
+async function playAssetAudio(path){try{const u=await getAssetURL(path);if(!u)throw new Error('missing');if(window._materialAudio){window._materialAudio.pause()}window._materialAudio=new Audio(u);await window._materialAudio.play()}catch(e){alert('音声データが見つからないか、再生できません。教材パックを再読み込みしてください。')}}
+function refreshMaterialUI(){const needed=document.getElementById('materialNeeded'),status=document.getElementById('materialStatus');if(needed)needed.classList.toggle('hidden',MATERIAL_READY);if(status)status.innerHTML=MATERIAL_READY?`<b>✅ 読み込み済み</b><div>${MATERIAL_META?.title||'教材'} / ${MATERIAL_META?.pack_version||''}</div><div class="small">画像・音声・学習データはこの端末内だけに保存されています。</div>`:'<b>未読み込み</b><div class="small">専用教材パックZIPを選んでください。</div>'}
+async function importMaterialPack(file){if(!file)return;const prog=document.getElementById('importProgress'),bar=document.getElementById('importBar');try{prog.textContent='ZIPを開いています…';bar.style.width='2%';const zip=await JSZip.loadAsync(file);const pkg=JSON.parse(await zip.file('package.json').async('string'));if(pkg.format!=='thai-training-material-pack')throw new Error('このZIPは教材パックではありません');const data=JSON.parse(await zip.file(pkg.data_file||'data.json').async('string'));const lessons=JSON.parse(await zip.file(pkg.lessons_file||'lessons.json').async('string'));const pages=JSON.parse(await zip.file(pkg.pages_file||'pages.json').async('string'));await dbClear();await dbPut('meta','package',pkg);await dbPut('meta','data',data);await dbPut('meta','lessons',lessons);await dbPut('meta','pages',pages);const files=Object.keys(zip.files).filter(n=>!zip.files[n].dir&&(n.startsWith('audio/')||n.startsWith('pages/')));let done=0;for(const name of files){const blob=await zip.file(name).async('blob');await dbPut('assets',name,blob);done++;if(done%3===0||done===files.length){const pct=Math.round(done/files.length*95)+5;bar.style.width=Math.min(100,pct)+'%';prog.textContent=`教材データを保存中… ${done}/${files.length}`;await new Promise(r=>setTimeout(r,0));}}bar.style.width='100%';prog.textContent='読み込み完了';await loadMaterialFromDB();alert('教材データを端末に保存しました。次回から読み込み不要です。')}catch(e){console.error(e);prog.textContent='読み込みに失敗しました';bar.style.width='0%';alert('教材パックを読み込めませんでした：'+e.message)}}
+async function loadMaterialFromDB(){const pkg=await dbGet('meta','package');if(!pkg){MATERIAL_READY=false;MATERIAL_META=null;refreshMaterialUI();return false}DATA=await dbGet('meta','data');LESSONS=await dbGet('meta','lessons')||[];PAGES=await dbGet('meta','pages')||[];MATERIAL_META=pkg;MATERIAL_READY=!!DATA;refreshMaterialUI();if(MATERIAL_READY){fillLessonFilters();updateHome();renderBooks();showLetterPage();renderPage();renderLessons()}return MATERIAL_READY}
+async function deleteMaterialPack(){if(!confirm('この端末内の教材画像・音声・Lessonデータを削除しますか？ 学習履歴は残ります。'))return;ASSET_URLS.forEach(u=>URL.revokeObjectURL(u));ASSET_URLS.clear();await dbClear();DATA=null;LESSONS=[];PAGES=[];MATERIAL_READY=false;MATERIAL_META=null;refreshMaterialUI();alert('教材データを削除しました。')}
+async function bootApp(){try{setupCanvas();updateHome();await loadMaterialFromDB()}catch(e){console.error(e);refreshMaterialUI()}}
+
+bootApp();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script></body></html>
