@@ -1,11 +1,11 @@
-タイ語トレーニング 公開版 v1.14
+タイ語トレーニング 公開版 v1.15
 
-重要修正：
-- 教材パックv6で sentences[].th が欠落していた不具合に対応
-- 教材パックv7では153/153文のタイ語本文を phrases と再同期
-- タイ語 / ローマ字 / 日本語 / sentence audio の存在を事前検証
-- 不完全な教材パックはIndexedDBを消す前に読込拒否
-- 単語・チャンク画面でもThai本文欠落時に発音記号だけを表示せずエラーを明示
+重要修正：PWA更新キャッシュ
+- v1.14のsw.jsが誤って v1.13 のキャッシュ名を使用していた問題を修正
+- Service Workerキャッシュ名を thai-training-public-v1-15 に更新
+- Service Worker登録時 updateViaCache:'none' を指定
+- 起動時に reg.update() を実行して更新確認を強化
 
-教材：
-new_express_private_pack_v7.zip を読み込んでください。
+教材パック：
+new_express_private_pack_v7.zip を引き続き使用。
+教材パックの再読込は不要です。
