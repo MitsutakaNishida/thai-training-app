@@ -1,11 +1,9 @@
-タイ語トレーニング 公開版 v1.15
+タイ語トレーニング 公開版 v1.16
 
-重要修正：PWA更新キャッシュ
-- v1.14のsw.jsが誤って v1.13 のキャッシュ名を使用していた問題を修正
-- Service Workerキャッシュ名を thai-training-public-v1-15 に更新
-- Service Worker登録時 updateViaCache:'none' を指定
-- 起動時に reg.update() を実行して更新確認を強化
+解説強化:
+- Sentenceごとに主要動詞・重要語・文法語・疑問表現・丁寧語を表示
+- 品詞タグを追加
+- 文法・構文ポイントをSentence単位で表示
+- 教材既存のタイ語/日本語/ローマ字/音声IDは変更なし
 
-教材パック：
-new_express_private_pack_v7.zip を引き続き使用。
-教材パックの再読込は不要です。
+教材パック: new_express_private_pack_v8.zip
