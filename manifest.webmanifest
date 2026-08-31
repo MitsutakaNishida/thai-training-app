@@ -1,10 +1,10 @@
 {
   "name": "タイ語トレーニング",
-  "short_name": "タイ語練習",
+  "short_name": "Thai Training",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f4faf9",
-  "theme_color": "#0d9488",
+  "background_color": "#eef8f5",
+  "theme_color": "#0b7f74",
   "icons": [
     {
       "src": "icon-192.png",
