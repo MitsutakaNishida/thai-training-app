@@ -169,13 +169,15 @@ body.reviewActive .reviewHide{display:none!important}
 .classBadge{display:inline-block;padding:4px 8px;border-radius:999px;background:#fff4cf;color:#725600;font-size:12px;font-weight:800;margin-top:5px}
 @media(max-width:390px){.classSwitch button{font-size:12px;padding:9px 3px}.glyphSample .sampleChar{font-size:42px}}
 
+.soundFilter{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;background:#edf6f4;padding:5px;border-radius:16px;margin:10px 0}.soundFilter button{min-width:0;padding:10px 4px;background:transparent;color:#08736b;font-size:13px}.soundFilter button.active{background:linear-gradient(135deg,var(--main),var(--main2));color:#fff}.soundPrompt{font-size:82px;line-height:1.15;text-align:center;margin:18px 0 12px;font-weight:800}.soundAnswerBox{margin-top:10px}.soundHint{padding:9px 11px;border-radius:13px;background:#f4faf8;color:var(--muted);font-size:12px}.soundMeta{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}.soundMeta>div{padding:9px 10px;border:1px solid var(--line);border-radius:13px;background:#fbfefd}.vowelAudioNote{margin-top:8px;padding:9px 10px;border-radius:13px;background:#fff9e8;font-size:12px;color:#6a5520}@media(max-width:390px){.soundPrompt{font-size:72px}.soundFilter button{font-size:12px;padding:9px 2px}.soundMeta{grid-template-columns:1fr}}
+
 </style>
 <script src="jszip.min.js"></script>
 </head><body><div class="wrap">
 <div class="appHero">
 <img src="icon-192.png" alt="タイ語トレーニング">
 <div class="heroText">
-<h1>タイ語トレーニング <span class="small">v1.24</span></h1>
+<h1>タイ語トレーニング <span class="small">v1.25</span></h1>
 <p class="sub">読む・書く・聞く・話すを、1つのアプリで。</p>
 <span class="heroBadge">🇹🇭 Thai Study</span>
 </div>
@@ -202,7 +204,7 @@ body.reviewActive .reviewHide{display:none!important}
 <div class="card"><div class="title">今日の学習</div>
 <div class="stats"><div class="stat"><span class="small">総回答</span><b id="totalAttempts">0</b></div><div class="stat"><span class="small">ミス</span><b id="totalWrong">0</b></div><div class="stat"><span class="small">正答率</span><b id="accuracy">—</b></div><div class="stat"><span class="small">要復習</span><b id="weakCount">0</b></div></div>
 <div class="grid2" style="margin-top:12px"><button class="main" onclick="startWeak()">苦手から復習</button><button class="soft" onclick="tab('study')">自由に練習</button></div></div>
-<div class="card"><div class="title">教材の状態</div><div class="small">教材パックv9：全157枚を教材DB化 / 子音44字 / 母音・数字・声調 / Lesson 1〜20</div><div id="appStatus" class="answer">v1.24 チャンク・音声整合性修正</div></div>
+<div class="card"><div class="title">教材の状態</div><div class="small">教材パックv11：全157枚を教材DB化 / 子音44字 / 母音・数字・声調 / Lesson 1〜20</div><div id="appStatus" class="answer">v1.25 文字→発音・弱点優先トレーニング</div></div>
 <div class="card"><div class="title">今日なにする？</div><div class="small" style="margin-bottom:10px">気分に合わせて練習を選ぶ</div><div class="grid2">
 <button class="soft" onclick="tab('letters')">✍️ タイ文字</button><button class="soft" onclick="openMode('word')">🔤 単語・チャンク</button>
 <button class="soft" onclick="openMode('pron')">🎤 発音</button><button class="soft" onclick="openMode('comp')">📝 タイ作文</button>
@@ -239,6 +241,7 @@ body.reviewActive .reviewHide{display:none!important}
 </div>
 <div class="small reviewHide" style="margin-top:-2px">Web字体は代表的なループなし字体。実際のサイトではフォントごとに字形が少し変わります。</div>
 <div class="toggleRow"><span class="small">発音記号は常時表示</span><button class="switchBtn" onclick="toggleKana()">カタカナ補助 ON/OFF</button></div>
+<div id="vowelAudioNote" class="vowelAudioNote hidden">🔊 母音は記号単独ではなく、อ を母音の台にした例音を再生します。再生する例は正解表示後に確認できます。</div>
 <div id="letterPageChar" class="bigthai">？</div>
 <div style="text-align:center">
 <div id="letterPageName" style="font-size:21px;font-weight:900"></div>
@@ -265,11 +268,24 @@ body.reviewActive .reviewHide{display:none!important}
 </section>
 
 <section id="studyTab" class="hidden">
-<div class="card reviewHide"><div class="title">モード</div><div class="grid2"><button class="soft" onclick="openMode('letter')">文字</button><button class="soft" onclick="openMode('word')">単語・チャンク</button><button class="soft" onclick="openMode('pron')">発音</button><button class="soft" onclick="openMode('comp')">タイ作文</button></div></div>
+<div class="card reviewHide"><div class="title">モード</div><div class="grid2"><button class="soft" onclick="openMode('letter')">文字</button><button class="soft" onclick="openMode('sound')">🔡 文字→発音</button><button class="soft" onclick="openMode('word')">単語・チャンク</button><button class="soft" onclick="openMode('pron')">発音</button><button class="soft" onclick="openMode('comp')">タイ作文</button></div></div>
 
 <div id="letterMode" class="card hidden"><div class="title">タイ文字・書き取り</div><div id="letterChar" class="bigthai">ก</div><div style="text-align:center"><b id="letterName"></b><div id="letterRoman" class="roman"></div><div id="letterKana" class="kana"></div><div id="letterWord" class="thai"></div><div id="letterJP"></div></div>
 <div style="position:relative;margin:12px 0"><canvas id="cv"></canvas><div id="ghost" class="bigthai" style="position:absolute;inset:65px 0 auto;opacity:.12;pointer-events:none">ก</div></div>
 <div class="grid3"><button class="soft" onclick="clearCv()">消す</button><button class="soft" onclick="letterSound()">🔊</button><button class="warn" onclick="revealSmallLetterAnswer()">正解表示</button></div><div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradeCurrent(false)">不正解</button><button class="good" onclick="gradeCurrent(true)">正解</button></div><div id="itemMiniStats" class="answer"></div></div>
+
+<div id="soundMode" class="card hidden"><div class="title">文字 → 発音</div><div class="small">タイ文字を見て、教材の発音記号・ローマ字を入力。文字練習で苦手な文字ほど優先して出題できます。</div>
+<div class="soundFilter reviewHide"><button id="soundConsonantBtn" class="active" onclick="setSoundCategory('consonants')">子音</button><button id="soundVowelBtn" onclick="setSoundCategory('vowels')">母音</button><button id="soundMixedBtn" onclick="setSoundCategory('mixed')">混合</button></div>
+<div id="soundClassRow" class="classSwitch reviewHide" style="grid-template-columns:repeat(5,minmax(0,1fr))"><button id="soundClassMidHighBtn" class="active" onclick="setSoundClassFilter('midhigh')">中＋高</button><button id="soundClassMidBtn" onclick="setSoundClassFilter('mid')">中</button><button id="soundClassHighBtn" onclick="setSoundClassFilter('high')">高</button><button id="soundClassLowBtn" onclick="setSoundClassFilter('low')">低</button><button id="soundClassAllBtn" onclick="setSoundClassFilter('all')">全部</button></div>
+<div class="modeSwitch reviewHide" style="margin-top:10px"><button id="soundAdaptiveBtn" class="active" onclick="setSoundOrder('adaptive')">🎯 弱点優先</button><button id="soundRandomBtn" onclick="setSoundOrder('random')">🔀 完全ランダム</button></div>
+<div id="soundPrompt" class="soundPrompt thaiGlyphLooped">ก</div>
+<div id="soundQuestionMeta" class="small" style="text-align:center"></div>
+<div class="inputRow"><input id="soundInput" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="例：k / kh / ng / o / oo"><button class="main" onclick="checkSoundAnswer(false)">判定</button></div>
+<div class="grid2" style="margin-top:8px"><button class="bad" onclick="checkSoundAnswer(true)">わからない</button><button class="soft" onclick="playSoundExample()">🔊 例音</button></div>
+<div id="soundResult" class="answer hidden soundAnswerBox"></div>
+<button id="soundNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="nextSoundQuestion()">次の問題 →</button>
+<div id="soundStats" class="answer"></div>
+<div class="soundHint">入力は教材表記が基準です。ŋ→ng、ʉ→ue、ɛ→ae、ɔ→aw、ə→oe などの簡易入力も正解にします。</div></div>
 
 <div id="wordMode" class="card hidden"><div class="title">単語・チャンク</div><div class="small">日本語を見てタイ語を答える</div>
 <div class="grid2 reviewHide" style="margin-top:10px">
@@ -292,7 +308,7 @@ body.reviewActive .reviewHide{display:none!important}
 <section id="recordTab" class="hidden"><div class="card"><div class="title">成績・復習</div>
 <div class="small">間違えた内容を確認して、その場で再練習できます。</div>
 <div class="recordFilterChips" style="margin-top:10px"><button id="rfAll" class="active" onclick="setRecordPrimary('all')">すべて</button><button id="rfWeak" onclick="setRecordPrimary('weak')">苦手</button><button id="rfMiss" onclick="setRecordPrimary('miss')">ミスあり</button><button id="rfRecent" onclick="setRecordPrimary('recent')">最近間違えた</button></div>
-<div class="recordFilterGrid"><select id="recordLessonFilter" onchange="renderRecord()"><option value="all">全Lesson</option></select><select id="recordTypeFilter" onchange="renderRecord()"><option value="all">全種類</option><option value="word">単語・フレーズ</option><option value="chunk">チャンク</option><option value="composition">タイ作文</option><option value="pron">発音</option><option value="foundation">文字・基礎</option></select></div>
+<div class="recordFilterGrid"><select id="recordLessonFilter" onchange="renderRecord()"><option value="all">全Lesson</option></select><select id="recordTypeFilter" onchange="renderRecord()"><option value="all">全種類</option><option value="word">単語・フレーズ</option><option value="chunk">チャンク</option><option value="composition">タイ作文</option><option value="pron">発音</option><option value="foundation">文字・基礎</option><option value="sound">文字→発音</option></select></div>
 <div id="recordList"></div></div></section>
 
 <section id="audioTab" class="hidden"><div class="card"><div class="title">教材音声 83本</div><input id="audioSearch" placeholder="Lesson 3 / Pronunciation など" oninput="renderAudio()"><div id="audioList"></div></div></section>
@@ -392,6 +408,10 @@ const THAI_CONSONANT_CLASSES={
 };
 
 let foundationDeck=[],foundationDeckPos=0,foundationDeckKey='';
+let soundCategory=localStorage.getItem('thai_sound_category_v1')||'consonants';
+let soundClassFilter=localStorage.getItem('thai_sound_class_filter_v1')||'midhigh';
+let soundOrderMode=localStorage.getItem('thai_sound_order_v1')||'adaptive';
+let soundCurrentItem=null,soundLastId='',soundForcedItem=null;
 let wordOrderMode=localStorage.getItem('thai_word_order_v1')||'sequential';
 let wordDeck=[],wordDeckPos=0,wordDeckKey='';
 let wordAnswerMode=localStorage.getItem('thai_word_answer_mode_v1')||'choice';
@@ -590,7 +610,7 @@ async function playLearningAudio(item=currentItem){
 }
 function renderExplanation(item){const s=sentenceForItem(item)||item,ex=item?.explanation||s?.explanation;if(!ex)return'';const vocab=(ex.vocabulary||[]).map(v=>`<div class="explainRow"><div class="explainThai">${escapeHtml(v.thai||'')} ${v.pos?`<span class="posTag">${escapeHtml(v.pos)}</span>`:''}</div>${v.roman?`<div class="explainRoman">${escapeHtml(v.roman)}</div>`:''}<div class="explainJP">${escapeHtml(v.japanese||'')}</div>${v.note?`<div class="explainNote">${escapeHtml(v.note)}</div>`:''}</div>`).join('');const grammar=(ex.grammar||[]).map(g=>`<div class="grammarRow">・${escapeHtml(g)}</div>`).join('');return `<div class="explainBox"><div class="explainTitle">📘 語句・フレーズ解説</div>${vocab}${grammar?`<div class="pointBox"><b>💡 文法・構文ポイント</b>${grammar}</div>`:''}${ex.note?`<div class="small" style="margin-top:9px">${escapeHtml(ex.note)}</div>`:''}</div>`}
 function resultAudioHtml(item){const s=sentenceForItem(item)||item;if(s?.audio_file)return `<button class="soft learningAudioBtn" onclick="playLearningAudio(currentItem)">🔊 教材音声</button>`;if(s?.th||item?.th)return `<button class="soft learningAudioBtn" onclick="playLearningAudio(currentItem)">🔊 読み上げ</button>`;return ''}
-function typeLabel(t){return ({word:'単語',phrase:'例文',chunk:'チャンク',composition:'タイ作文','thai-writing':'タイ作文',pron:'発音',letter:'文字',foundation:'文字・基礎'}[t]||t||'学習')}
+function typeLabel(t){return ({word:'単語',phrase:'例文',chunk:'チャンク',composition:'タイ作文','thai-writing':'タイ作文',pron:'発音',letter:'文字',foundation:'文字・基礎',sound:'文字→発音'}[t]||t||'学習')}
 function directChunkById(id){
  const c=buildChunkItems().find(x=>x.id===id);
  return c||null;
@@ -616,6 +636,10 @@ function allFoundationItems(){
 }
 function resolveStudyItem(id){
  if(!DATA)return {id,title:'学習項目',subtitle:'',type:'',lesson:null,item:null};
+ if(id.startsWith('sound:')){
+   const base=id.slice(6),f=allFoundationItems().find(x=>x.id===base);
+   return f?{id,title:f.ch||f.symbol||base,subtitle:`${f.roman||''} ${f.kana||''}`.trim(),type:'sound',lesson:null,item:f}:null;
+ }
  if(id.startsWith('pron:')){
    const s=sentenceById(id.slice(5));
    return s?{id,title:s.th,subtitle:s.jp||s.japanese||'',type:'pron',lesson:s.lesson_number||lessonNumberOf(s),item:s}:null;
@@ -670,8 +694,8 @@ function tab(t,fromReview=false){
  if(t==='letters'){showLetterPage();resizeDrawingCanvases();}
  if(t==='record')renderRecord();if(t==='audio')renderAudio();if(t==='lessons')renderLessons();if(t==='pages')renderPage();if(t==='books')renderBooks();
 }
-function hideModes(){['letter','word','pron','comp'].forEach(x=>document.getElementById(x+'Mode').classList.add('hidden'))}
-function openMode(m){tab('study');hideModes();currentMode=m;document.getElementById(m+'Mode').classList.remove('hidden');if(m==='letter'){showLetter();resizeDrawingCanvases();}if(m==='word')showWord();if(m==='pron')showPron();if(m==='comp')showComp()}
+function hideModes(){['letter','sound','word','pron','comp'].forEach(x=>document.getElementById(x+'Mode').classList.add('hidden'))}
+function openMode(m){tab('study');hideModes();currentMode=m;document.getElementById(m+'Mode').classList.remove('hidden');if(m==='letter'){showLetter();resizeDrawingCanvases();}if(m==='sound')showSoundQuestion();if(m==='word')showWord();if(m==='pron')showPron();if(m==='comp')showComp()}
 function normalizeThai(s){return(s||'').trim().replace(/[\s\u200bๆฯ,.!?'"“”\-]/g,'')}
 function lev(a,b){a=normalizeThai(a);b=normalizeThai(b);const m=a.length,n=b.length,d=Array.from({length:m+1},()=>Array(n+1).fill(0));for(let i=0;i<=m;i++)d[i][0]=i;for(let j=0;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return {dist:d[m][n],score:Math.max(0,Math.round((1-d[m][n]/Math.max(1,m,n))*100))}}
 function mini(id){const s=stat(id),a=s.attempts?Math.round(s.correct/s.attempts*100):0;return `累計 ${s.attempts}回 / 正解 ${s.correct} / ミス ${s.wrong} / 正答率 ${s.attempts?a+'%':'—'} / 連続正解 ${s.streak}`}
@@ -683,20 +707,20 @@ function thaiLetterSpokenName(x){return `${x.ch}อ ${x.word}`}
 function speakThai(text,rate=.72){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=rate;speechSynthesis.speak(u)}
 
 const VOWEL_SPEAK_EXAMPLE={
- 'v-a-short':'กะ','v-a-long':'กา',
- 'v-i-short':'กิ','v-i-long':'กี',
- 'v-ue-short':'กึ','v-ue-long':'กือ',
- 'v-u-short':'กุ','v-u-long':'กู',
- 'v-e-short':'เกะ','v-e-long':'เก',
- 'v-ae-short':'แกะ','v-ae-long':'แก',
- 'v-o-short':'โกะ','v-o-long':'โก',
- 'v-aw-short':'เกาะ','v-aw-long':'กอ',
- 'v-oe-short':'เกอะ','v-oe-long':'เกอ',
- 'v-ia-short':'เกียะ','v-ia-long':'เกีย',
- 'v-uea-short':'เกือะ','v-uea-long':'เกือ',
- 'v-ua-short':'กัวะ','v-ua-long':'กัว',
- 'v-ai-maimuan':'ใจ','v-ai-maimalai':'ไก่',
- 'v-ao':'เกา','v-am':'กำ'
+ 'v-a-short':'อะ','v-a-long':'อา',
+ 'v-i-short':'อิ','v-i-long':'อี',
+ 'v-ue-short':'อึ','v-ue-long':'อือ',
+ 'v-u-short':'อุ','v-u-long':'อู',
+ 'v-e-short':'เอะ','v-e-long':'เอ',
+ 'v-ae-short':'แอะ','v-ae-long':'แอ',
+ 'v-o-short':'โอะ','v-o-long':'โอ',
+ 'v-aw-short':'เอาะ','v-aw-long':'ออ',
+ 'v-oe-short':'เออะ','v-oe-long':'เออ',
+ 'v-ia-short':'เอียะ','v-ia-long':'เอีย',
+ 'v-uea-short':'เอือะ','v-uea-long':'เอือ',
+ 'v-ua-short':'อัวะ','v-ua-long':'อัว',
+ 'v-ai-maimuan':'ใจ','v-ai-maimalai':'ไอ',
+ 'v-ao':'เอา','v-am':'อำ'
 };
 function vowelSpeakText(x){return VOWEL_SPEAK_EXAMPLE[x.id]||''}
 
@@ -711,6 +735,80 @@ function showLetter(){
 function revealSmallLetterAnswer(){if(!currentItem)return;letterChar.textContent=currentItem.ch;letterWord.textContent=`${currentItem.word}（${currentItem.jp}）`;letterJP.textContent='';ghost.classList.remove('hidden')}
 function letterSound(){if(currentItem)speakThai(thaiLetterSpokenName(currentItem),.68)}
 function gradeCurrent(ok){register(currentItem.id,ok,'letter',{question:'タイ文字を書き取り',userAnswer:ok?'自己評価：正解':'自己評価：不正解',correctAnswer:currentItem.ch||'',mode:'letter',lesson:null});letterI++;showLetter()}
+
+function soundPool(){
+ if(!DATA)return[];
+ const consonants=(DATA.letters||[]).map(x=>({...x,_kind:'consonant',display:x.ch})).filter(x=>{
+   const c=consonantClassOf(x);
+   return soundClassFilter==='all'||c===soundClassFilter||(soundClassFilter==='midhigh'&&(c==='mid'||c==='high'));
+ });
+ const vowels=(DATA.vowels||[]).map(x=>({...x,_kind:'vowel',display:x.symbol,name:'母音 '+(x.roman||''),jp:x.kana||'',ch:x.symbol}));
+ if(soundCategory==='vowels')return vowels;
+ if(soundCategory==='mixed')return [...consonants,...vowels];
+ return consonants;
+}
+function setSoundCategory(v){
+ if(!['consonants','vowels','mixed'].includes(v))v='consonants';soundCategory=v;localStorage.setItem('thai_sound_category_v1',v);soundForcedItem=null;soundLastId='';updateSoundUI();showSoundQuestion();
+}
+function setSoundClassFilter(v){
+ if(!['midhigh','mid','high','low','all'].includes(v))v='midhigh';soundClassFilter=v;localStorage.setItem('thai_sound_class_filter_v1',v);soundForcedItem=null;soundLastId='';updateSoundUI();showSoundQuestion();
+}
+function setSoundOrder(v){soundOrderMode=v==='random'?'random':'adaptive';localStorage.setItem('thai_sound_order_v1',soundOrderMode);updateSoundUI();showSoundQuestion()}
+function updateSoundUI(){
+ const cats={consonants:'soundConsonantBtn',vowels:'soundVowelBtn',mixed:'soundMixedBtn'};Object.entries(cats).forEach(([k,id])=>{const b=document.getElementById(id);if(b)b.classList.toggle('active',soundCategory===k)});
+ const cls={midhigh:'soundClassMidHighBtn',mid:'soundClassMidBtn',high:'soundClassHighBtn',low:'soundClassLowBtn',all:'soundClassAllBtn'};Object.entries(cls).forEach(([k,id])=>{const b=document.getElementById(id);if(b)b.classList.toggle('active',soundClassFilter===k)});
+ if(window.soundClassRow)soundClassRow.classList.toggle('hidden',soundCategory==='vowels');
+ if(window.soundAdaptiveBtn){soundAdaptiveBtn.classList.toggle('active',soundOrderMode==='adaptive');soundRandomBtn.classList.toggle('active',soundOrderMode==='random')}
+}
+function lastWrongBonus(rec){const h=Array.isArray(rec?.history)?rec.history:[];const z=[...h].reverse().find(x=>x&&typeof x.isCorrect==='boolean');return z&&!z.isCorrect?2:0}
+function soundWeight(item){
+ const base=stat(item.id),skill=stat('sound:'+item.id),a=base.attempts?base.correct/base.attempts:null,sa=skill.attempts?skill.correct/skill.attempts:null;
+ let w=1;
+ if(base.attempts===0)w+=2;else if(a<.5)w+=6;else if(a<.7)w+=4;else if(a<.85)w+=2;
+ if((base.wrong||0)>0&&(base.streak||0)<3)w+=3;
+ if(skill.attempts===0)w+=1;else if(sa<.5)w+=4;else if(sa<.75)w+=2;
+ w+=lastWrongBonus(base)+lastWrongBonus(skill);
+ return Math.max(1,w);
+}
+function weightedSoundPick(pool){
+ const candidates=pool.length>1?pool.filter(x=>x.id!==soundLastId):pool;if(!candidates.length)return pool[0]||null;
+ if(soundOrderMode==='random')return candidates[Math.floor(Math.random()*candidates.length)];
+ const weights=candidates.map(soundWeight),total=weights.reduce((a,b)=>a+b,0);let r=Math.random()*total;
+ for(let i=0;i<candidates.length;i++){r-=weights[i];if(r<=0)return candidates[i]}return candidates[candidates.length-1];
+}
+const ROMAN_ALIASES={
+ 'ŋ':['ng'],'ʉ':['ue','ɯ'],'ʉʉ':['uee','ɯɯ','ɯ:','ɯː'],'ɛ':['ae'],'ɛɛ':['aae','aee','ae:','aeː'],'ɔ':['aw'],'ɔɔ':['aaw','aww','aw:','awː'],'ə':['oe'],'əə':['oee','oe:','oeː']
+};
+function normalizeRoman(v){return String(v||'').trim().toLowerCase().replace(/\s+/g,'').replace(/[\/\[\]]/g,'').replace(/ː/g,':')}
+function acceptedRoman(item){
+ const raw=String(item?.roman||item?.initial||'').trim(),out=[raw];
+ (ROMAN_ALIASES[raw]||[]).forEach(x=>out.push(x));
+ if(raw.includes('ŋ'))out.push(raw.replaceAll('ŋ','ng'));
+ if(raw.includes('ʉ'))out.push(raw.replaceAll('ʉ','ue'));
+ if(raw.includes('ɛ'))out.push(raw.replaceAll('ɛ','ae'));
+ if(raw.includes('ɔ'))out.push(raw.replaceAll('ɔ','aw'));
+ if(raw.includes('ə'))out.push(raw.replaceAll('ə','oe'));
+ return [...new Set(out.map(normalizeRoman).filter(Boolean))];
+}
+function asciiRomanHint(item){const raw=String(item?.roman||'');const a=(ROMAN_ALIASES[raw]||[])[0]||raw.replaceAll('ŋ','ng').replaceAll('ʉ','ue').replaceAll('ɛ','ae').replaceAll('ɔ','aw').replaceAll('ə','oe');return a!==raw?a:''}
+function soundExampleText(item){if(!item)return'';if(item._kind==='vowel')return vowelSpeakText(item);return thaiLetterSpokenName(item)}
+function renderSoundItem(item,label=''){
+ soundCurrentItem=item;currentItem=item;soundLastId=item?.id||soundLastId;if(!item)return;
+ soundPrompt.textContent=item.ch||item.symbol||'—';soundPrompt.classList.toggle('thaiGlyphModern',thaiGlyphStyle==='modern');soundPrompt.classList.toggle('thaiGlyphLooped',thaiGlyphStyle!=='modern');
+ const kind=item._kind==='vowel'?'母音':consonantClassLabel(item);soundQuestionMeta.textContent=`${label?label+' / ':''}${kind}`;
+ soundInput.value='';soundInput.disabled=false;soundResult.classList.add('hidden');soundNextBtn.classList.add('hidden');soundStats.innerHTML=`文字練習：${mini(item.id)}<br>文字→発音：${mini('sound:'+item.id)}`;setTimeout(()=>soundInput?.focus(),30);
+}
+function showSoundQuestion(){updateSoundUI();const pool=soundPool();if(!pool.length){if(window.soundQuestionMeta)soundQuestionMeta.textContent='対象なし';return}const item=soundForcedItem||weightedSoundPick(pool);soundForcedItem=null;renderSoundItem(item,soundOrderMode==='adaptive'?'🎯 弱点優先':'🔀 ランダム')}
+function checkSoundAnswer(forceWrong=false){
+ if(!soundCurrentItem||!window.soundInput)return;const user=soundInput.value,accepted=acceptedRoman(soundCurrentItem),ok=!forceWrong&&accepted.includes(normalizeRoman(user)),expected=String(soundCurrentItem.roman||soundCurrentItem.initial||'');
+ register('sound:'+soundCurrentItem.id,ok,'sound',{question:(soundCurrentItem.ch||soundCurrentItem.symbol||'')+' → 発音',userAnswer:forceWrong?'わからない':user,correctAnswer:expected,mode:'sound',lesson:null});
+ const alias=asciiRomanHint(soundCurrentItem),ex=soundExampleText(soundCurrentItem),cls=soundCurrentItem._kind==='consonant'?consonantClassLabel(soundCurrentItem):'母音';
+ soundInput.disabled=true;soundResult.classList.remove('hidden');soundResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}</b><div class="roman" style="font-size:24px;margin-top:6px">${escapeHtml(expected)}</div>${alias?`<div class="small">簡易入力：${escapeHtml(alias)}</div>`:''}<div class="kana">${escapeHtml(soundCurrentItem.kana||'')}</div><div class="soundMeta"><div><span class="small">種類</span><br><b>${escapeHtml(cls)}</b></div><div><span class="small">例音</span><br><b class="thai">${escapeHtml(ex||'—')}</b></div></div>${soundCurrentItem._kind==='consonant'?`<div class="small" style="margin-top:8px">代表語：${escapeHtml(soundCurrentItem.word||'')}（${escapeHtml(soundCurrentItem.jp||'')}）</div>`:'<div class="small" style="margin-top:8px">母音の音声は อ を母音の台にした例音です。記号単独の読み上げではありません。</div>'}`;
+ soundNextBtn.classList.remove('hidden');soundStats.innerHTML=`文字練習：${mini(soundCurrentItem.id)}<br>文字→発音：${mini('sound:'+soundCurrentItem.id)}`;
+}
+function nextSoundQuestion(){if(reviewQueueActive){reviewQueueNext();return}showSoundQuestion()}
+function playSoundExample(){if(!soundCurrentItem)return;const t=soundExampleText(soundCurrentItem);if(t)speakThai(t,.68)}
+
 function buildChunkItems(){
  const out=[],referenced=new Set();
  const master=new Map((DATA?.chunks||[]).map(c=>[String(c.th||c.text||'').trim(),c]));
@@ -768,7 +866,7 @@ function buildWords(){
  }
  return arr
 }
-function renderWordCurrent(item,all,label=''){currentItem=item;wordPrompt.textContent=currentItem.jp;wordInput.value='';wordResult.classList.add('hidden');wordNextBtn.classList.add('hidden');const pos=wordOrderMode==='random'?(wordDeckPos%Math.max(1,all.length))+1:(wordI%Math.max(1,all.length))+1;const wt=window.wordTypeFilter?.value||'word';const typeTxt=wt==='word'?'付録単語':wt==='chunk'?'チャンク':wt==='phrase'?'例文':'全部';wordCountInfo.textContent=label||`${typeTxt} ${all.length}件 / ${getLessonFilter('word')==='all'?'全範囲':getLessonFilter('word')} / ${wordOrderMode==='random'?'🔀 ランダム':'順番'} ${pos}/${all.length}`;if(window.wordVoiceStatus)wordVoiceStatus.textContent='';setWordAnswerMode(wordAnswerMode);updateOrderButtons()}
+function renderWordCurrent(item,all,label=''){currentItem=item;wordPrompt.textContent=currentItem.jp;wordInput.value='';wordResult.classList.add('hidden');wordNextBtn.classList.add('hidden');const pos=wordOrderMode==='random'?(wordDeckPos%Math.max(1,all.length))+1:(wordI%Math.max(1,all.length))+1;const wt=window.wordTypeFilter?.value||'word';const typeTxt=wt==='word'?'付録単語':wt==='chunk'?'チャンク':wt==='phrase'?'例文':'全部';wordCountInfo.textContent=label||`${typeTxt} ${all.length}件 / ${getLessonFilter('word')==='all'?'全範囲':getLessonFilter('word')} / ${wordOrderMode==='random'?'🔀 ランダム':'順番'} ${pos}/${all.length}`;if(window.wordVoiceStatus)wordVoiceStatus.textContent='';setWordAnswerMode(wordAnswerMode);updateOrderButtons();updateSoundUI()}
 function showWord(){
  const all=lessonFiltered(buildWords(),'word');
  if(!all.length){
@@ -866,6 +964,7 @@ function showLetterPage(){
  const pos=foundationOrderMode==='random'?(foundationDeckPos%list.length)+1:(foundationI%list.length)+1;
  const group=foundationCategory==='consonants'?(consonantClassFilter==='all'?'全44':({mid:'中子音',high:'高子音',low:'低子音'}[consonantClassFilter])):'';
  letterPageStats.innerHTML=`${mini(x.id)}<div class="foundationCount">${group?group+' / ':''}${foundationOrderMode==='random'?'🔀 ランダム':'順番'} ${pos} / ${list.length}</div>`;
+ if(window.vowelAudioNote){vowelAudioNote.classList.toggle('hidden',x._kind!=='vowel');if(x._kind==='vowel'){const ex=vowelSpeakText(x);vowelAudioNote.innerHTML=`🔊 母音記号単独ではなく、<b class="thai">${escapeHtml(ex||'例音')}</b> のように อ を母音の台にした例音を再生します。`;}}
  clearLetterCv();updateOrderButtons();updateConsonantClassUI();applyThaiGlyphStyle();
 }
 function revealLetterAnswer(){const list=foundationList(),x=list[currentFoundationIndex(list)];letterPageChar.textContent=x.ch||x.symbol||x.thai;letterGhost.classList.remove('hidden');letterExample.textContent=x._kind==='consonant'?`${x.word}（${x.jp}）`:foundationSourceLabel(x)}
@@ -892,7 +991,7 @@ function hasRecentWrong(x){const cutoff=Date.now()-7*24*3600*1000;return (x.hist
 function recordPasses(id,x,r){const att=attemptsOf(x),acc=att?(x.correct||0)/att:0;if(recordPrimary==='weak'&&!isWeakRecord(x))return false;if(recordPrimary==='miss'&&!(x.wrong||0))return false;if(recordPrimary==='recent'&&!hasRecentWrong(x))return false;const lf=recordLessonFilter?.value||'all';if(lf!=='all'&&Number(String(lf).replace(/\D/g,''))!==Number(r.lesson))return false;const tf=recordTypeFilter?.value||'all';if(tf!=='all'){if(tf==='word'&&!['word','phrase'].includes(r.type))return false;else if(tf!=='word'&&r.type!==tf)return false;}return true}
 function fmtDate(v){if(!v)return'—';const d=new Date(v);if(Number.isNaN(d.getTime()))return v;return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function renderHistoryEntries(x){const h=Array.isArray(x.history)?[...x.history].reverse():[];if(!h.length)return'<div class="small" style="margin-top:10px">個別回答履歴はv1.24以降の回答から保存されます。これまでの正解数・ミス数はそのまま残っています。</div>';return `<div style="margin-top:12px"><b>▼ 学習履歴</b>${h.map(e=>`<div class="historyEntry ${e.isCorrect?'':'wrong'}"><b>${fmtDate(e.timestamp)}　${e.isCorrect?'✅':'❌'}</b>${e.question?`<div class="historyQA"><div class="historyLabel">問題</div><div class="historyValue">${escapeHtml(e.question)}</div></div>`:''}${e.userAnswer?`<div class="historyQA"><div class="historyLabel">自分の回答</div><div class="historyValue">${escapeHtml(e.userAnswer)}</div></div>`:''}${e.correctAnswer?`<div class="historyQA"><div class="historyLabel">正解</div><div class="historyValue thai" style="font-size:19px">${escapeHtml(e.correctAnswer)}</div></div>`:''}<div class="small" style="margin-top:5px">${escapeHtml(typeLabel(e.mode))}</div></div>`).join('')}</div>`}
-function renderRecord(){const R=getRec(),rows=Object.entries(R).map(([id,x])=>[id,x,resolveStudyItem(id)]).filter(([id,x,r])=>r&&recordPasses(id,x,r)).sort((a,b)=>new Date(b[1].last||0)-new Date(a[1].last||0));recordList.innerHTML=rows.length?rows.map(([id,x,r])=>{const att=attemptsOf(x),a=att?Math.round((x.correct||0)/att*100):0;return `<details class="answer recordCard"><summary><div class="recordTitle">${escapeHtml(r.title)}</div><div class="recordSub">${escapeHtml(r.subtitle||'')}</div><div class="small" style="margin-top:5px">${typeLabel(r.type)}${r.lesson?' / Lesson '+r.lesson:''}</div><div class="recordMeta"><div><span class="small">正解</span><b>${x.correct||0}</b></div><div><span class="small">ミス</span><b>${x.wrong||0}</b></div><div><span class="small">正答率</span><b>${a}%</b></div><div><span class="small">連続正解</span><b>${x.streak||0}</b></div></div><div class="small" style="margin-top:7px">最終学習 ${fmtDate(x.last)}</div><div class="bar"><i style="width:${a}%"></i></div></summary>${renderHistoryEntries(x)}${(['foundation','word','chunk','phrase','composition','pron'].includes(r.type))?`<button class="main" style="width:100%;margin-top:10px" onclick="practiceRecordItem('${encodeURIComponent(id)}')">🔁 この問題を練習</button>`:''}</details>`}).join(''):'<span class="small">条件に合う記録はありません</span>'}
+function renderRecord(){const R=getRec(),rows=Object.entries(R).map(([id,x])=>[id,x,resolveStudyItem(id)]).filter(([id,x,r])=>r&&recordPasses(id,x,r)).sort((a,b)=>new Date(b[1].last||0)-new Date(a[1].last||0));recordList.innerHTML=rows.length?rows.map(([id,x,r])=>{const att=attemptsOf(x),a=att?Math.round((x.correct||0)/att*100):0;return `<details class="answer recordCard"><summary><div class="recordTitle">${escapeHtml(r.title)}</div><div class="recordSub">${escapeHtml(r.subtitle||'')}</div><div class="small" style="margin-top:5px">${typeLabel(r.type)}${r.lesson?' / Lesson '+r.lesson:''}</div><div class="recordMeta"><div><span class="small">正解</span><b>${x.correct||0}</b></div><div><span class="small">ミス</span><b>${x.wrong||0}</b></div><div><span class="small">正答率</span><b>${a}%</b></div><div><span class="small">連続正解</span><b>${x.streak||0}</b></div></div><div class="small" style="margin-top:7px">最終学習 ${fmtDate(x.last)}</div><div class="bar"><i style="width:${a}%"></i></div></summary>${renderHistoryEntries(x)}${(['foundation','sound','word','chunk','phrase','composition','pron'].includes(r.type))?`<button class="main" style="width:100%;margin-top:10px" onclick="practiceRecordItem('${encodeURIComponent(id)}')">🔁 この問題を練習</button>`:''}</details>`}).join(''):'<span class="small">条件に合う記録はありません</span>'}
 function practiceFoundationItem(item,fromReview=false){
  tab('letters',fromReview);
  if(item._kind==='vowel')foundationCategory='vowels';
@@ -908,6 +1007,10 @@ function practiceRecordItem(enc,fromQueue=false){
  const id=decodeURIComponent(enc),r=resolveStudyItem(id);if(!r||!r.item)return;
  if(!fromQueue)stopReviewQueue();
  if(r.type==='foundation'){practiceFoundationItem(r.item,fromQueue);updateReviewQueueBar();return}
+ if(r.type==='sound'){
+   tab('study',fromQueue);hideModes();currentMode='sound';soundMode.classList.remove('hidden');
+   soundForcedItem=r.item;renderSoundItem(r.item,reviewQueueActive?'🔁 苦手復習':'🔁 誤答復習');updateReviewQueueBar();return;
+ }
  if(r.type==='word'||r.type==='chunk'||r.type==='phrase'){
    tab('study',fromQueue);hideModes();currentMode='word';wordMode.classList.remove('hidden');
    renderWordCurrent(r.item,[r.item],reviewQueueActive?'🔁 苦手復習':'🔁 誤答復習');updateReviewQueueBar();return;
@@ -923,7 +1026,7 @@ function practiceRecordItem(enc,fromQueue=false){
  }
 } 
 
-function reviewTypeLabel(r){return ({foundation:'文字',word:'単語',chunk:'チャンク',phrase:'例文',composition:'タイ作文',pron:'発音'}[r?.type]||'復習')}
+function reviewTypeLabel(r){return ({foundation:'文字',sound:'文字→発音',word:'単語',chunk:'チャンク',phrase:'例文',composition:'タイ作文',pron:'発音'}[r?.type]||'復習')}
 function updateReviewQueueBar(){
  if(!window.reviewQueueBar)return;
  document.body.classList.toggle('reviewActive',!!(reviewQueueActive&&reviewQueue.length));
@@ -961,7 +1064,7 @@ function startWeak(){
  const ranked=Object.entries(R)
    .filter(([id,x])=>isWeakRecord(x))
    .map(([id,x])=>({id,x,r:resolveStudyItem(id)}))
-   .filter(o=>o.r&&o.r.item&&['foundation','word','chunk','phrase','composition','pron'].includes(o.r.type))
+   .filter(o=>o.r&&o.r.item&&['foundation','sound','word','chunk','phrase','composition','pron'].includes(o.r.type))
    .sort((a,b)=>(b.x.wrong||0)-(a.x.wrong||0)||new Date(b.x.last||0)-new Date(a.x.last||0));
  if(!ranked.length){
    stopReviewQueue();
@@ -1087,9 +1190,11 @@ const names=new Set(Object.keys(zip.files));
 const missingAudio=ss.filter(s=>!names.has(s.audio_file));
 if(missingAudio.length)throw new Error(`Sentence音声が不足しています（${missingAudio.length}件）。現在の教材データは変更していません。`);
 await dbClear();await dbPut('meta','package',pkg);await dbPut('meta','data',data);await dbPut('meta','lessons',lessons);await dbPut('meta','pages',pages);const files=Object.keys(zip.files).filter(n=>!zip.files[n].dir&&(n.startsWith('audio/')||n.startsWith('sentence_audio/')||n.startsWith('pages/')));let done=0;for(const name of files){const blob=await zip.file(name).async('blob');await dbPut('assets',name,blob);done++;if(done%3===0||done===files.length){const pct=Math.round(done/files.length*95)+5;bar.style.width=Math.min(100,pct)+'%';prog.textContent=`教材データを保存中… ${done}/${files.length}`;await new Promise(r=>setTimeout(r,0));}}bar.style.width='100%';prog.textContent='読み込み完了';await loadMaterialFromDB();alert('教材データを端末に保存しました。次回から読み込み不要です。')}catch(e){console.error(e);prog.textContent='読み込みに失敗しました';bar.style.width='0%';alert('教材パックを読み込めませんでした：'+e.message)}}
-async function loadMaterialFromDB(){const pkg=await dbGet('meta','package');if(!pkg){MATERIAL_READY=false;MATERIAL_META=null;refreshMaterialUI();return false}DATA=applyRuntimeDataCorrections(await dbGet('meta','data'));LESSONS=await dbGet('meta','lessons')||[];PAGES=await dbGet('meta','pages')||[];MATERIAL_META=pkg;MATERIAL_READY=!!DATA;refreshMaterialUI();if(MATERIAL_READY){fillLessonFilters();updateHome();renderBooks();showLetterPage();renderPage();renderLessons();setWordAnswerMode(wordAnswerMode);updateOrderButtons()}return MATERIAL_READY}
+async function loadMaterialFromDB(){const pkg=await dbGet('meta','package');if(!pkg){MATERIAL_READY=false;MATERIAL_META=null;refreshMaterialUI();return false}DATA=applyRuntimeDataCorrections(await dbGet('meta','data'));LESSONS=await dbGet('meta','lessons')||[];PAGES=await dbGet('meta','pages')||[];MATERIAL_META=pkg;MATERIAL_READY=!!DATA;refreshMaterialUI();if(MATERIAL_READY){fillLessonFilters();updateHome();renderBooks();showLetterPage();renderPage();renderLessons();setWordAnswerMode(wordAnswerMode);updateOrderButtons();updateSoundUI()}return MATERIAL_READY}
 async function deleteMaterialPack(){if(!confirm('この端末内の教材画像・音声・Lessonデータを削除しますか？ 学習履歴は残ります。'))return;ASSET_URLS.forEach(u=>URL.revokeObjectURL(u));ASSET_URLS.clear();await dbClear();DATA=null;LESSONS=[];PAGES=[];MATERIAL_READY=false;MATERIAL_META=null;refreshMaterialUI();alert('教材データを削除しました。')}
 async function bootApp(){try{setupCanvas();updateHome();await loadMaterialFromDB()}catch(e){console.error(e);refreshMaterialUI()}}
+
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&currentMode==='sound'&&document.activeElement===window.soundInput){e.preventDefault();if(soundNextBtn&&!soundNextBtn.classList.contains('hidden'))nextSoundQuestion();else checkSoundAnswer(false)}});
 
 bootApp();
 if('serviceWorker'in navigator){
