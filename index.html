@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0d9488">
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="manifest" href="manifest.webmanifest?v=128">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png?v=128">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&family=Noto+Sans+Thai+Looped:wght@400;700&display=swap" rel="stylesheet">
@@ -191,7 +192,7 @@ body.reviewActive .reviewHide{display:none!important}
 <div class="appHero">
 <img src="icon-192.png" alt="タイ語トレーニング">
 <div class="heroText">
-<h1>タイ語トレーニング <span class="small">v1.26</span></h1>
+<h1>タイ語トレーニング <span class="small">v1.28</span></h1>
 <p class="sub">読む・書く・聞く・話すを、1つのアプリで。</p>
 <span class="heroBadge">🇹🇭 Thai Study</span>
 </div>
@@ -213,7 +214,7 @@ body.reviewActive .reviewHide{display:none!important}
 <div class="card"><div class="title">今日の学習</div>
 <div class="stats"><div class="stat"><span class="small">総回答</span><b id="totalAttempts">0</b></div><div class="stat"><span class="small">ミス</span><b id="totalWrong">0</b></div><div class="stat"><span class="small">正答率</span><b id="accuracy">—</b></div><div class="stat"><span class="small">要復習</span><b id="weakCount">0</b></div></div>
 <div class="grid2" style="margin-top:12px"><button class="main" onclick="startWeak()">苦手から復習</button><button class="soft" onclick="tab('study')">自由に練習</button></div></div>
-<div class="card"><div class="title">教材の状態</div><div id="homeMaterialSummary" class="small">教材パック：確認中…</div><div id="appStatus" class="answer">v1.26 UX整理・実単語リーディング・弱点適応</div></div>
+<div class="card"><div class="title">教材の状態</div><div id="homeMaterialSummary" class="small">教材パック：確認中…</div><div id="appStatus" class="answer">v1.28 統合監査版・教材v19対応</div></div>
 <div class="card homeRecommend"><div class="title">今日のおすすめ</div><div class="small" style="margin-bottom:10px">今の学習段階に合わせ、実単語の「読む→意味」を中心に。既知の超基本語は出題頻度を下げ、苦手を優先します。</div>
 <button class="main" style="width:100%" onclick="openMode('reading')">📖 実単語リーディング</button>
 <div class="grid2" style="margin-top:8px"><button class="soft" onclick="openMode('sound')">🔡 文字→発音</button><button class="soft" onclick="startWeak()">🔁 苦手復習</button></div></div>
@@ -418,7 +419,7 @@ body.reviewActive .reviewHide{display:none!important}
 </div>
 </section>
 
-<section id="backupTab" class="hidden"><div class="card"><div class="title">データ管理</div><div class="grid2"><button class="soft" onclick="exportData()">JSONバックアップ</button><label class="soft" style="text-align:center;padding:12px;border-radius:15px;font-weight:800">読み込み<input type="file" id="restoreFile" accept=".json" onchange="restoreData()" style="display:none"></label></div><p class="small">学習履歴はこの端末のブラウザ内に保存されます。定期バックアップ推奨。</p></div></section>
+<section id="backupTab" class="hidden"><div class="card"><div class="title">データ管理</div><div class="grid2"><button class="soft" onclick="exportData()">学習データをバックアップ</button><label class="soft" style="text-align:center;padding:12px;border-radius:15px;font-weight:800">読み込み<input type="file" id="restoreFile" accept=".json" onchange="restoreData()" style="display:none"></label></div><p class="small">学習履歴・弱点プロファイル・出題設定など、thai_ で始まる端末内設定をまとめて保存します。教材画像・音声は容量が大きいため含めません。復元後は教材パックZIPを再読み込みしてください。</p></div></section>
 </div>
 <script>
 let DATA=null,currentMode='',currentItem=null,letterI=0,wordI=0,pronI=0,compI=0;let foundationCategory='consonants',foundationI=0;
@@ -1199,8 +1200,9 @@ function searchTextbook(){
  textbookSearchResults.innerHTML=hits.map(x=>{const low=x.text.toLowerCase(),pos=low.indexOf(q),start=Math.max(0,pos-80),sn=x.text.slice(start,start+260);return `<div class="answer searchHit" onclick="openSearchPage(${x.i})"><b>撮影 #${x.i+1}${x.p.lesson?' / Lesson '+x.p.lesson:''}</b><div class="small">${x.p.section||''}</div><div class="searchSnippet">${escapeHtml(sn)}</div></div>`}).join('')||'<div class="small" style="margin-top:10px">該当なし</div>';
 }
 function openSearchPage(i){pageNo=i+1;tab('pages');renderPage()}
-function exportData(){const blob=new Blob([JSON.stringify({format:'thai-training-backup',version:2,records:getRec()},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='thai_training_backup.json';a.click()}
-function restoreData(){const f=restoreFile.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);localStorage.setItem(KEY,JSON.stringify(x.records||x));updateHome();alert('読み込みました')}catch(e){alert('読み込み失敗')}};r.readAsText(f)}
+function collectThaiLocalStorage(){const out={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('thai_'))out[k]=localStorage.getItem(k)}return out}
+function exportData(){const payload={format:'thai-training-backup',version:3,created_at:new Date().toISOString(),app_version:'1.28',material_version:MATERIAL_META?.pack_version||null,localStorage:collectThaiLocalStorage()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');const u=URL.createObjectURL(blob);a.href=u;a.download='thai_training_backup_v3.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1500)}
+function restoreData(){const f=restoreFile.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(x&&x.format==='thai-training-backup'&&x.localStorage){Object.entries(x.localStorage).forEach(([k,v])=>{if(k.startsWith('thai_'))localStorage.setItem(k,String(v))})}else if(x&&x.records){localStorage.setItem(KEY,JSON.stringify(x.records))}else{localStorage.setItem(KEY,JSON.stringify(x))}updateHome();renderReviewSummary();alert('学習データを復元しました。教材パックは必要に応じて再読み込みしてください。')}catch(e){console.error(e);alert('読み込み失敗：'+e.message)}};r.readAsText(f)}
 function bindCanvas(c,clearName){
  const ctx=c.getContext('2d');let draw=false,last=null,lastTouch=0;
  function size(){const r=c.getBoundingClientRect();if(r.width<10||r.height<10)return;const d=Math.min(window.devicePixelRatio||1,3),w=Math.round(r.width*d),h=Math.round(r.height*d);if(c.width===w&&c.height===h)return;c.width=w;c.height=h;ctx.setTransform(d,0,0,d,0,0);ctx.lineWidth=7;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#17302d'}
@@ -1228,7 +1230,7 @@ async function dbGet(store,key){const db=await openDB();return new Promise((reso
 async function dbClear(){const db=await openDB();return Promise.all(['assets','meta'].map(store=>new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})))}
 async function getAssetURL(path){if(ASSET_URLS.has(path))return ASSET_URLS.get(path);const blob=await dbGet('assets',path);if(!blob)return null;const u=URL.createObjectURL(blob);ASSET_URLS.set(path,u);return u}
 async function playAssetAudio(path){try{const u=await getAssetURL(path);if(!u)throw new Error('missing');if(window._materialAudio){window._materialAudio.pause()}window._materialAudio=new Audio(u);await window._materialAudio.play()}catch(e){alert('音声データが見つからないか、再生できません。教材パックを再読み込みしてください。')}}
-function refreshMaterialUI(){const needed=document.getElementById('materialNeeded'),status=document.getElementById('materialStatus'),home=document.getElementById('homeMaterialSummary');if(needed)needed.classList.toggle('hidden',MATERIAL_READY);const ver=parseFloat(MATERIAL_META?.pack_version||0);if(home)home.textContent=MATERIAL_READY?`教材パックv${MATERIAL_META?.pack_version||'?'}：全157枚を教材DB化 / 子音44字 / 母音・数字・声調 / Lesson 1〜20`:'教材パック：未読み込み';if(status){status.innerHTML=MATERIAL_READY?`<b>✅ 読み込み済み</b><div>${MATERIAL_META?.title||'教材'} / v${MATERIAL_META?.pack_version||''}</div>${ver<17?'<div class="answer"><b>⚠️ 教材パックv17へ更新してください</b><div class="small">解説強化とDialogue音声境界修正版です。</div></div>':''}<div class="small">画像・音声・学習データはこの端末内だけに保存されています。</div>`:'<b>未読み込み</b><div class="small">専用教材パックZIPを選んでください。</div>'}}
+function refreshMaterialUI(){const needed=document.getElementById('materialNeeded'),status=document.getElementById('materialStatus'),home=document.getElementById('homeMaterialSummary');if(needed)needed.classList.toggle('hidden',MATERIAL_READY);const ver=parseFloat(MATERIAL_META?.pack_version||0);if(home)home.textContent=MATERIAL_READY?`教材パックv${MATERIAL_META?.pack_version||'?'}：全157枚を教材DB化 / 子音44字 / 母音・数字・声調 / Lesson 1〜20`:'教材パック：未読み込み';if(status){status.innerHTML=MATERIAL_READY?`<b>✅ 読み込み済み</b><div>${MATERIAL_META?.title||'教材'} / v${MATERIAL_META?.pack_version||''}</div>${ver<18?'<div class="answer"><b>⚠️ 教材パックv18へ更新してください</b><div class="small">全153 Dialogue音声の境界再監査版です。</div></div>':''}<div class="small">画像・音声・学習データはこの端末内だけに保存されています。</div>`:'<b>未読み込み</b><div class="small">専用教材パックZIPを選んでください。</div>'}}
 async function importMaterialPack(file){if(!file)return;const prog=document.getElementById('importProgress'),bar=document.getElementById('importBar');try{prog.textContent='ZIPを開いています…';bar.style.width='2%';const zip=await JSZip.loadAsync(file);const pkg=JSON.parse(await zip.file('package.json').async('string'));if(pkg.format!=='thai-training-material-pack')throw new Error('このZIPは教材パックではありません');const data=applyRuntimeDataCorrections(JSON.parse(await zip.file(pkg.data_file||'data.json').async('string')));const lessons=JSON.parse(await zip.file(pkg.lessons_file||'lessons.json').async('string'));const pages=JSON.parse(await zip.file(pkg.pages_file||'pages.json').async('string'));
 const ss=Array.isArray(data.sentences)?data.sentences:[];
 if(ss.length!==153)throw new Error(`Sentence数が不正です（${ss.length}/153）`);
