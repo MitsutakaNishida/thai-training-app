@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0d9488">
 <link rel="manifest" href="manifest.webmanifest?v=128">
-<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png?v=128">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png?v=129">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&family=Noto+Sans+Thai+Looped:wght@400;700&display=swap" rel="stylesheet">
@@ -186,13 +186,28 @@ body.reviewActive .reviewHide{display:none!important}
 .homeRecommend{background:linear-gradient(135deg,#e9f8f3,#fff8e3)}
 .reviewSummary{font-size:32px;font-weight:900;color:var(--main);text-align:center;margin:8px 0}
 @media(max-width:390px){.readingPrompt{font-size:46px}.nav button{font-size:13px;padding:11px 10px}.utilityGrid button{font-size:13px}}
+
+/* v1.29 実戦表現ライブラリ */
+.fieldManager summary{cursor:pointer;font-weight:900;font-size:17px;list-style:none}
+.fieldManager summary::-webkit-details-marker{display:none}
+.fieldManager summary::after{content:"＋";float:right;color:var(--muted)}
+.fieldManager[open] summary::after{content:"−"}
+.fieldFormat{margin-top:10px;padding:10px 12px;border-radius:13px;background:#f8fafc;border:1px dashed var(--line);white-space:pre-wrap;font-size:12px;line-height:1.65}
+.fieldPreviewItem,.fieldListItem{padding:11px 12px;border:1px solid var(--line);border-radius:14px;margin-top:8px;background:#fff}
+.fieldPreviewStatus{font-size:12px;font-weight:800;margin-bottom:5px}
+.fieldPracticePrompt{font-size:25px;font-weight:900;line-height:1.45;margin:16px 0;text-align:center}
+.fieldAnswerThai{font-size:34px;font-weight:900;line-height:1.4;margin-top:8px;text-align:center}
+.fieldExplanation{margin-top:10px;padding:11px 12px;border-radius:14px;background:#fff8df;border:1px solid #efd88c;white-space:pre-wrap;line-height:1.65}
+.fieldGradeGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.fieldGradeGrid button{min-height:48px}
+@media(max-width:390px){.fieldGradeGrid{grid-template-columns:1fr}.fieldAnswerThai{font-size:30px}}
 </style>
 <script src="jszip.min.js"></script>
 </head><body><div class="wrap">
 <div class="appHero">
 <img src="icon-192.png" alt="タイ語トレーニング">
 <div class="heroText">
-<h1>タイ語トレーニング <span class="small">v1.28</span></h1>
+<h1>タイ語トレーニング <span class="small">v1.29</span></h1>
 <p class="sub">読む・書く・聞く・話すを、1つのアプリで。</p>
 <span class="heroBadge">🇹🇭 Thai Study</span>
 </div>
@@ -214,7 +229,7 @@ body.reviewActive .reviewHide{display:none!important}
 <div class="card"><div class="title">今日の学習</div>
 <div class="stats"><div class="stat"><span class="small">総回答</span><b id="totalAttempts">0</b></div><div class="stat"><span class="small">ミス</span><b id="totalWrong">0</b></div><div class="stat"><span class="small">正答率</span><b id="accuracy">—</b></div><div class="stat"><span class="small">要復習</span><b id="weakCount">0</b></div></div>
 <div class="grid2" style="margin-top:12px"><button class="main" onclick="startWeak()">苦手から復習</button><button class="soft" onclick="tab('study')">自由に練習</button></div></div>
-<div class="card"><div class="title">教材の状態</div><div id="homeMaterialSummary" class="small">教材パック：確認中…</div><div id="appStatus" class="answer">v1.28 統合監査版・教材v19対応</div></div>
+<div class="card"><div class="title">教材の状態</div><div id="homeMaterialSummary" class="small">教材パック：確認中…</div><div id="appStatus" class="answer">v1.29 実戦表現対応・教材v20対応</div></div>
 <div class="card homeRecommend"><div class="title">今日のおすすめ</div><div class="small" style="margin-bottom:10px">今の学習段階に合わせ、実単語の「読む→意味」を中心に。既知の超基本語は出題頻度を下げ、苦手を優先します。</div>
 <button class="main" style="width:100%" onclick="openMode('reading')">📖 実単語リーディング</button>
 <div class="grid2" style="margin-top:8px"><button class="soft" onclick="openMode('sound')">🔡 文字→発音</button><button class="soft" onclick="startWeak()">🔁 苦手復習</button></div></div>
@@ -279,10 +294,29 @@ body.reviewActive .reviewHide{display:none!important}
 <div id="letterPageStats" class="answer"></div>
 <div class="grid2 reviewHide" style="margin-top:10px"><button class="soft" onclick="prevLetterPage()">← 前</button><button class="soft" onclick="nextLetterPage()">次 →</button></div>
 </div>
+<div class="card reviewHide">
+<div class="title">実戦表現</div>
+<div class="small">旅先・SNS・実会話で拾った表現を、自分専用の教材として追加します。登録はコピペ一括でOK。</div>
+<div class="grid2" style="margin-top:10px"><button class="main" onclick="openMode('field')">🗣 練習する</button><button class="soft" onclick="document.getElementById('fieldManager').open=true;document.getElementById('fieldBulkInput').focus()">＋ 一括登録</button></div>
+<details id="fieldManager" class="fieldManager" style="margin-top:12px"><summary>登録・管理</summary>
+<div class="small" style="margin-top:10px">別スレで作ったフォーマットを、そのまま貼り付けてください。複数件まとめて登録できます。</div>
+<textarea id="fieldBulkInput" rows="10" style="margin-top:8px" placeholder="日本語：コップを落とした
+自然なタイ語：ทำแก้วตก
+発音：tham kɛ̂ɛo tòk
+解説：
+・ทำ + O + 自動詞/状態 = Oを〜の状態にする
+・แก้ว = コップ
+・ตก = 落ちる"></textarea>
+<div class="grid2" style="margin-top:8px"><button class="soft" onclick="previewFieldImport()">内容を確認</button><button id="fieldCommitBtn" class="main" onclick="commitFieldImport()" disabled>登録する</button></div>
+<div id="fieldImportMsg" class="small" style="margin-top:8px"></div>
+<div id="fieldImportPreview"></div>
+<div style="margin-top:14px"><b>登録済み <span id="fieldCount">0</span>件</b><input id="fieldSearch" placeholder="日本語・タイ語で検索" oninput="renderFieldLibrary()" style="margin-top:8px"><div id="fieldLibraryList"></div></div>
+</details>
+</div>
 </section>
 
 <section id="studyTab" class="hidden">
-<div class="card reviewHide"><div class="title">練習する</div><div class="small" style="margin-bottom:9px">おすすめは「実単語で読む」。細かい設定は各モード内にまとめています。</div><div class="grid2"><button class="main" onclick="openMode('reading')">📖 実単語で読む</button><button class="soft" onclick="openMode('sound')">🔡 文字→発音</button><button class="soft" onclick="openMode('word')">🔤 意味→タイ語</button><button class="soft" onclick="openMode('pron')">🎤 発音</button><button class="soft" onclick="openMode('comp')">📝 タイ作文</button><button class="soft" onclick="openMode('letter')">✍️ 書き取り</button></div></div>
+<div class="card reviewHide"><div class="title">練習する</div><div class="small" style="margin-bottom:9px">おすすめは「実単語で読む」。細かい設定は各モード内にまとめています。</div><div class="grid2"><button class="main" onclick="openMode('reading')">📖 実単語で読む</button><button class="soft" onclick="openMode('sound')">🔡 文字→発音</button><button class="soft" onclick="openMode('word')">🔤 意味→タイ語</button><button class="soft" onclick="openMode('pron')">🎤 発音</button><button class="soft" onclick="openMode('comp')">📝 タイ作文</button><button class="soft" onclick="openMode('letter')">✍️ 書き取り</button><button class="soft" onclick="openMode('field')">🗣 実戦表現</button></div></div>
 
 <div id="letterMode" class="card hidden"><div class="title">タイ文字・書き取り</div><div id="letterChar" class="bigthai">ก</div><div style="text-align:center"><b id="letterName"></b><div id="letterRoman" class="roman"></div><div id="letterKana" class="kana"></div><div id="letterWord" class="thai"></div><div id="letterJP"></div></div>
 <div style="position:relative;margin:12px 0"><canvas id="cv"></canvas><div id="ghost" class="bigthai" style="position:absolute;inset:65px 0 auto;opacity:.12;pointer-events:none">ก</div></div>
@@ -319,6 +353,17 @@ body.reviewActive .reviewHide{display:none!important}
 </div>
 <button class="soft reviewHide" style="width:100%;margin-top:8px" onclick="openAppendixVocabulary()">📚 教材付録「単語リスト」を見る（p.146〜163）</button><div class="modeSwitch reviewHide" style="margin-top:10px"><button id="wordOrderBtn" class="active" onclick="setWordOrder('sequential')">順番</button><button id="wordRandomBtn" onclick="setWordOrder('random')">🔀 ランダム</button></div><div class="small" id="wordCountInfo"></div><div id="wordPrompt" style="font-size:24px;font-weight:800;margin:10px 0"></div><div class="modeSwitch"><button id="wordChoiceModeBtn" class="active" onclick="setWordAnswerMode('choice')">選択式</button><button id="wordInputModeBtn" onclick="setWordAnswerMode('input')">入力式</button></div><div id="wordChoiceArea"><select id="choiceAssist" onchange="saveChoiceAssist();renderWordChoices()"><option value="roman">タイ文字＋発音記号＋カタカナ</option><option value="romanOnly">タイ文字＋発音記号</option><option value="thai">タイ文字のみ</option></select><div id="wordChoices" class="choiceList"></div></div><div id="wordInputArea" class="hidden"><div class="small">タイ語を入力。音声入力はiPhoneキーボードのマイクを使えます。</div><div class="inputRow"><input id="wordInput" placeholder="タイ語を入力"><button class="micBtn" onclick="openNativeDictationHint()">🎤</button></div><button class="main" style="width:100%;margin-top:8px" onclick="checkWord()">判定</button><div id="wordVoiceStatus" class="small" style="margin-top:8px"></div></div><div id="wordResult" class="answer hidden"></div><button id="wordNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="nextWordQuestion()">次の問題 →</button></div>
 
+<div id="fieldMode" class="card hidden"><div class="title">実戦表現</div>
+<div class="small">日本語を見てタイ語を思い出す → 答えと解説を確認 → 3段階で自己評価。あやしい表現は復習に残ります。</div>
+<div id="fieldPracticeCount" class="small" style="margin-top:10px"></div>
+<div id="fieldPracticePrompt" class="fieldPracticePrompt">登録した実戦表現がありません</div>
+<div id="fieldPracticeAnswer" class="answer hidden"></div>
+<button id="fieldRevealBtn" class="main" style="width:100%" onclick="revealFieldAnswer()">答えを見る</button>
+<div id="fieldGradeArea" class="fieldGradeGrid hidden"><button class="good" onclick="gradeFieldExpression('ok')">使えた</button><button class="warn" onclick="gradeFieldExpression('uncertain')">あやしい</button><button class="bad" onclick="gradeFieldExpression('no')">言えなかった</button></div>
+<button id="fieldNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="nextFieldExpression()">次の表現 →</button>
+<div id="fieldPracticeStats" class="answer"></div>
+</div>
+
 <div id="pronMode" class="card hidden"><div class="title">発音練習</div><select class="reviewHide" id="pronLessonFilter" onchange="pronI=0;showPron()"><option value="all">全Lesson</option></select><div class="small" id="pronCountInfo"></div><div id="pronThai" class="thai"></div><div id="pronRoman" class="roman"></div><div id="pronKana" class="kana"></div><div id="pronJP"></div>
 <div class="grid2" style="margin-top:10px"><button class="soft" onclick="playPron()">🔊 教材音声</button><button id="recordPronBtn" class="main" onclick="togglePronRecording()">🎤 録音する</button></div>
 <div id="pronRecordBox" class="answer hidden"><b>自分の発音</b><audio id="pronPlayback" controls style="width:100%;margin-top:8px"></audio><div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradePronManual(false)">もう一度</button><button class="good" onclick="gradePronManual(true)">できた</button></div></div>
@@ -334,7 +379,7 @@ body.reviewActive .reviewHide{display:none!important}
 <section id="recordTab" class="hidden"><div class="card"><div class="title">成績・復習</div>
 <div class="small">間違えた内容を確認して、その場で再練習できます。</div>
 <div class="recordFilterChips" style="margin-top:10px"><button id="rfAll" class="active" onclick="setRecordPrimary('all')">すべて</button><button id="rfWeak" onclick="setRecordPrimary('weak')">苦手</button><button id="rfMiss" onclick="setRecordPrimary('miss')">ミスあり</button><button id="rfRecent" onclick="setRecordPrimary('recent')">最近間違えた</button></div>
-<div class="recordFilterGrid"><select id="recordLessonFilter" onchange="renderRecord()"><option value="all">全Lesson</option></select><select id="recordTypeFilter" onchange="renderRecord()"><option value="all">全種類</option><option value="word">単語・フレーズ</option><option value="chunk">チャンク</option><option value="composition">タイ作文</option><option value="pron">発音</option><option value="foundation">文字・基礎</option><option value="sound">文字→発音</option><option value="reading">実単語リーディング</option></select></div>
+<div class="recordFilterGrid"><select id="recordLessonFilter" onchange="renderRecord()"><option value="all">全Lesson</option></select><select id="recordTypeFilter" onchange="renderRecord()"><option value="all">全種類</option><option value="word">単語・フレーズ</option><option value="chunk">チャンク</option><option value="composition">タイ作文</option><option value="pron">発音</option><option value="foundation">文字・基礎</option><option value="sound">文字→発音</option><option value="reading">実単語リーディング</option><option value="field">実戦表現</option></select></div>
 <div id="recordList"></div></div></section>
 
 <section id="audioTab" class="hidden"><div class="card"><div class="title">教材音声 83本</div><input id="audioSearch" placeholder="Lesson 3 / Pronunciation など" oninput="renderAudio()"><div id="audioList"></div></div></section>
@@ -441,6 +486,9 @@ let soundCurrentItem=null,soundLastId='',soundForcedItem=null;
 let readingOrderMode=localStorage.getItem('thai_reading_order_v1')||'adaptive';
 let readingCurrentItem=null,readingLastId='',readingOptions=[];
 const READING_PROFILE_KEY='thai_reading_skill_profile_v1';
+const FIELD_LIBRARY_KEY='thai_field_expression_library_v1';
+const FIELD_PROFILE_KEY='thai_field_expression_profile_v1';
+let fieldImportPreviewItems=[],fieldCurrent=null,fieldLastId='';
 const READING_KNOWN_BASIC=new Set(['ขอบคุณ','ขอบคุณครับ','ขอบคุณค่ะ','เข้าใจแล้ว','สวัสดี','สวัสดีครับ','สวัสดีค่ะ','ครับ','ค่ะ','ใช่','ไม่ใช่','โอเค','ไม่เป็นไร']);
 let wordOrderMode=localStorage.getItem('thai_word_order_v1')||'sequential';
 let wordDeck=[],wordDeckPos=0,wordDeckKey='';
@@ -640,7 +688,7 @@ async function playLearningAudio(item=currentItem){
 }
 function renderExplanation(item){const s=sentenceForItem(item)||item,ex=item?.explanation||s?.explanation;if(!ex)return'';if(!(ex.vocabulary||[]).length&&!(ex.grammar||[]).length)return'';const vocab=(ex.vocabulary||[]).map(v=>`<div class="explainRow"><div class="explainThai">${escapeHtml(v.thai||'')} ${v.pos?`<span class="posTag">${escapeHtml(v.pos)}</span>`:''}</div>${v.roman?`<div class="explainRoman">${escapeHtml(v.roman)}</div>`:''}<div class="explainJP">${escapeHtml(v.japanese||'')}</div>${v.note?`<div class="explainNote">${escapeHtml(v.note)}</div>`:''}</div>`).join('');const grammar=(ex.grammar||[]).map(g=>`<div class="grammarRow">・${escapeHtml(g)}</div>`).join('');return `<div class="explainBox"><div class="explainTitle">📘 語句・フレーズ解説</div>${vocab}${grammar?`<div class="pointBox"><b>💡 文法・構文ポイント</b>${grammar}</div>`:''}</div>`}
 function resultAudioHtml(item){const s=sentenceForItem(item)||item;if(s?.audio_file)return `<button class="soft learningAudioBtn" onclick="playLearningAudio(currentItem)">🔊 教材音声</button>`;if(s?.th||item?.th)return `<button class="soft learningAudioBtn" onclick="playLearningAudio(currentItem)">🔊 読み上げ</button>`;return ''}
-function typeLabel(t){return ({word:'単語',phrase:'例文',chunk:'チャンク',composition:'タイ作文','thai-writing':'タイ作文',pron:'発音',letter:'文字',foundation:'文字・基礎',sound:'文字→発音',reading:'実単語リーディング'}[t]||t||'学習')}
+function typeLabel(t){return ({word:'単語',phrase:'例文',chunk:'チャンク',composition:'タイ作文','thai-writing':'タイ作文',pron:'発音',letter:'文字',foundation:'文字・基礎',sound:'文字→発音',reading:'実単語リーディング',field:'実戦表現'}[t]||t||'学習')}
 function directChunkById(id){
  const c=buildChunkItems().find(x=>x.id===id);
  return c||null;
@@ -665,6 +713,10 @@ function allFoundationItems(){
  ];
 }
 function resolveStudyItem(id){
+ if(id.startsWith('field:')){
+   const f=getFieldExpressions().find(x=>x.id===id);
+   return f?{id,title:f.thai||id,subtitle:f.jp||'',type:'field',lesson:null,item:f}:null;
+ }
  if(!DATA)return {id,title:'学習項目',subtitle:'',type:'',lesson:null,item:null};
  if(id.startsWith('sound:')){
    const base=id.slice(6),f=allFoundationItems().find(x=>x.id===base);
@@ -725,11 +777,11 @@ function tab(t,fromReview=false){
  if(!MATERIAL_READY && !['home','material','backup'].includes(t)){document.getElementById('materialNeeded').classList.remove('hidden');t='home';}
  ['home','letters','study','review','record','audio','lessons','pages','books','material','backup'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('hidden',x!==t));
  document.querySelectorAll('.nav button').forEach(b=>b.className=b.dataset.tab===t?'main':'soft');
- if(t==='letters'){showLetterPage();resizeDrawingCanvases();}
+ if(t==='letters'){showLetterPage();resizeDrawingCanvases();renderFieldLibrary();}
  if(t==='review'){renderReviewSummary();}if(t==='record')renderRecord();if(t==='audio')renderAudio();if(t==='lessons')renderLessons();if(t==='pages')renderPage();if(t==='books')renderBooks();
 }
-function hideModes(){['letter','sound','reading','word','pron','comp'].forEach(x=>document.getElementById(x+'Mode').classList.add('hidden'))}
-function openMode(m){tab('study');hideModes();currentMode=m;document.getElementById(m+'Mode').classList.remove('hidden');if(m==='letter'){showLetter();resizeDrawingCanvases();}if(m==='sound')showSoundQuestion();if(m==='reading')showReadingQuestion();if(m==='word')showWord();if(m==='pron')showPron();if(m==='comp')showComp()}
+function hideModes(){['letter','sound','reading','word','field','pron','comp'].forEach(x=>document.getElementById(x+'Mode').classList.add('hidden'))}
+function openMode(m){tab('study');hideModes();currentMode=m;document.getElementById(m+'Mode').classList.remove('hidden');if(m==='letter'){showLetter();resizeDrawingCanvases();}if(m==='sound')showSoundQuestion();if(m==='reading')showReadingQuestion();if(m==='word')showWord();if(m==='field')showFieldExpression();if(m==='pron')showPron();if(m==='comp')showComp()}
 function normalizeThai(s){return(s||'').trim().replace(/[\s\u200bๆฯ,.!?'"“”\-]/g,'')}
 function lev(a,b){a=normalizeThai(a);b=normalizeThai(b);const m=a.length,n=b.length,d=Array.from({length:m+1},()=>Array(n+1).fill(0));for(let i=0;i<=m;i++)d[i][0]=i;for(let j=0;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return {dist:d[m][n],score:Math.max(0,Math.round((1-d[m][n]/Math.max(1,m,n))*100))}}
 function mini(id){const s=stat(id),a=s.attempts?Math.round(s.correct/s.attempts*100):0;return `累計 ${s.attempts}回 / 正解 ${s.correct} / ミス ${s.wrong} / 正答率 ${s.attempts?a+'%':'—'} / 連続正解 ${s.streak}`}
@@ -860,6 +912,43 @@ function markReadingIssue(kind){if(!readingCurrentItem)return;const P=getReading
 function nextReadingQuestion(){if(reviewQueueActive){reviewQueueNext();return}showReadingQuestion()}
 function renderReviewSummary(){const R=getRec(),wc=Object.values(R).filter(isWeakRecord).length;if(window.reviewWeakCount)reviewWeakCount.textContent=wc;const P=getReadingProfile(),sum={reading:0,meaning:0,spelling:0,tone:0};Object.values(P).forEach(x=>Object.keys(sum).forEach(k=>sum[k]+=Number(x[k]||0)));if(window.skillProfileSummary)skillProfileSummary.innerHTML=`読めない ${sum.reading} / 意味不明 ${sum.meaning} / 綴り不安 ${sum.spelling} / 声調ミス ${sum.tone}`}
 function showWeakRecords(){recordPrimary='weak';tab('record');renderRecord()}
+
+function getFieldExpressions(){try{const x=JSON.parse(localStorage.getItem(FIELD_LIBRARY_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
+function saveFieldExpressions(arr){localStorage.setItem(FIELD_LIBRARY_KEY,JSON.stringify(arr));renderFieldLibrary();updateHome()}
+function normalizeFieldKey(s){return String(s||'').trim().toLowerCase().replace(/[\s　。、,.!?！？「」『』（）()\-ー]/g,'')}
+function fieldKey(x){return normalizeFieldKey(x.jp)+'|'+normalizeFieldKey(x.thai)}
+function makeFieldId(x){let h=2166136261;const t=fieldKey(x);for(const ch of t){h^=ch.codePointAt(0);h=Math.imul(h,16777619)}return 'field:'+((h>>>0).toString(36))}
+function parseFieldBulkText(text){
+ const lines=String(text||'').replace(/\r/g,'').split('\n'),out=[];let cur=null,key='';
+ const labels=[['jp',/^\s*(?:日本語)\s*[：:]\s*(.*)$/],['thai',/^\s*(?:自然なタイ語|タイ語)\s*[：:]\s*(.*)$/],['roman',/^\s*(?:発音|IPA|ローマ字)\s*[：:]\s*(.*)$/i],['explanation',/^\s*(?:解説|ポイント)\s*[：:]\s*(.*)$/]];
+ const push=()=>{if(cur&&(cur.jp||cur.thai)){cur.jp=String(cur.jp||'').trim();cur.thai=String(cur.thai||'').trim();cur.roman=String(cur.roman||'').trim();cur.explanation=String(cur.explanation||'').trim();out.push(cur)}cur=null;key=''};
+ for(const raw of lines){let matched=false;for(const [k,re] of labels){const m=raw.match(re);if(m){if(k==='jp'&&cur&&(cur.jp||cur.thai))push();if(!cur)cur={jp:'',thai:'',roman:'',explanation:''};key=k;cur[k]=m[1]||'';matched=true;break}}if(matched)continue;if(cur&&key){const v=raw.trimEnd();if(v.trim()||key==='explanation')cur[key]+=(cur[key]?'\n':'')+v}}
+ push();return out.filter(x=>x.jp&&x.thai);
+}
+function previewFieldImport(){
+ const parsed=parseFieldBulkText(fieldBulkInput.value),existing=getFieldExpressions(),map=new Map(existing.map(x=>[fieldKey(x),x]));
+ fieldImportPreviewItems=parsed.map(x=>({...x,id:map.get(fieldKey(x))?.id||makeFieldId(x),_status:map.has(fieldKey(x))?'update':'new'}));
+ const invalid=Math.max(0,(String(fieldBulkInput.value).match(/^\s*日本語\s*[：:]/gm)||[]).length-parsed.length);
+ fieldImportMsg.textContent=parsed.length?`${parsed.length}件を解析しました。新規 ${fieldImportPreviewItems.filter(x=>x._status==='new').length} / 既存更新 ${fieldImportPreviewItems.filter(x=>x._status==='update').length}${invalid?` / 不完全 ${invalid}`:''}`:'登録できる形式が見つかりません。';
+ fieldImportPreview.innerHTML=fieldImportPreviewItems.map(x=>`<div class="fieldPreviewItem"><div class="fieldPreviewStatus">${x._status==='new'?'🆕 新規':'♻️ 既存を更新'}</div><b>${escapeHtml(x.jp)}</b><div class="thai" style="font-size:23px">${escapeHtml(x.thai)}</div>${x.roman?`<div class="roman">${escapeHtml(x.roman)}</div>`:''}${x.explanation?`<div class="small" style="white-space:pre-wrap;margin-top:5px">${escapeHtml(x.explanation)}</div>`:''}</div>`).join('');
+ fieldCommitBtn.disabled=!fieldImportPreviewItems.length;
+}
+function commitFieldImport(){
+ if(!fieldImportPreviewItems.length)return;const arr=getFieldExpressions(),map=new Map(arr.map((x,i)=>[x.id,i]));let added=0,updated=0;
+ for(const x of fieldImportPreviewItems){const item={id:x.id,jp:x.jp,thai:x.thai,roman:x.roman||'',explanation:x.explanation||'',created_at:new Date().toISOString()};if(map.has(item.id)){const i=map.get(item.id);arr[i]={...arr[i],...item,created_at:arr[i].created_at||item.created_at,updated_at:new Date().toISOString()};updated++}else{arr.push(item);map.set(item.id,arr.length-1);added++}}
+ saveFieldExpressions(arr);fieldImportMsg.textContent=`登録しました：新規 ${added}件 / 更新 ${updated}件`;fieldImportPreviewItems=[];fieldImportPreview.innerHTML='';fieldCommitBtn.disabled=true;fieldBulkInput.value='';
+}
+function renderFieldLibrary(){
+ if(!window.fieldLibraryList)return;const arr=getFieldExpressions(),q=normalizeFieldKey(window.fieldSearch?.value||'');fieldCount.textContent=arr.length;const f=q?arr.filter(x=>normalizeFieldKey(x.jp+' '+x.thai+' '+x.roman+' '+x.explanation).includes(q)):arr;
+ fieldLibraryList.innerHTML=f.length?f.slice().reverse().map(x=>`<details class="fieldListItem"><summary><b>${escapeHtml(x.jp)}</b><div class="thai" style="font-size:21px">${escapeHtml(x.thai)}</div></summary>${x.roman?`<div class="roman">${escapeHtml(x.roman)}</div>`:''}${x.explanation?`<div class="small" style="white-space:pre-wrap;margin-top:6px">${escapeHtml(x.explanation)}</div>`:''}<button class="bad" style="width:100%;margin-top:8px" onclick="deleteFieldExpression('${x.id}')">削除</button></details>`).join(''):'<div class="small" style="margin-top:8px">登録済みの実戦表現はありません。</div>';
+}
+function deleteFieldExpression(id){if(!confirm('この実戦表現を削除しますか？'))return;saveFieldExpressions(getFieldExpressions().filter(x=>x.id!==id));const R=getRec();if(R[id]){delete R[id];saveRec(R)}try{const P=JSON.parse(localStorage.getItem(FIELD_PROFILE_KEY)||'{}');if(P[id]){delete P[id];localStorage.setItem(FIELD_PROFILE_KEY,JSON.stringify(P))}}catch(e){}}
+function fieldPracticeWeight(x){const r=stat(x.id);if(!r.attempts)return 5;const acc=r.correct/Math.max(1,r.attempts);return 1+(1-acc)*5+(isWeakRecord(r)?4:0)}
+function pickFieldExpression(arr){let c=arr.length>1?arr.filter(x=>x.id!==fieldLastId):arr;if(!c.length)return null;const ws=c.map(fieldPracticeWeight),total=ws.reduce((a,b)=>a+b,0);let r=Math.random()*total;for(let i=0;i<c.length;i++){r-=ws[i];if(r<=0)return c[i]}return c[c.length-1]}
+function showFieldExpression(forced=null){const arr=getFieldExpressions();fieldCurrent=forced||pickFieldExpression(arr);currentItem=fieldCurrent;if(!fieldCurrent){fieldPracticeCount.textContent='0件';fieldPracticePrompt.textContent='「学ぶ」→ 実戦表現から一括登録してください。';fieldPracticeAnswer.classList.add('hidden');fieldRevealBtn.classList.add('hidden');fieldGradeArea.classList.add('hidden');fieldNextBtn.classList.add('hidden');fieldPracticeStats.innerHTML='';return}fieldLastId=fieldCurrent.id;fieldPracticeCount.textContent=`登録 ${arr.length}件 / 弱点優先`;fieldPracticePrompt.textContent=fieldCurrent.jp;fieldPracticeAnswer.classList.add('hidden');fieldRevealBtn.classList.remove('hidden');fieldGradeArea.classList.add('hidden');fieldNextBtn.classList.add('hidden');fieldPracticeStats.innerHTML=mini(fieldCurrent.id)}
+function revealFieldAnswer(){if(!fieldCurrent)return;fieldPracticeAnswer.classList.remove('hidden');fieldPracticeAnswer.innerHTML=`<div class="fieldAnswerThai">${escapeHtml(fieldCurrent.thai)}</div>${fieldCurrent.roman?`<div class="roman" style="text-align:center">${escapeHtml(fieldCurrent.roman)}</div>`:''}<button class="soft" style="width:100%;margin-top:8px" onclick="speakThai('${String(fieldCurrent.thai).replaceAll("'","\\'")}',.75)">🔊 読み上げ</button>${fieldCurrent.explanation?`<div class="fieldExplanation"><b>📘 解説</b>\n${escapeHtml(fieldCurrent.explanation)}</div>`:''}`;fieldRevealBtn.classList.add('hidden');fieldGradeArea.classList.remove('hidden')}
+function gradeFieldExpression(kind){if(!fieldCurrent)return;const ok=kind==='ok',label={ok:'使えた',uncertain:'あやしい',no:'言えなかった'}[kind];register(fieldCurrent.id,ok,'field',{question:fieldCurrent.jp,userAnswer:'自己評価：'+label,correctAnswer:fieldCurrent.thai,mode:'field',lesson:null});const P=(()=>{try{return JSON.parse(localStorage.getItem(FIELD_PROFILE_KEY)||'{}')}catch(e){return{}}})();const x=P[fieldCurrent.id]||{ok:0,uncertain:0,no:0};x[kind]=(x[kind]||0)+1;x.last=new Date().toISOString();P[fieldCurrent.id]=x;localStorage.setItem(FIELD_PROFILE_KEY,JSON.stringify(P));if(reviewQueueActive&&!ok&&!reviewQueue.slice(reviewQueuePos+1).includes(fieldCurrent.id))reviewQueue.push(fieldCurrent.id);fieldGradeArea.classList.add('hidden');fieldNextBtn.classList.remove('hidden');fieldPracticeStats.innerHTML=`${label}を記録しました。<br>${mini(fieldCurrent.id)}`}
+function nextFieldExpression(){if(reviewQueueActive){reviewQueueNext();return}showFieldExpression()}
 
 function buildChunkItems(){
  const out=[],referenced=new Set();
@@ -1043,7 +1132,7 @@ function hasRecentWrong(x){const cutoff=Date.now()-7*24*3600*1000;return (x.hist
 function recordPasses(id,x,r){const att=attemptsOf(x),acc=att?(x.correct||0)/att:0;if(recordPrimary==='weak'&&!isWeakRecord(x))return false;if(recordPrimary==='miss'&&!(x.wrong||0))return false;if(recordPrimary==='recent'&&!hasRecentWrong(x))return false;const lf=recordLessonFilter?.value||'all';if(lf!=='all'&&Number(String(lf).replace(/\D/g,''))!==Number(r.lesson))return false;const tf=recordTypeFilter?.value||'all';if(tf!=='all'){if(tf==='word'&&!['word','phrase'].includes(r.type))return false;else if(tf!=='word'&&r.type!==tf)return false;}return true}
 function fmtDate(v){if(!v)return'—';const d=new Date(v);if(Number.isNaN(d.getTime()))return v;return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function renderHistoryEntries(x){const h=Array.isArray(x.history)?[...x.history].reverse():[];if(!h.length)return'<div class="small" style="margin-top:10px">個別回答履歴はv1.24以降の回答から保存されます。これまでの正解数・ミス数はそのまま残っています。</div>';return `<div style="margin-top:12px"><b>▼ 学習履歴</b>${h.map(e=>`<div class="historyEntry ${e.isCorrect?'':'wrong'}"><b>${fmtDate(e.timestamp)}　${e.isCorrect?'✅':'❌'}</b>${e.question?`<div class="historyQA"><div class="historyLabel">問題</div><div class="historyValue">${escapeHtml(e.question)}</div></div>`:''}${e.userAnswer?`<div class="historyQA"><div class="historyLabel">自分の回答</div><div class="historyValue">${escapeHtml(e.userAnswer)}</div></div>`:''}${e.correctAnswer?`<div class="historyQA"><div class="historyLabel">正解</div><div class="historyValue thai" style="font-size:19px">${escapeHtml(e.correctAnswer)}</div></div>`:''}<div class="small" style="margin-top:5px">${escapeHtml(typeLabel(e.mode))}</div></div>`).join('')}</div>`}
-function renderRecord(){const R=getRec(),rows=Object.entries(R).map(([id,x])=>[id,x,resolveStudyItem(id)]).filter(([id,x,r])=>r&&recordPasses(id,x,r)).sort((a,b)=>new Date(b[1].last||0)-new Date(a[1].last||0));recordList.innerHTML=rows.length?rows.map(([id,x,r])=>{const att=attemptsOf(x),a=att?Math.round((x.correct||0)/att*100):0;return `<details class="answer recordCard"><summary><div class="recordTitle">${escapeHtml(r.title)}</div><div class="recordSub">${escapeHtml(r.subtitle||'')}</div><div class="small" style="margin-top:5px">${typeLabel(r.type)}${r.lesson?' / Lesson '+r.lesson:''}</div><div class="recordMeta"><div><span class="small">正解</span><b>${x.correct||0}</b></div><div><span class="small">ミス</span><b>${x.wrong||0}</b></div><div><span class="small">正答率</span><b>${a}%</b></div><div><span class="small">連続正解</span><b>${x.streak||0}</b></div></div><div class="small" style="margin-top:7px">最終学習 ${fmtDate(x.last)}</div><div class="bar"><i style="width:${a}%"></i></div></summary>${renderHistoryEntries(x)}${(['foundation','sound','reading','word','chunk','phrase','composition','pron'].includes(r.type))?`<button class="main" style="width:100%;margin-top:10px" onclick="practiceRecordItem('${encodeURIComponent(id)}')">🔁 この問題を練習</button>`:''}</details>`}).join(''):'<span class="small">条件に合う記録はありません</span>'}
+function renderRecord(){const R=getRec(),rows=Object.entries(R).map(([id,x])=>[id,x,resolveStudyItem(id)]).filter(([id,x,r])=>r&&recordPasses(id,x,r)).sort((a,b)=>new Date(b[1].last||0)-new Date(a[1].last||0));recordList.innerHTML=rows.length?rows.map(([id,x,r])=>{const att=attemptsOf(x),a=att?Math.round((x.correct||0)/att*100):0;return `<details class="answer recordCard"><summary><div class="recordTitle">${escapeHtml(r.title)}</div><div class="recordSub">${escapeHtml(r.subtitle||'')}</div><div class="small" style="margin-top:5px">${typeLabel(r.type)}${r.lesson?' / Lesson '+r.lesson:''}</div><div class="recordMeta"><div><span class="small">正解</span><b>${x.correct||0}</b></div><div><span class="small">ミス</span><b>${x.wrong||0}</b></div><div><span class="small">正答率</span><b>${a}%</b></div><div><span class="small">連続正解</span><b>${x.streak||0}</b></div></div><div class="small" style="margin-top:7px">最終学習 ${fmtDate(x.last)}</div><div class="bar"><i style="width:${a}%"></i></div></summary>${renderHistoryEntries(x)}${(['foundation','sound','reading','word','chunk','phrase','composition','pron','field'].includes(r.type))?`<button class="main" style="width:100%;margin-top:10px" onclick="practiceRecordItem('${encodeURIComponent(id)}')">🔁 この問題を練習</button>`:''}</details>`}).join(''):'<span class="small">条件に合う記録はありません</span>'}
 function practiceFoundationItem(item,fromReview=false){
  tab('letters',fromReview);
  if(item._kind==='vowel')foundationCategory='vowels';
@@ -1068,6 +1157,9 @@ function practiceRecordItem(enc,fromQueue=false){
    tab('study',fromQueue);hideModes();currentMode='word';wordMode.classList.remove('hidden');
    renderWordCurrent(r.item,[r.item],reviewQueueActive?'🔁 苦手復習':'🔁 誤答復習');updateReviewQueueBar();return;
  }
+ if(r.type==='field'){
+   tab('study',fromQueue);hideModes();currentMode='field';fieldMode.classList.remove('hidden');showFieldExpression(r.item);updateReviewQueueBar();return;
+ }
  if(r.type==='composition'){
    tab('study',fromQueue);hideModes();currentMode='comp';compMode.classList.remove('hidden');
    renderCompCurrent(r.item,[r.item],reviewQueueActive?'🔁 苦手復習':'🔁 誤答復習');updateReviewQueueBar();return;
@@ -1079,7 +1171,7 @@ function practiceRecordItem(enc,fromQueue=false){
  }
 } 
 
-function reviewTypeLabel(r){return ({foundation:'文字',sound:'文字→発音',word:'単語',chunk:'チャンク',phrase:'例文',composition:'タイ作文',pron:'発音',reading:'実単語'}[r?.type]||'復習')}
+function reviewTypeLabel(r){return ({foundation:'文字',sound:'文字→発音',word:'単語',chunk:'チャンク',phrase:'例文',composition:'タイ作文',pron:'発音',reading:'実単語',field:'実戦表現'}[r?.type]||'復習')}
 function updateReviewQueueBar(){
  if(!window.reviewQueueBar)return;
  document.body.classList.toggle('reviewActive',!!(reviewQueueActive&&reviewQueue.length));
@@ -1117,7 +1209,7 @@ function startWeak(){
  const ranked=Object.entries(R)
    .filter(([id,x])=>isWeakRecord(x))
    .map(([id,x])=>({id,x,r:resolveStudyItem(id)}))
-   .filter(o=>o.r&&o.r.item&&['foundation','sound','reading','word','chunk','phrase','composition','pron'].includes(o.r.type))
+   .filter(o=>o.r&&o.r.item&&['foundation','sound','reading','word','chunk','phrase','composition','pron','field'].includes(o.r.type))
    .sort((a,b)=>(b.x.wrong||0)-(a.x.wrong||0)||new Date(b.x.last||0)-new Date(a.x.last||0));
  if(!ranked.length){
    stopReviewQueue();
@@ -1201,7 +1293,7 @@ function searchTextbook(){
 }
 function openSearchPage(i){pageNo=i+1;tab('pages');renderPage()}
 function collectThaiLocalStorage(){const out={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('thai_'))out[k]=localStorage.getItem(k)}return out}
-function exportData(){const payload={format:'thai-training-backup',version:3,created_at:new Date().toISOString(),app_version:'1.28',material_version:MATERIAL_META?.pack_version||null,localStorage:collectThaiLocalStorage()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');const u=URL.createObjectURL(blob);a.href=u;a.download='thai_training_backup_v3.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1500)}
+function exportData(){const payload={format:'thai-training-backup',version:3,created_at:new Date().toISOString(),app_version:'1.29',material_version:MATERIAL_META?.pack_version||null,localStorage:collectThaiLocalStorage()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');const u=URL.createObjectURL(blob);a.href=u;a.download='thai_training_backup_v3.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1500)}
 function restoreData(){const f=restoreFile.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(x&&x.format==='thai-training-backup'&&x.localStorage){Object.entries(x.localStorage).forEach(([k,v])=>{if(k.startsWith('thai_'))localStorage.setItem(k,String(v))})}else if(x&&x.records){localStorage.setItem(KEY,JSON.stringify(x.records))}else{localStorage.setItem(KEY,JSON.stringify(x))}updateHome();renderReviewSummary();alert('学習データを復元しました。教材パックは必要に応じて再読み込みしてください。')}catch(e){console.error(e);alert('読み込み失敗：'+e.message)}};r.readAsText(f)}
 function bindCanvas(c,clearName){
  const ctx=c.getContext('2d');let draw=false,last=null,lastTouch=0;
@@ -1230,7 +1322,7 @@ async function dbGet(store,key){const db=await openDB();return new Promise((reso
 async function dbClear(){const db=await openDB();return Promise.all(['assets','meta'].map(store=>new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})))}
 async function getAssetURL(path){if(ASSET_URLS.has(path))return ASSET_URLS.get(path);const blob=await dbGet('assets',path);if(!blob)return null;const u=URL.createObjectURL(blob);ASSET_URLS.set(path,u);return u}
 async function playAssetAudio(path){try{const u=await getAssetURL(path);if(!u)throw new Error('missing');if(window._materialAudio){window._materialAudio.pause()}window._materialAudio=new Audio(u);await window._materialAudio.play()}catch(e){alert('音声データが見つからないか、再生できません。教材パックを再読み込みしてください。')}}
-function refreshMaterialUI(){const needed=document.getElementById('materialNeeded'),status=document.getElementById('materialStatus'),home=document.getElementById('homeMaterialSummary');if(needed)needed.classList.toggle('hidden',MATERIAL_READY);const ver=parseFloat(MATERIAL_META?.pack_version||0);if(home)home.textContent=MATERIAL_READY?`教材パックv${MATERIAL_META?.pack_version||'?'}：全157枚を教材DB化 / 子音44字 / 母音・数字・声調 / Lesson 1〜20`:'教材パック：未読み込み';if(status){status.innerHTML=MATERIAL_READY?`<b>✅ 読み込み済み</b><div>${MATERIAL_META?.title||'教材'} / v${MATERIAL_META?.pack_version||''}</div>${ver<18?'<div class="answer"><b>⚠️ 教材パックv18へ更新してください</b><div class="small">全153 Dialogue音声の境界再監査版です。</div></div>':''}<div class="small">画像・音声・学習データはこの端末内だけに保存されています。</div>`:'<b>未読み込み</b><div class="small">専用教材パックZIPを選んでください。</div>'}}
+function refreshMaterialUI(){const needed=document.getElementById('materialNeeded'),status=document.getElementById('materialStatus'),home=document.getElementById('homeMaterialSummary');if(needed)needed.classList.toggle('hidden',MATERIAL_READY);const ver=parseFloat(MATERIAL_META?.pack_version||0);if(home)home.textContent=MATERIAL_READY?`教材パックv${MATERIAL_META?.pack_version||'?'}：全157枚を教材DB化 / 子音44字 / 母音・数字・声調 / Lesson 1〜20`:'教材パック：未読み込み';if(status){status.innerHTML=MATERIAL_READY?`<b>✅ 読み込み済み</b><div>${MATERIAL_META?.title||'教材'} / v${MATERIAL_META?.pack_version||''}</div>${ver<20?'<div class="answer"><b>⚠️ 教材パックv20へ更新してください</b><div class="small">Lesson 15の年号読みなど、元テキスト照合を反映した最新版です。</div></div>':''}<div class="small">画像・音声・学習データはこの端末内だけに保存されています。</div>`:'<b>未読み込み</b><div class="small">専用教材パックZIPを選んでください。</div>'}}
 async function importMaterialPack(file){if(!file)return;const prog=document.getElementById('importProgress'),bar=document.getElementById('importBar');try{prog.textContent='ZIPを開いています…';bar.style.width='2%';const zip=await JSZip.loadAsync(file);const pkg=JSON.parse(await zip.file('package.json').async('string'));if(pkg.format!=='thai-training-material-pack')throw new Error('このZIPは教材パックではありません');const data=applyRuntimeDataCorrections(JSON.parse(await zip.file(pkg.data_file||'data.json').async('string')));const lessons=JSON.parse(await zip.file(pkg.lessons_file||'lessons.json').async('string'));const pages=JSON.parse(await zip.file(pkg.pages_file||'pages.json').async('string'));
 const ss=Array.isArray(data.sentences)?data.sentences:[];
 if(ss.length!==153)throw new Error(`Sentence数が不正です（${ss.length}/153）`);
