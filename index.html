@@ -1,1351 +1,1063 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0d9488">
-<link rel="manifest" href="manifest.webmanifest?v=128">
-<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png?v=129">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&family=Noto+Sans+Thai+Looped:wght@400;700&display=swap" rel="stylesheet">
-<title>タイ語トレーニング</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2f6fed">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>運動記録 β</title>
 <style>
-:root{
- --bg:#f7fbf7;--card:#fff;--ink:#153237;--muted:#708184;
- --main:#148f83;--main2:#0d756c;--soft:#e9f6f2;--line:#dcece7;
- --good:#e1f5e7;--bad:#fde3e3;--warn:#fff3cf;--gold:#d8a63a;
-}
-*{box-sizing:border-box}
-html{background:var(--bg)}
-body{
- margin:0;
- background:
-   radial-gradient(circle at 15% 0%,rgba(231,244,225,.95),transparent 34%),
-   radial-gradient(circle at 95% 4%,rgba(215,239,233,.95),transparent 32%),
-   linear-gradient(180deg,#fbfdf9 0%,#f2faf7 100%);
- color:var(--ink);
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-.wrap{max-width:820px;margin:auto;padding:14px 14px calc(110px + env(safe-area-inset-bottom))}
-.appHero{
- display:flex;align-items:center;gap:14px;
- padding:12px 14px 16px;
- margin:2px 0 12px;
- border-radius:26px;
- background:linear-gradient(135deg,#f6fbef 0%,#eaf8f4 55%,#fff8e9 100%);
- border:1px solid #e0eee7;
- box-shadow:0 8px 28px rgba(29,98,83,.08);
-}
-.appHero img{
- width:72px;height:72px;border-radius:22px;object-fit:cover;
- box-shadow:0 6px 16px rgba(33,93,78,.16);
-}
-.heroText h1{font-size:29px;margin:0 0 4px;line-height:1.08}
-.heroText .sub{margin:0;color:var(--muted);font-size:14px;line-height:1.4}
-.heroBadge{
- display:inline-block;margin-top:7px;padding:5px 9px;border-radius:999px;
- background:#fff7d8;color:#7b5a00;font-size:12px;font-weight:800
-}
-h1{font-size:27px;margin:4px 0}
-.sub{margin:0;color:var(--muted)}
-button{
- border:0;border-radius:16px;padding:12px 13px;font-size:15px;font-weight:800;
- min-height:46px;touch-action:manipulation
-}
-.main{background:linear-gradient(135deg,var(--main),var(--main2));color:white}
-.soft{background:var(--soft);color:#0b736a}
-.good{background:var(--good);color:#17662b}
-.bad{background:var(--bad);color:#922}
-.warn{background:var(--warn);color:#745700}
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#6d7687;--blue:#2f6fed;--blue2:#eaf1ff;--green:#daf6df;--red:#ffe2e2;--line:#dfe5ef}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:760px;margin:auto;padding:18px 16px 80px} h1{font-size:28px;margin:6px 0 2px}.sub{color:var(--muted);margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin:14px 0;box-shadow:0 3px 14px rgba(20,35,70,.05)}
+.section-title{font-size:20px;font-weight:800;margin-bottom:10px} label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px}
+input,select,textarea{width:100%;border:1px solid #ccd4e0;border-radius:14px;padding:13px;font-size:18px;background:#fff}
+button{border:0;border-radius:16px;padding:13px 15px;font-weight:700;font-size:16px}.primary{background:var(--blue);color:white}.soft{background:var(--blue2);color:#204d9e}.green{background:var(--green);color:#176b28}.red{background:var(--red);color:#9c2424}
+.toprow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:8px;min-width:0}.quick button{background:#f0f3f8;color:#33405a;padding:10px 0;min-width:0;width:100%;font-size:clamp(11px,3vw,16px);touch-action:manipulation}.grid2>div{min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{background:#eef3ff;color:#244d9b;border-radius:999px;padding:10px 13px;font-weight:700}.chip.active{background:var(--blue);color:#fff}
+.suggest{margin-top:8px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}.suggest button{display:block;width:100%;text-align:left;border-radius:0;background:#fff;border-bottom:1px solid var(--line);color:var(--ink)}.suggest button:last-child{border-bottom:0}
+.exercise{border-top:1px solid var(--line);padding:13px 0}.exercise:first-child{border-top:0}.name{font-size:18px;font-weight:800}.small{font-size:13px;color:var(--muted)}
+.setrow{display:grid;grid-template-columns:1fr auto 1fr auto;gap:7px;align-items:center;margin-top:8px}.setrow input{font-size:17px;padding:11px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#f7f9fd;border-radius:16px;padding:12px;text-align:center}.stat b{display:block;font-size:22px}.hidden{display:none!important}
+.rowBtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.rowBtns button{flex:1;min-width:120px}
+.draftNotice{background:#fff7d8;border:1px solid #f0d57a;border-radius:16px;padding:12px;margin:10px 0}
+.historyDay{border:1px solid var(--line);border-radius:18px;margin:10px 0;overflow:hidden;background:#fff}
+.historyHead{width:100%;background:#fff;color:var(--ink);text-align:left;border-radius:0;padding:14px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.historyBody{padding:0 14px 14px;background:#fbfcfe}.historySession{border-top:1px solid var(--line);padding:12px 0}.historySession:first-child{border-top:0}
+.detailExercise{margin:8px 0}.detailSets{color:var(--muted);font-size:14px;margin-top:3px}
+.editSetRow{display:grid;grid-template-columns:1.5fr .7fr .7fr auto;gap:6px;align-items:center;margin:7px 0}.editSetRow input,.editSetRow select{font-size:15px;padding:10px}
+.aliasRow{display:grid;grid-template-columns:1fr auto 1fr auto;gap:6px;align-items:center;margin-top:8px}.aliasArrow{text-align:center;color:var(--muted);font-weight:800}.editAddPanel{margin-top:12px;padding:14px;border:1px solid #d7e0ec;border-radius:18px;background:#f8fbff}.editSuggest{border:1px solid #ccd4e0;border-radius:14px;overflow:hidden;background:#fff;margin-top:6px}.editSuggest button{display:block;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid #edf1f6;padding:12px 14px;font-size:16px}.editSuggest button:last-child{border-bottom:0}.editSelected{font-size:20px;font-weight:800;margin:8px 0;color:#17233d}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef3ff;color:#244d9b;font-size:12px;font-weight:700}
 
-.nav{
- position:fixed;left:50%;bottom:0;transform:translateX(-50%);
- width:min(820px,100%);z-index:40;
- display:flex;gap:6px;overflow-x:auto;
- padding:8px 12px calc(8px + env(safe-area-inset-bottom));
- background:rgba(250,253,251,.96);backdrop-filter:blur(18px);
- border-top:1px solid #dcebe6;box-shadow:0 -8px 28px rgba(25,83,70,.08);
- scrollbar-width:none
-}
-.nav::-webkit-scrollbar{display:none}
-.nav button{
- flex:0 0 auto;min-width:92px;min-height:54px;
- border-radius:18px;background:transparent;color:#33776f;
- padding:9px 12px
-}
-.nav button.main{background:#e2f3ee;color:#0b756c;box-shadow:none}
-.nav button[data-tab="home"]::before{content:"🏠 ";font-size:16px}
-.nav button[data-tab="letters"]::before{content:"✍️ ";font-size:16px}
-.nav button[data-tab="study"]::before{content:"🐘 ";font-size:16px}
-.nav button[data-tab="record"]::before{content:"📊 ";font-size:16px}
+.suggestCard{border:1px solid #dbe4f2;border-radius:18px;padding:13px;margin-top:10px;background:#fbfdff}.suggestTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.suggestName{font-size:17px;font-weight:800}.suggestScore{white-space:nowrap;background:#eef3ff;color:#244d9b;border-radius:999px;padding:5px 8px;font-size:12px;font-weight:800}.suggestReason{margin-top:5px;font-size:13px;color:var(--muted);line-height:1.45}.suggestSets{margin-top:8px;font-size:14px;font-weight:700;line-height:1.55}.suggestActions{display:flex;gap:8px;margin-top:10px}.suggestActions button{flex:1;padding:10px 12px;font-size:14px}.suggestEmpty{padding:10px 2px;color:var(--muted);font-size:13px;line-height:1.55}
 
-.card{
- background:rgba(255,255,255,.96);border:1px solid var(--line);
- border-radius:26px;padding:17px;margin:14px 0;
- box-shadow:0 8px 24px rgba(31,91,77,.07)
-}
-.title{font-weight:900;font-size:22px;margin-bottom:10px;letter-spacing:.01em}
-.small{font-size:13px;color:var(--muted)}
-.hidden{display:none!important}
+.healthBox{margin-top:12px;padding:13px;border:1px solid #d7e8dc;border-radius:16px;background:#f7fff9}.healthBtn{background:#e5f7e9;color:#176b28}.healthBtnSynced{background:#edf1f5;color:#5f6875}.healthSetup{margin-top:10px;padding:12px;border-radius:14px;background:#f7f9fd;border:1px solid var(--line);font-size:13px;line-height:1.6}.healthSetup ol{padding-left:20px;margin:8px 0}.healthSetup code{font-size:12px;background:#eef2f7;padding:2px 5px;border-radius:6px}.healthStatus{margin-top:6px;font-size:12px;color:#5f6875}
+.exerciseMeta{margin-top:10px;padding:12px;border:1px solid #dbe4f2;border-radius:14px;background:#f8fbff;font-size:13px;line-height:1.6}.exerciseMeta b{color:#203d75}.careNote{margin-top:8px;padding:9px 10px;border-radius:12px;background:#fff7e8;color:#77521a}.safetyNote{margin-top:8px;padding:9px 10px;border-radius:12px;background:#fff1f1;color:#8d2f2f}.sideWrap{margin-top:8px}.sideTag{display:inline-block;margin-left:6px;padding:2px 7px;border-radius:999px;background:#eef3ff;color:#244d9b;font-size:11px;font-weight:800}.editSideRow{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;margin:-2px 0 9px 0;padding-left:6px}.editSideRow select{font-size:14px;padding:9px}
 
-#homeTab>.card:nth-of-type(2){background:linear-gradient(135deg,#ffffff,#f7fcfa)}
-#homeTab .grid2 button{min-height:68px;font-size:17px}
-#homeTab .grid2 button.soft{background:linear-gradient(135deg,#edf8f5,#e7f5f1)}
-#homeTab .grid2 button.main{background:linear-gradient(135deg,#18a092,#0d796f)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.stat{background:#f0f8f5;border:1px solid #e0efea;border-radius:17px;padding:11px 7px;text-align:center}
-.stat b{display:block;font-size:22px;color:#0d756c}
-@media(max-width:520px){
- .stats{grid-template-columns:repeat(2,1fr)}
- .heroText h1{font-size:25px}
- .appHero img{width:64px;height:64px}
-}
-
-input,textarea,select{
- width:100%;font-size:18px;border:1px solid #cfe1dc;border-radius:16px;
- padding:13px;background:#fff;outline:none
-}
-input:focus,textarea:focus,select:focus{border-color:#7cc0b5;box-shadow:0 0 0 3px rgba(20,143,131,.09)}
-.thai{font-size:34px;line-height:1.5}
-.bigthai{font-size:96px;text-align:center;line-height:1.1}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.bar{height:10px;border-radius:99px;background:#e9eeee;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--main)}
-.answer{border:1px dashed #b9ceca;border-radius:17px;padding:13px;margin-top:10px;background:#fbfefd}
-audio{width:100%}
-.pill{display:inline-block;background:#edf7f5;padding:6px 9px;border-radius:999px;margin:3px;color:#176c65;font-size:13px}
-.roman{font-size:18px;color:#0a746a;font-weight:800;letter-spacing:.2px}
-.kana{font-size:14px;color:var(--muted);margin-top:3px}
-.metaGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-.metaBox{background:#f2f8f7;border-radius:15px;padding:10px;border:1px solid #e1efeb}
-.metaBox span{display:block;font-size:11px;color:var(--muted)}
-.metaBox b{font-size:16px}
-.toggleRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0}
-.switchBtn{background:#eef6f4;color:#176c65;padding:8px 11px;border-radius:999px;font-size:13px}
-canvas{width:100%;height:270px;border:2px dashed #9ccac0;border-radius:22px;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;background:linear-gradient(180deg,#fff,#fcfefd)}
-.modeSwitch{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#edf6f4;padding:5px;border-radius:16px;margin:10px 0}
-.modeSwitch button{background:transparent;color:#08736b}
-.modeSwitch button.active{background:linear-gradient(135deg,var(--main),var(--main2));color:#fff}
-.choiceList{display:grid;gap:9px;margin-top:10px}
-.choiceBtn{width:100%;text-align:left;background:#fff;border:1px solid #bfd6d1;color:var(--ink);padding:13px 14px;border-radius:17px}
-.choiceThai{font-size:26px;font-weight:800;line-height:1.35}
-.choiceRoman{font-size:16px;color:#08736b;font-weight:800;margin-top:3px}
-.choiceKana{font-size:13px;color:var(--muted);margin-top:2px}
-.choiceBtn.correct{background:var(--good);border-color:#8cc99a}
-.choiceBtn.wrong{background:var(--bad);border-color:#e7a6a6}
-.inputRow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
-.micBtn{min-width:64px;background:var(--soft);color:#08736b;font-size:21px}
-.sourceTag{display:inline-block;margin-top:7px;padding:4px 8px;border-radius:999px;background:#fff4cf;color:#725600;font-size:12px;font-weight:800}.searchHit{cursor:pointer}.searchSnippet{font-size:13px;color:var(--muted);white-space:pre-wrap;max-height:7.5em;overflow:hidden}.foundationCount{font-size:12px;color:var(--muted);text-align:center;margin:4px 0 8px}
-.learningAudioBtn{width:100%;margin-top:9px}
-.explainBox{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:16px;background:#f8fcfb;overflow-wrap:anywhere;word-break:break-word}
-.explainTitle{font-weight:900;color:var(--main);margin-bottom:8px}
-.explainRow{padding:9px 0;border-bottom:1px solid #e6efec}.explainRow:last-child{border-bottom:0}
-.explainThai{font-size:21px;font-weight:850;line-height:1.45;overflow-wrap:anywhere}.explainJP{margin-top:2px}.posTag{display:inline-block;font-size:11px;font-weight:800;color:#087d72;background:#e5f6f1;border-radius:999px;padding:2px 7px;vertical-align:middle;margin-left:5px}.grammarRow{margin-top:8px;line-height:1.55}.explainNote{font-size:13px;color:var(--muted);margin-top:3px}
-.pointBox{margin-top:10px;padding:11px 12px;background:#fff8df;border-radius:14px;overflow-wrap:anywhere}
-.pronNav{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.recordFilterChips{display:flex;gap:7px;overflow-x:auto;padding:2px 0 6px;-webkit-overflow-scrolling:touch}.recordFilterChips button{white-space:nowrap;flex:0 0 auto;padding:9px 12px}.recordFilterChips button.active{background:linear-gradient(135deg,var(--main),var(--main2));color:white}
-.recordFilterGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 12px}.recordFilterGrid select{min-width:0}
-.recordCard{margin-top:10px}.recordCard summary{list-style:none;cursor:pointer}.recordCard summary::-webkit-details-marker{display:none}
-.recordTitle{font-size:22px;font-weight:900;line-height:1.4;overflow-wrap:anywhere;word-break:break-word}.recordSub{margin-top:3px;overflow-wrap:anywhere;word-break:break-word}
-.recordMeta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}.recordMeta div{background:#f4faf8;border-radius:12px;padding:8px}.recordMeta b{display:block;font-size:18px}
-.historyEntry{margin-top:9px;padding:11px;background:#f8fbfa;border-radius:14px;border:1px solid var(--line);overflow-wrap:anywhere;word-break:break-word}.historyEntry.wrong{background:#fff7f7}.historyQA{margin-top:6px}.historyLabel{font-size:12px;color:var(--muted);font-weight:800}.historyValue{margin-top:2px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
-@media(max-width:430px){.recordFilterGrid{grid-template-columns:1fr}.recordTitle{font-size:20px}.explainThai{font-size:20px}.pronNav button{min-width:0;padding:11px 8px}}
-.explainRoman{font-size:16px;font-weight:800;color:var(--teal);margin-top:3px;overflow-wrap:anywhere}
-.reviewQueueBar{display:none;position:sticky;top:8px;z-index:40;margin:0 0 12px;padding:10px 12px;border:1px solid #b9ddd6;border-radius:18px;background:rgba(246,255,252,.97);box-shadow:0 5px 18px rgba(26,78,69,.08)}
-.reviewQueueBar.active{display:block}.reviewQueueTop{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
-.reviewQueueType{font-weight:800;color:var(--main)}.reviewQueueHint{margin-top:5px;font-size:12px;color:var(--muted)}
-body.reviewActive .reviewHide{display:none!important}
-.thaiGlyphLooped{font-family:"Noto Sans Thai Looped","Thonburi",sans-serif}
-.thaiGlyphModern{font-family:"Noto Sans Thai","Sukhumvit Set","Arial",sans-serif}
-.classSwitch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;background:#edf6f4;padding:5px;border-radius:16px;margin:10px 0}
-.classSwitch button{min-width:0;padding:10px 5px;background:transparent;color:#08736b;font-size:13px}
-.classSwitch button.active{background:linear-gradient(135deg,var(--main),var(--main2));color:#fff}
-.glyphSwitch{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#edf6f4;padding:5px;border-radius:16px;margin:10px 0}
-.glyphSwitch button{background:transparent;color:#08736b}
-.glyphSwitch button.active{background:linear-gradient(135deg,var(--main),var(--main2));color:#fff}
-.glyphCompare{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-.glyphSample{border:1px solid var(--line);background:#fbfefd;border-radius:16px;padding:10px;text-align:center}
-.glyphSample .sampleChar{font-size:48px;line-height:1.15}
-.classBadge{display:inline-block;padding:4px 8px;border-radius:999px;background:#fff4cf;color:#725600;font-size:12px;font-weight:800;margin-top:5px}
-@media(max-width:390px){.classSwitch button{font-size:12px;padding:9px 3px}.glyphSample .sampleChar{font-size:42px}}
-
-.soundFilter{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;background:#edf6f4;padding:5px;border-radius:16px;margin:10px 0}.soundFilter button{min-width:0;padding:10px 4px;background:transparent;color:#08736b;font-size:13px}.soundFilter button.active{background:linear-gradient(135deg,var(--main),var(--main2));color:#fff}.soundPrompt{font-size:82px;line-height:1.15;text-align:center;margin:18px 0 12px;font-weight:800}.soundAnswerBox{margin-top:10px}.soundHint{padding:9px 11px;border-radius:13px;background:#f4faf8;color:var(--muted);font-size:12px}.soundMeta{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}.soundMeta>div{padding:9px 10px;border:1px solid var(--line);border-radius:13px;background:#fbfefd}.vowelAudioNote{margin-top:8px;padding:9px 10px;border-radius:13px;background:#fff9e8;font-size:12px;color:#6a5520}@media(max-width:390px){.soundPrompt{font-size:72px}.soundFilter button{font-size:12px;padding:9px 2px}.soundMeta{grid-template-columns:1fr}}
-
-
-/* v1.26 UX / reading */
-.nav button[data-tab="review"]::before{content:"🔁 ";font-size:16px}
-.readingPrompt{font-size:54px;line-height:1.35;text-align:center;font-weight:900;margin:18px 0 8px;word-break:break-word}
-.readingLead{text-align:center;color:var(--muted);font-size:13px;margin-bottom:12px}
-.meaningChoices{display:grid;grid-template-columns:1fr;gap:8px}
-.meaningChoices button{width:100%;text-align:left;padding:14px 15px;background:#f7fbfa;color:var(--ink);border:1px solid var(--line);box-shadow:none}
-.meaningChoices button.correct{background:#e4f5e8;border-color:#89c897}.meaningChoices button.wrong{background:#fde7e7;border-color:#e6a0a0}
-.readingBreakdown{margin-top:10px;padding:11px 12px;border-radius:14px;background:#f4faf8;border:1px solid var(--line)}
-.skillIssueGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.skillIssueGrid button{font-size:13px;padding:10px 6px}
-.utilityGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.utilityGrid button{font-size:14px;padding:12px 8px}
-.homeRecommend{background:linear-gradient(135deg,#e9f8f3,#fff8e3)}
-.reviewSummary{font-size:32px;font-weight:900;color:var(--main);text-align:center;margin:8px 0}
-@media(max-width:390px){.readingPrompt{font-size:46px}.nav button{font-size:13px;padding:11px 10px}.utilityGrid button{font-size:13px}}
-
-/* v1.29 実戦表現ライブラリ */
-.fieldManager summary{cursor:pointer;font-weight:900;font-size:17px;list-style:none}
-.fieldManager summary::-webkit-details-marker{display:none}
-.fieldManager summary::after{content:"＋";float:right;color:var(--muted)}
-.fieldManager[open] summary::after{content:"−"}
-.fieldFormat{margin-top:10px;padding:10px 12px;border-radius:13px;background:#f8fafc;border:1px dashed var(--line);white-space:pre-wrap;font-size:12px;line-height:1.65}
-.fieldPreviewItem,.fieldListItem{padding:11px 12px;border:1px solid var(--line);border-radius:14px;margin-top:8px;background:#fff}
-.fieldPreviewStatus{font-size:12px;font-weight:800;margin-bottom:5px}
-.fieldPracticePrompt{font-size:25px;font-weight:900;line-height:1.45;margin:16px 0;text-align:center}
-.fieldAnswerThai{font-size:34px;font-weight:900;line-height:1.4;margin-top:8px;text-align:center}
-.fieldExplanation{margin-top:10px;padding:11px 12px;border-radius:14px;background:#fff8df;border:1px solid #efd88c;white-space:pre-wrap;line-height:1.65}
-.fieldGradeGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
-.fieldGradeGrid button{min-height:48px}
-@media(max-width:390px){.fieldGradeGrid{grid-template-columns:1fr}.fieldAnswerThai{font-size:30px}}
 </style>
-<script src="jszip.min.js"></script>
-</head><body><div class="wrap">
-<div class="appHero">
-<img src="icon-192.png" alt="タイ語トレーニング">
-<div class="heroText">
-<h1>タイ語トレーニング <span class="small">v1.29</span></h1>
-<p class="sub">読む・書く・聞く・話すを、1つのアプリで。</p>
-<span class="heroBadge">🇹🇭 Thai Study</span>
-</div>
-</div>
-<div class="nav">
-<button class="main" data-tab="home" onclick="tab('home')">ホーム</button>
-<button class="soft" data-tab="letters" onclick="tab('letters')">学ぶ</button>
-<button class="soft" data-tab="study" onclick="tab('study')">練習</button>
-<button class="soft" data-tab="review" onclick="tab('review')">復習</button>
-<button class="soft" data-tab="record" onclick="tab('record')">成績</button>
+</head>
+<body>
+<div class="wrap">
+<h1>運動記録 β <span style="font-size:14px;color:#6d7687">v0.13.3</span></h1>
+<p class="sub">途中保存・あとから編集対応。過去履歴から今日のおすすめも提案します。</p>
+
+<div class="toprow">
+<button class="primary" onclick="showTab('today')">今日</button>
+<button class="soft" onclick="showTab('history')">履歴</button>
 </div>
 
-<div id="reviewQueueBar" class="reviewQueueBar">
-<div class="reviewQueueTop"><span><b>苦手復習</b> <span id="reviewQueueProgress"></span></span><span id="reviewQueueType" class="reviewQueueType"></span></div>
-<div class="reviewQueueHint">間違えた問題だけを復習中</div>
-</div>
-<section id="homeTab">
-<div id="materialNeeded" class="card hidden"><div class="title">教材データを読み込んでください</div><p>初回だけ、専用の教材パックZIPを読み込みます。画像・音声・Lessonデータはこの端末内に保存され、GitHubにはアップロードされません。</p><button class="main" style="width:100%" onclick="tab('material')">教材パックを読み込む</button></div>
-<div class="card"><div class="title">今日の学習</div>
-<div class="stats"><div class="stat"><span class="small">総回答</span><b id="totalAttempts">0</b></div><div class="stat"><span class="small">ミス</span><b id="totalWrong">0</b></div><div class="stat"><span class="small">正答率</span><b id="accuracy">—</b></div><div class="stat"><span class="small">要復習</span><b id="weakCount">0</b></div></div>
-<div class="grid2" style="margin-top:12px"><button class="main" onclick="startWeak()">苦手から復習</button><button class="soft" onclick="tab('study')">自由に練習</button></div></div>
-<div class="card"><div class="title">教材の状態</div><div id="homeMaterialSummary" class="small">教材パック：確認中…</div><div id="appStatus" class="answer">v1.29 実戦表現対応・教材v20対応</div></div>
-<div class="card homeRecommend"><div class="title">今日のおすすめ</div><div class="small" style="margin-bottom:10px">今の学習段階に合わせ、実単語の「読む→意味」を中心に。既知の超基本語は出題頻度を下げ、苦手を優先します。</div>
-<button class="main" style="width:100%" onclick="openMode('reading')">📖 実単語リーディング</button>
-<div class="grid2" style="margin-top:8px"><button class="soft" onclick="openMode('sound')">🔡 文字→発音</button><button class="soft" onclick="startWeak()">🔁 苦手復習</button></div></div>
-<div class="card"><div class="title">教材・その他</div><div class="small" style="margin-bottom:10px">普段は上の「学ぶ・練習・復習」でOK。教材参照や設定だけここから。</div><div class="utilityGrid">
-<button class="soft" onclick="tab('lessons')">📚 レッスン</button><button class="soft" onclick="tab('pages')">📖 本文</button>
-<button class="soft" onclick="tab('audio')">🔊 教材音声</button><button class="soft" onclick="tab('books')">🔎 教材検索</button>
-<button class="soft" onclick="tab('material')">📦 教材読込</button><button class="soft" onclick="tab('backup')">💾 データ</button>
-</div></div>
-</section>
-
-
-<section id="lettersTab" class="hidden">
+<section id="todayTab">
+<div id="draftNotice" class="draftNotice hidden"><b>一時保存データがあります</b><div id="draftTime" class="small"></div><div class="rowBtns"><button class="primary" onclick="resumeDraft()">続きを開く</button><button class="red" onclick="discardDraft()">破棄</button></div></div>
 <div class="card">
-<div class="title">文字を学ぶ</div><div class="small">単体の形と音を確認したら、実単語で読む練習へ進みます。</div><div class="grid2 reviewHide" style="margin:10px 0"><button class="soft" onclick="openMode('reading')">📖 実単語で読む</button><button class="soft" onclick="tab('lessons')">📚 教材レッスン</button></div>
-<div class="modeSwitch reviewHide" style="grid-template-columns:repeat(4,1fr)">
-<button id="foundationConsonantBtn" class="active" onclick="setFoundationCategory('consonants')">子音44</button>
-<button id="foundationVowelBtn" onclick="setFoundationCategory('vowels')">母音</button>
-<button id="foundationDigitBtn" onclick="setFoundationCategory('digits')">数字</button>
-<button id="foundationToneBtn" onclick="setFoundationCategory('tones')">声調</button>
-</div>
-<div id="consonantClassRow" class="classSwitch reviewHide">
-<button id="classAllBtn" class="active" onclick="setConsonantClassFilter('all')">全44</button>
-<button id="classMidBtn" onclick="setConsonantClassFilter('mid')">中 9</button>
-<button id="classHighBtn" onclick="setConsonantClassFilter('high')">高 11</button>
-<button id="classLowBtn" onclick="setConsonantClassFilter('low')">低 24</button>
-</div>
-<div class="modeSwitch reviewHide" style="margin-top:10px">
-<button id="foundationOrderBtn" class="active" onclick="setFoundationOrder('sequential')">順番</button>
-<button id="foundationRandomBtn" onclick="setFoundationOrder('random')">🔀 ランダム</button>
-</div>
-<div class="glyphSwitch reviewHide">
-<button id="glyphLoopedBtn" class="active" onclick="setThaiGlyphStyle('looped')">教科書字体</button>
-<button id="glyphModernBtn" onclick="setThaiGlyphStyle('modern')">Web字体</button>
-</div>
-<div id="glyphCompareBox" class="glyphCompare reviewHide">
-<div class="glyphSample"><div class="small">教科書字体</div><div id="glyphLoopedSample" class="sampleChar thaiGlyphLooped">ก</div></div>
-<div class="glyphSample"><div class="small">Web字体</div><div id="glyphModernSample" class="sampleChar thaiGlyphModern">ก</div></div>
-</div>
-<div class="small reviewHide" style="margin-top:-2px">Web字体は代表的なループなし字体。実際のサイトではフォントごとに字形が少し変わります。</div>
-<div class="toggleRow"><span class="small">発音記号は常時表示</span><button class="switchBtn" onclick="toggleKana()">カタカナ補助 ON/OFF</button></div>
-<div id="vowelAudioNote" class="vowelAudioNote hidden">🔊 母音は記号単独ではなく、อ を母音の台にした例音を再生します。再生する例は正解表示後に確認できます。</div>
-<div id="letterPageChar" class="bigthai">？</div>
-<div style="text-align:center">
-<div id="letterPageName" style="font-size:21px;font-weight:900"></div>
-<div id="letterPageRoman" class="roman"></div>
-<div id="letterClassBadge" class="classBadge">子音クラス</div>
-<div id="letterPageKana" class="kana"></div>
-</div>
-<div class="metaGrid">
-<div class="metaBox"><span>子音クラス</span><b id="letterClass">—</b></div>
-<div class="metaBox"><span>頭子音</span><b id="letterInitial">—</b></div>
-<div class="metaBox"><span>末子音</span><b id="letterFinal">—</b></div>
-<div class="metaBox"><span>代表語</span><b id="letterExample">—</b></div>
-</div>
-<div style="position:relative;margin:12px 0"><canvas id="letterCv"></canvas><div id="letterGhost" class="bigthai" style="position:absolute;inset:65px 0 auto;opacity:.12;pointer-events:none">ก</div></div>
-<div class="grid3">
-<button class="soft" onclick="clearLetterCv()">消す</button>
-<button class="soft" onclick="letterPageSound()">🔊 発音</button>
-<button class="warn" onclick="revealLetterAnswer()">正解表示</button>
-</div>
-<div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradeLetterPage(false)">まだ無理</button><button class="good" onclick="gradeLetterPage(true)">できた</button></div>
-<div id="letterPageStats" class="answer"></div>
-<div class="grid2 reviewHide" style="margin-top:10px"><button class="soft" onclick="prevLetterPage()">← 前</button><button class="soft" onclick="nextLetterPage()">次 →</button></div>
-</div>
-<div class="card reviewHide">
-<div class="title">実戦表現</div>
-<div class="small">旅先・SNS・実会話で拾った表現を、自分専用の教材として追加します。登録はコピペ一括でOK。</div>
-<div class="grid2" style="margin-top:10px"><button class="main" onclick="openMode('field')">🗣 練習する</button><button class="soft" onclick="document.getElementById('fieldManager').open=true;document.getElementById('fieldBulkInput').focus()">＋ 一括登録</button></div>
-<details id="fieldManager" class="fieldManager" style="margin-top:12px"><summary>登録・管理</summary>
-<div class="small" style="margin-top:10px">別スレで作ったフォーマットを、そのまま貼り付けてください。複数件まとめて登録できます。</div>
-<textarea id="fieldBulkInput" rows="10" style="margin-top:8px" placeholder="日本語：コップを落とした
-自然なタイ語：ทำแก้วตก
-発音：tham kɛ̂ɛo tòk
-解説：
-・ทำ + O + 自動詞/状態 = Oを〜の状態にする
-・แก้ว = コップ
-・ตก = 落ちる"></textarea>
-<div class="grid2" style="margin-top:8px"><button class="soft" onclick="previewFieldImport()">内容を確認</button><button id="fieldCommitBtn" class="main" onclick="commitFieldImport()" disabled>登録する</button></div>
-<div id="fieldImportMsg" class="small" style="margin-top:8px"></div>
-<div id="fieldImportPreview"></div>
-<div style="margin-top:14px"><b>登録済み <span id="fieldCount">0</span>件</b><input id="fieldSearch" placeholder="日本語・タイ語で検索" oninput="renderFieldLibrary()" style="margin-top:8px"><div id="fieldLibraryList"></div></div>
-</details>
-</div>
-</section>
-
-<section id="studyTab" class="hidden">
-<div class="card reviewHide"><div class="title">練習する</div><div class="small" style="margin-bottom:9px">おすすめは「実単語で読む」。細かい設定は各モード内にまとめています。</div><div class="grid2"><button class="main" onclick="openMode('reading')">📖 実単語で読む</button><button class="soft" onclick="openMode('sound')">🔡 文字→発音</button><button class="soft" onclick="openMode('word')">🔤 意味→タイ語</button><button class="soft" onclick="openMode('pron')">🎤 発音</button><button class="soft" onclick="openMode('comp')">📝 タイ作文</button><button class="soft" onclick="openMode('letter')">✍️ 書き取り</button><button class="soft" onclick="openMode('field')">🗣 実戦表現</button></div></div>
-
-<div id="letterMode" class="card hidden"><div class="title">タイ文字・書き取り</div><div id="letterChar" class="bigthai">ก</div><div style="text-align:center"><b id="letterName"></b><div id="letterRoman" class="roman"></div><div id="letterKana" class="kana"></div><div id="letterWord" class="thai"></div><div id="letterJP"></div></div>
-<div style="position:relative;margin:12px 0"><canvas id="cv"></canvas><div id="ghost" class="bigthai" style="position:absolute;inset:65px 0 auto;opacity:.12;pointer-events:none">ก</div></div>
-<div class="grid3"><button class="soft" onclick="clearCv()">消す</button><button class="soft" onclick="letterSound()">🔊</button><button class="warn" onclick="revealSmallLetterAnswer()">正解表示</button></div><div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradeCurrent(false)">不正解</button><button class="good" onclick="gradeCurrent(true)">正解</button></div><div id="itemMiniStats" class="answer"></div></div>
-
-<div id="soundMode" class="card hidden"><div class="title">文字 → 発音</div><div class="small">タイ文字を見て、教材の発音記号・ローマ字を入力。文字練習で苦手な文字ほど優先して出題できます。</div>
-<div class="soundFilter reviewHide"><button id="soundConsonantBtn" class="active" onclick="setSoundCategory('consonants')">子音</button><button id="soundVowelBtn" onclick="setSoundCategory('vowels')">母音</button><button id="soundMixedBtn" onclick="setSoundCategory('mixed')">混合</button></div>
-<div id="soundClassRow" class="classSwitch reviewHide" style="grid-template-columns:repeat(5,minmax(0,1fr))"><button id="soundClassMidHighBtn" class="active" onclick="setSoundClassFilter('midhigh')">中＋高</button><button id="soundClassMidBtn" onclick="setSoundClassFilter('mid')">中</button><button id="soundClassHighBtn" onclick="setSoundClassFilter('high')">高</button><button id="soundClassLowBtn" onclick="setSoundClassFilter('low')">低</button><button id="soundClassAllBtn" onclick="setSoundClassFilter('all')">全部</button></div>
-<div class="modeSwitch reviewHide" style="margin-top:10px"><button id="soundAdaptiveBtn" class="active" onclick="setSoundOrder('adaptive')">🎯 弱点優先</button><button id="soundRandomBtn" onclick="setSoundOrder('random')">🔀 完全ランダム</button></div>
-<div id="soundPrompt" class="soundPrompt thaiGlyphLooped">ก</div>
-<div id="soundQuestionMeta" class="small" style="text-align:center"></div>
-<div class="inputRow"><input id="soundInput" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="例：k / kh / ng / o / oo"><button class="main" onclick="checkSoundAnswer(false)">判定</button></div>
-<div class="grid2" style="margin-top:8px"><button class="bad" onclick="checkSoundAnswer(true)">わからない</button><button class="soft" onclick="playSoundExample()">🔊 例音</button></div>
-<div id="soundResult" class="answer hidden soundAnswerBox"></div>
-<button id="soundNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="nextSoundQuestion()">次の問題 →</button>
-<div id="soundStats" class="answer"></div>
-<div class="soundHint">入力は教材表記が基準です。ŋ→ng、ʉ→ue、ɛ→ae、ɔ→aw、ə→oe などの簡易入力も正解にします。</div></div>
-
-<div id="readingMode" class="card hidden"><div class="title">実単語リーディング</div>
-<div class="small">①タイ文字を声に出して読む → ②意味を選ぶ → ③発音記号と文字構成を確認。既知の超基本語は低頻度、苦手語を優先します。</div>
-<div class="modeSwitch reviewHide" style="margin-top:10px"><button id="readingAdaptiveBtn" class="active" onclick="setReadingOrder('adaptive')">🎯 弱点優先</button><button id="readingRandomBtn" onclick="setReadingOrder('random')">🔀 ランダム</button></div>
-<div id="readingPrompt" class="readingPrompt">ภาษา</div><div class="readingLead">まず声に出して読んでから、意味を選んでください。</div>
-<div id="readingChoices" class="meaningChoices"></div>
-<div id="readingResult" class="answer hidden"></div>
-<button id="readingNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="nextReadingQuestion()">次の問題 →</button>
-<div id="readingStats" class="answer"></div></div>
-
-<div id="wordMode" class="card hidden"><div class="title">単語・チャンク</div><div class="small">日本語を見てタイ語を答える</div>
-<div class="grid2 reviewHide" style="margin-top:10px">
-<select id="wordTypeFilter" onchange="resetWordSequence();showWord()">
-<option value="word" selected>単語（付録）</option><option value="chunk">チャンク</option><option value="phrase">例文</option><option value="all">全部</option>
-</select>
-<select id="wordLessonFilter" onchange="resetWordSequence();showWord()"><option value="all">全Lesson</option></select>
-</div>
-<button class="soft reviewHide" style="width:100%;margin-top:8px" onclick="openAppendixVocabulary()">📚 教材付録「単語リスト」を見る（p.146〜163）</button><div class="modeSwitch reviewHide" style="margin-top:10px"><button id="wordOrderBtn" class="active" onclick="setWordOrder('sequential')">順番</button><button id="wordRandomBtn" onclick="setWordOrder('random')">🔀 ランダム</button></div><div class="small" id="wordCountInfo"></div><div id="wordPrompt" style="font-size:24px;font-weight:800;margin:10px 0"></div><div class="modeSwitch"><button id="wordChoiceModeBtn" class="active" onclick="setWordAnswerMode('choice')">選択式</button><button id="wordInputModeBtn" onclick="setWordAnswerMode('input')">入力式</button></div><div id="wordChoiceArea"><select id="choiceAssist" onchange="saveChoiceAssist();renderWordChoices()"><option value="roman">タイ文字＋発音記号＋カタカナ</option><option value="romanOnly">タイ文字＋発音記号</option><option value="thai">タイ文字のみ</option></select><div id="wordChoices" class="choiceList"></div></div><div id="wordInputArea" class="hidden"><div class="small">タイ語を入力。音声入力はiPhoneキーボードのマイクを使えます。</div><div class="inputRow"><input id="wordInput" placeholder="タイ語を入力"><button class="micBtn" onclick="openNativeDictationHint()">🎤</button></div><button class="main" style="width:100%;margin-top:8px" onclick="checkWord()">判定</button><div id="wordVoiceStatus" class="small" style="margin-top:8px"></div></div><div id="wordResult" class="answer hidden"></div><button id="wordNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="nextWordQuestion()">次の問題 →</button></div>
-
-<div id="fieldMode" class="card hidden"><div class="title">実戦表現</div>
-<div class="small">日本語を見てタイ語を思い出す → 答えと解説を確認 → 3段階で自己評価。あやしい表現は復習に残ります。</div>
-<div id="fieldPracticeCount" class="small" style="margin-top:10px"></div>
-<div id="fieldPracticePrompt" class="fieldPracticePrompt">登録した実戦表現がありません</div>
-<div id="fieldPracticeAnswer" class="answer hidden"></div>
-<button id="fieldRevealBtn" class="main" style="width:100%" onclick="revealFieldAnswer()">答えを見る</button>
-<div id="fieldGradeArea" class="fieldGradeGrid hidden"><button class="good" onclick="gradeFieldExpression('ok')">使えた</button><button class="warn" onclick="gradeFieldExpression('uncertain')">あやしい</button><button class="bad" onclick="gradeFieldExpression('no')">言えなかった</button></div>
-<button id="fieldNextBtn" class="soft hidden" style="width:100%;margin-top:8px" onclick="nextFieldExpression()">次の表現 →</button>
-<div id="fieldPracticeStats" class="answer"></div>
-</div>
-
-<div id="pronMode" class="card hidden"><div class="title">発音練習</div><select class="reviewHide" id="pronLessonFilter" onchange="pronI=0;showPron()"><option value="all">全Lesson</option></select><div class="small" id="pronCountInfo"></div><div id="pronThai" class="thai"></div><div id="pronRoman" class="roman"></div><div id="pronKana" class="kana"></div><div id="pronJP"></div>
-<div class="grid2" style="margin-top:10px"><button class="soft" onclick="playPron()">🔊 教材音声</button><button id="recordPronBtn" class="main" onclick="togglePronRecording()">🎤 録音する</button></div>
-<div id="pronRecordBox" class="answer hidden"><b>自分の発音</b><audio id="pronPlayback" controls style="width:100%;margin-top:8px"></audio><div class="grid2" style="margin-top:8px"><button class="bad" onclick="gradePronManual(false)">もう一度</button><button class="good" onclick="gradePronManual(true)">できた</button></div></div>
-<div id="pronResult" class="answer"><span class="small">LessonのDialogue文は、冒頭導入を除外して文単位に切り直した教材公式音声を再生します。録音は端末内で処理し、サーバーへ送信しません。</span></div>
-<div class="pronNav reviewHide"><button class="soft" onclick="prevPron()">← 前の文</button><button class="soft" onclick="nextPron()">次の文 →</button></div></div>
-
-<div id="compMode" class="card hidden"><div class="title">タイ作文</div><div class="small">判定後、模範解答と発音記号を表示</div><select class="reviewHide" id="compLessonFilter" onchange="showComp()"><option value="all">全Lesson</option></select><div class="small" id="compCountInfo"></div><div class="small">日本語 → タイ語</div><div id="compJP" style="font-size:23px;font-weight:800;margin:10px 0"></div><textarea id="compInput" rows="4" placeholder="タイ語で書く"></textarea><button class="main" style="width:100%;margin-top:8px" onclick="checkComp()">正誤判定</button><div id="compResult" class="answer hidden"></div></div>
-</section>
-
-<section id="reviewTab" class="hidden"><div class="card"><div class="title">復習</div><div class="small">間違えた問題は3回連続正解まで残します。通常の練習にも弱点は自動で多めに混ざります。</div><div class="reviewSummary"><span id="reviewWeakCount">0</span> 件</div><div class="grid2"><button class="main" onclick="startWeak()">苦手から復習</button><button class="soft" onclick="showWeakRecords()">苦手一覧を見る</button></div></div>
-<div class="card"><div class="title">間違いの種類</div><div class="small">実単語リーディングでは「読めない／意味不明／綴り不安／声調ミス」を別々に記録します。次の出題優先度に反映します。</div><div id="skillProfileSummary" class="answer"></div></div></section>
-
-<section id="recordTab" class="hidden"><div class="card"><div class="title">成績・復習</div>
-<div class="small">間違えた内容を確認して、その場で再練習できます。</div>
-<div class="recordFilterChips" style="margin-top:10px"><button id="rfAll" class="active" onclick="setRecordPrimary('all')">すべて</button><button id="rfWeak" onclick="setRecordPrimary('weak')">苦手</button><button id="rfMiss" onclick="setRecordPrimary('miss')">ミスあり</button><button id="rfRecent" onclick="setRecordPrimary('recent')">最近間違えた</button></div>
-<div class="recordFilterGrid"><select id="recordLessonFilter" onchange="renderRecord()"><option value="all">全Lesson</option></select><select id="recordTypeFilter" onchange="renderRecord()"><option value="all">全種類</option><option value="word">単語・フレーズ</option><option value="chunk">チャンク</option><option value="composition">タイ作文</option><option value="pron">発音</option><option value="foundation">文字・基礎</option><option value="sound">文字→発音</option><option value="reading">実単語リーディング</option><option value="field">実戦表現</option></select></div>
-<div id="recordList"></div></div></section>
-
-<section id="audioTab" class="hidden"><div class="card"><div class="title">教材音声 83本</div><input id="audioSearch" placeholder="Lesson 3 / Pronunciation など" oninput="renderAudio()"><div id="audioList"></div></div></section>
-
-
-
-<section id="lessonsTab" class="hidden">
-<div class="card"><div class="title">ニューエクスプレス 20課</div>
-<p class="small">目次の印刷ページと付属音声をLesson単位で紐づけています。Lesson 1〜20の会話文を構造化済み。タイ文字・発音記号・日本語訳を併記。</p>
-<div id="lessonList"></div></div>
-<div id="lessonDetail" class="card hidden">
-<button class="soft" onclick="closeLesson()">← 一覧へ</button>
-<div class="title" id="lessonTitle" style="margin-top:12px"></div>
-<div id="lessonMeta" class="small"></div>
-<div class="grid2" style="margin-top:10px">
-<button class="main" onclick="playLessonAudio('dialogue')">🔊 Dialogue</button>
-<button class="soft" onclick="playLessonAudio('words')">🔊 Words</button>
-</div>
-<div id="lessonDialogue"></div><div id="lessonSummary" class="answer hidden"></div>
-<div class="grid2" style="margin-top:12px">
-<button class="soft" onclick="openLessonPage()">📖 本文画像</button>
-<button class="soft" onclick="openLessonPractice('word')">🔤 単語・フレーズ</button>
-</div><div class="grid2" style="margin-top:8px"><button class="soft" onclick="openLessonPractice('pron')">🎤 発音練習</button><button class="soft" onclick="openLessonPractice('comp')">📝 タイ作文</button></div>
-</div>
-</section>
-
-<section id="pagesTab" class="hidden">
-<div class="card">
-<div class="title">ニューエクスプレス 撮影ページビューア</div>
-<p class="small">撮影画像157枚を収録しています。見開き撮影もあるため、撮影No.と本の印刷ページは別管理です。各Lessonから対応する本文画像へ移動できます。</p>
+<div class="section-title">プロフィール</div>
 <div class="grid2">
-<div>
-<label class="small">ページへ移動</label>
-<input id="pageJump" type="number" inputmode="numeric" min="1" max="157" value="1">
+<div><label>体重 kg</label><input id="weight" type="number" inputmode="decimal" placeholder="例 75"></div>
+<div><label>筋トレ強度</label><select id="intensity"><option value="3.5">軽め</option><option value="5" selected>普通</option><option value="6">きつめ</option></select></div>
 </div>
-<div style="display:flex;align-items:end"><button class="main" style="width:100%" onclick="jumpPage()">移動</button></div>
+<button class="soft" style="margin-top:10px;width:100%" onclick="saveProfile()">保存</button>
 </div>
-<div class="grid3" style="margin-top:10px">
-<button class="soft" onclick="prevPage()">← 前</button>
-<button class="soft" onclick="fitPage()">全体表示</button>
-<button class="soft" onclick="nextPage()">次 →</button>
-</div>
-<div style="text-align:center;margin:12px 0"><b id="pageLabel">撮影 #1</b></div>
-<div id="pageFrame" style="overflow:auto;max-height:72vh;border:1px solid var(--line);border-radius:16px;background:#f2f4f4;text-align:center">
-<img id="pageImage" alt="教材ページ" style="max-width:100%;height:auto;display:block;margin:auto">
-</div>
-<div class="grid2" style="margin-top:10px">
-<button class="soft" onclick="zoomPage(1.25)">＋ 拡大</button>
-<button class="soft" onclick="zoomPage(.8)">− 縮小</button>
-</div>
-<div class="answer">
-<b>このページで学習</b>
-<div class="grid2" style="margin-top:8px">
-<button class="soft" onclick="tab('audio')">🔊 音声を探す</button>
-<button class="soft" onclick="tab('study')">✍️ 練習へ</button>
-</div>
-</div>
-</div>
-</section>
-
-<section id="booksTab" class="hidden">
-<div class="card"><div class="title">教材DB</div><div id="bookList"></div>
-<div id="coverageBox" class="answer"></div>
-<label style="margin-top:12px">ニューエクスプレス全文検索</label>
-<input id="textbookSearch" placeholder="例：過去、買物、ไหม、Exercise" oninput="searchTextbook()">
-<div id="textbookSearchInfo" class="small" style="margin-top:6px"></div>
-<div id="textbookSearchResults"></div>
-<p class="small">検索テキストは撮影ページから作った索引用データです。細かいタイ文字・発音記号は原本画像を最終確認してください。</p>
-</div></section>
 
 
-<section id="materialTab" class="hidden">
 <div class="card">
-<div class="title">教材データ（端末内）</div>
-<div id="materialStatus" class="answer">状態を確認中…</div>
-<label class="main" style="display:block;text-align:center;margin-top:12px;cursor:pointer">教材パックZIPを選ぶ
-<input id="materialZipInput" type="file" accept=".zip,application/zip" onchange="importMaterialPack(this.files[0])" style="display:none"></label>
-<div id="importProgress" class="small" style="margin-top:10px"></div>
-<div class="bar" style="margin-top:8px"><i id="importBar" style="width:0%"></i></div>
-<button class="bad" style="width:100%;margin-top:14px" onclick="deleteMaterialPack()">端末内の教材データを削除</button>
-<p class="small">※教材パックZIP自体は「ファイル」アプリに残しておいてください。iPhoneの空き容量管理などでWebサイトデータが削除された場合、再読み込みできます。</p>
+<div class="section-title">今日のおすすめ</div>
+<p class="small">過去の記録から、休養日数・最近の実施頻度・直近の成績を見て候補を出します。おすすめを開いても記録には追加されません。</p>
+<div class="rowBtns"><button class="soft" onclick="renderAllSuggestions()">↻ おすすめを更新</button></div>
+<div id="workoutSuggestions"><span class="small">履歴を確認しています…</span></div>
+<div style="height:1px;background:var(--line);margin:16px 0 12px"></div>
+<div class="section-title" style="font-size:16px">新しく試す候補</div>
+<p class="small">まだ記録がない種目から、最近少なめの部位を中心に候補を出します。初回の重量は提案せず、軽めから試す前提です。</p>
+<div id="newExerciseSuggestions"><span class="small">候補を確認しています…</span></div>
+</div>
+
+<div class="card">
+<div class="section-title">種目を選ぶ</div>
+
+<label>最近使った種目</label>
+<div id="recentChips" class="chips"></div>
+
+<label>検索・音声入力</label>
+<div style="display:grid;grid-template-columns:1fr auto;gap:8px">
+<input id="exerciseSearch" placeholder="例：レッグプレス" autocomplete="off">
+<button class="soft" onclick="voiceSearch()">🎤</button>
+</div>
+<div id="suggestions" class="suggest hidden"></div>
+
+<div style="margin-top:12px">
+<div class="small">選択中</div>
+<div id="selectedExercise" class="name">未選択</div>
+<div id="exerciseMetaPanel" class="exerciseMeta hidden"></div>
+<div id="sideWrap" class="sideWrap hidden"><label>左右</label><select id="side"><option value="左">左</option><option value="右">右</option></select></div>
+</div>
+
+<div class="grid2" style="margin-top:8px">
+<div><label>前回</label><div id="previousBox" class="small" style="padding:14px 4px">—</div></div>
+<div><label>前回コピー</label><button class="soft" style="width:100%" onclick="copyPrevious()">前回値を入れる</button></div>
+</div>
+
+<div class="grid2" style="margin-top:8px">
+<div>
+<label>重量 kg</label><input id="kg" type="number" min="0" inputmode="decimal">
+<div class="quick"><button onclick="bump('kg',-5)">-5</button><button onclick="bump('kg',-2.5)">-2.5</button><button onclick="bump('kg',2.5)">+2.5</button><button onclick="bump('kg',5)">+5</button></div>
+</div>
+<div>
+<label>回数</label><input id="reps" type="number" min="1" inputmode="numeric">
+<div class="quick"><button onclick="bump('reps',-2)">-2</button><button onclick="bump('reps',-1)">-1</button><button onclick="bump('reps',1)">+1</button><button onclick="bump('reps',2)">+2</button></div>
+</div>
+</div>
+<button class="primary" style="margin-top:12px;width:100%" onclick="addSet()">＋ このセットを記録</button>
+</div>
+
+<div class="card">
+<div class="section-title">種目名の言い換え</div>
+<p class="small">呼び方を登録すると、検索や音声入力で正式な種目名に置き換えます。</p>
+<div class="grid2"><div><label>呼び方</label><input id="aliasFrom" placeholder="例：アームカール"></div><div><label>正式名</label><input id="aliasTo" list="exerciseNames" placeholder="例：ダンベルカール"></div></div>
+<datalist id="exerciseNames"></datalist>
+<button class="soft" style="margin-top:10px;width:100%" onclick="addCustomAlias()">＋ 言い換えを登録</button>
+<div id="aliasList" style="margin-top:10px"></div>
+</div>
+
+<div class="card">
+<div class="section-title">今日のセット</div>
+<div id="setsList"><span class="small">まだ記録なし</span></div>
+</div>
+
+<div class="card">
+<div class="section-title">有酸素・その他</div>
+<div class="grid2">
+<div><label>種目</label><select id="cardioType"></select></div>
+<div><label>時間 分</label><input id="cardioMin" type="number" inputmode="numeric" value="20"></div>
+</div>
+<div class="quick"><button onclick="setMinutes(10)">10分</button><button onclick="setMinutes(20)">20分</button><button onclick="setMinutes(30)">30分</button><button onclick="setMinutes(45)">45分</button></div>
+<button class="primary" style="margin-top:12px;width:100%" onclick="addCardio()">＋ 記録</button>
+<div id="cardioList" style="margin-top:12px"></div>
+</div>
+
+<div class="card">
+<div class="section-title">今日のまとめ</div>
+<div class="summary">
+<div class="stat"><span class="small">セット</span><b id="sumSets">0</b></div>
+<div class="stat"><span class="small">運動時間</span><b id="sumMin">0</b><span class="small">分</span></div>
+<div class="stat"><span class="small">推定アクティブ消費</span><b id="sumKcal">0</b><span class="small">kcal</span></div><div class="small" style="grid-column:1/-1;margin-top:4px">筋トレは1セット約45秒の実働換算。有酸素は種目別METから休息分を除いた概算です。</div>
+</div>
+<label>メモ（任意）</label><textarea id="memo" placeholder="空欄でOK"></textarea>
+<div class="rowBtns">
+<button class="soft" onclick="saveDraft(true)">💾 一時保存</button>
+<button class="green" onclick="finishSession()">✅ 今日の運動を保存</button>
+</div>
+<div class="healthBox">
+<button class="healthBtn" style="width:100%" onclick="finishSessionToHealth()">❤️ 保存してヘルスケアへ連携</button>
+<div class="healthStatus">Apple Watchなし運用向け。推定アクティブ消費(kcal)をショートカット経由でヘルスケアへ記録します。</div>
+<button class="soft" style="width:100%;margin-top:9px" onclick="toggleHealthSetup()">⚙️ 初回設定を見る</button>
+<div id="healthSetup" class="healthSetup hidden">
+<b>初回だけ「ショートカット」を1つ作ります（名前は固定）</b>
+<ol>
+<li>iPhoneの「ショートカット」アプリで新規作成し、名前を <b>ジムをヘルスケアに記録</b> にする。</li>
+<li>「テキストを分割」を追加。入力は <b>クリップボード</b>、区切り文字は <code>~</code>。</li>
+<li>分割結果から「リストから項目を取得」で <b>4番目</b>（kcal）を取得。</li>
+<li>同じ分割結果から <b>3番目</b>（日付）を取得し、「入力から日付を取得」に通す。</li>
+<li>「ヘルスケアサンプルを記録」を追加し、種類を <b>アクティブエネルギー</b>、値を4番目の項目、単位をkcal、日付を手順4の日付にする。</li>
+</ol>
+<div>入力形式：<code>GYMLOG_V1~記録ID~日付~kcal~分</code></div><div style="margin-top:6px">※v0.13.2では、アプリがこの文字列をクリップボードに書き込みます。ショートカット側は「ショートカットの入力」ではなく、<b>クリップボード</b>を直接分割してください。</div>
+<div style="margin-top:8px"><button class="soft" onclick="openShortcutsApp()">ショートカットを開く</button></div>
+</div>
+</div>
+<p class="small">※消費カロリーは概算です。連携後にアプリ側の記録を修正しても、ヘルスケア側は自動更新されません。</p>
 </div>
 </section>
 
-<section id="backupTab" class="hidden"><div class="card"><div class="title">データ管理</div><div class="grid2"><button class="soft" onclick="exportData()">学習データをバックアップ</button><label class="soft" style="text-align:center;padding:12px;border-radius:15px;font-weight:800">読み込み<input type="file" id="restoreFile" accept=".json" onchange="restoreData()" style="display:none"></label></div><p class="small">学習履歴・弱点プロファイル・出題設定など、thai_ で始まる端末内設定をまとめて保存します。教材画像・音声は容量が大きいため含めません。復元後は教材パックZIPを再読み込みしてください。</p></div></section>
+<section id="historyTab" class="hidden">
+<div id="historyMain" class="card"><div class="section-title">履歴</div><p class="small">同じ日の記録はまとめて表示。日付をタップすると詳細が開きます。各記録から過去分もヘルスケアへ連携できます。</p><div id="historyList"></div></div>
+<div id="editHistoryCard" class="card hidden">
+<div class="section-title">保存済み記録を修正</div>
+<label for="editHistoryDateInput">トレーニング日</label>
+<input id="editHistoryDateInput" type="date" onchange="syncEditWorking()">
+<div class="small" style="margin-top:6px">日付を変更しても、Appleヘルスケアに登録済みのデータは自動変更されません。</div>
+<div id="editSetsList"></div>
+<button class="soft" style="width:100%;margin-top:10px" onclick="toggleEditAddPanel(true)">＋ 筋トレセットを追加</button>
+
+<div id="editAddPanel" class="editAddPanel hidden">
+<div class="section-title" style="font-size:17px">種目を追加</div>
+<label>最近使った種目</label>
+<div id="editRecentChips" class="chips"></div>
+
+<label>検索</label>
+<input id="editExerciseSearch" placeholder="例：フレンチプレス、アームカール" autocomplete="off">
+<div id="editSuggestions" class="editSuggest hidden"></div>
+
+<div class="small" style="margin-top:10px">選択中</div>
+<div id="editSelectedExercise" class="editSelected">未選択</div>
+
+<div class="grid2" style="margin-top:8px">
+<div><label>前回</label><div id="editPreviousBox" class="small" style="padding:14px 4px">—</div></div>
+<div><label>前回コピー</label><button class="soft" style="width:100%" onclick="copyEditPrevious()">前回値を入れる</button></div>
 </div>
+
+<div class="grid2" style="margin-top:8px">
+<div><label>重量 kg</label><input id="editKg" type="number" min="0" inputmode="decimal"><div class="quick"><button onclick="editBump('editKg',-5)">-5</button><button onclick="editBump('editKg',-2.5)">-2.5</button><button onclick="editBump('editKg',2.5)">+2.5</button><button onclick="editBump('editKg',5)">+5</button></div></div>
+<div><label>回数</label><input id="editReps" type="number" min="1" inputmode="numeric"><div class="quick"><button onclick="editBump('editReps',-2)">-2</button><button onclick="editBump('editReps',-1)">-1</button><button onclick="editBump('editReps',1)">+1</button><button onclick="editBump('editReps',2)">+2</button></div></div>
+</div>
+<div id="editSideWrap" class="sideWrap hidden"><label>左右</label><select id="editSide"><option value="左">左</option><option value="右">右</option></select></div>
+
+<div class="rowBtns">
+<button class="soft" onclick="toggleEditAddPanel(false)">閉じる</button>
+<button class="primary" onclick="commitEditAddedSet()">＋ このセットを追加</button>
+</div>
+</div>
+
+<div class="section-title" style="font-size:17px;margin-top:14px">有酸素・その他</div><div id="editCardioList"></div>
+<button class="soft" style="width:100%;margin-top:10px" onclick="addEditCardio()">＋ 有酸素・その他を追加</button>
+<label>メモ</label><textarea id="editMemo"></textarea>
+<div class="rowBtns"><button class="soft" onclick="cancelHistoryEdit()">キャンセル</button><button class="green" onclick="saveHistoryEdit()">修正を保存</button></div>
+</div>
+</section>
+</div>
+
 <script>
-let DATA=null,currentMode='',currentItem=null,letterI=0,wordI=0,pronI=0,compI=0;let foundationCategory='consonants',foundationI=0;
-let reviewQueue=[],reviewQueuePos=0,reviewQueueActive=false;
-let foundationOrderMode=localStorage.getItem('thai_foundation_order_v1')||'sequential';
-let consonantClassFilter=localStorage.getItem('thai_consonant_class_filter_v1')||'all';
-let thaiGlyphStyle=localStorage.getItem('thai_glyph_style_v1')||'looped';
-const THAI_CONSONANT_CLASSES={
- mid:new Set(['ก','จ','ฎ','ฏ','ด','ต','บ','ป','อ']),
- high:new Set(['ข','ฃ','ฉ','ฐ','ถ','ผ','ฝ','ศ','ษ','ส','ห']),
- low:new Set(['ค','ฅ','ฆ','ง','ช','ซ','ฌ','ญ','ฑ','ฒ','ณ','ท','ธ','น','พ','ฟ','ภ','ม','ย','ร','ล','ว','ฬ','ฮ'])
+const STORE='gym_log_beta_v1';
+const PROFILE='gym_log_profile_v1';
+const RECENT='gym_log_recent_exercises_v1';
+const DRAFT='gym_log_draft_v1';
+const CUSTOM_ALIASES='gym_log_custom_aliases_v1';
+const exerciseDB=[
+{n:'レッグプレス',cat:['脚','マシン']},
+{n:'リニアレッグプレス',cat:['脚','マシン']},
+{n:'ハックスクワット',cat:['脚','マシン']},
+{n:'ベルトスクワット',cat:['脚','マシン']},
+{n:'レッグエクステンション',cat:['脚','マシン']},
+{n:'レッグカール',cat:['脚','マシン']},
+{n:'シーテッドレッグカール',cat:['脚','マシン']},
+{n:'ライイングレッグカール',cat:['脚','マシン']},
+{n:'ヒップアブダクション',cat:['脚','尻','マシン']},
+{n:'ヒップアダクション',cat:['脚','内もも','マシン']},
+{n:'インナーサイ',cat:['脚','内もも','マシン']},
+{n:'アウターサイ',cat:['脚','尻','マシン']},
+{n:'グルートマシン',cat:['尻','マシン']},
+{n:'グルートエクステンション',cat:['尻','マシン']},
+{n:'カーフレイズ',cat:['脚','ふくらはぎ']},
+{n:'シーテッドカーフレイズ',cat:['脚','ふくらはぎ','マシン']},
+{n:'スタンディングカーフレイズ',cat:['脚','ふくらはぎ']},
+
+{n:'スクワット',cat:['脚','バーベル']},
+{n:'フロントスクワット',cat:['脚','バーベル']},
+{n:'ゴブレットスクワット',cat:['脚','ダンベル']},
+{n:'ダンベルスクワット',cat:['脚','ダンベル']},
+{n:'ブルガリアンスクワット',cat:['脚','尻','自重','ダンベル']},
+{n:'ランジ',cat:['脚','尻','自重']},
+{n:'ウォーキングランジ',cat:['脚','尻','自重','ダンベル']},
+{n:'リバースランジ',cat:['脚','尻','自重','ダンベル']},
+{n:'サイドランジ',cat:['脚','尻','自重']},
+{n:'ステップアップ',cat:['脚','尻','自重','ダンベル']},
+{n:'ヒップスラスト',cat:['尻','バーベル']},
+{n:'グルートブリッジ',cat:['尻','自重']},
+{n:'ルーマニアンデッドリフト',cat:['脚','尻','背中','バーベル','ダンベル']},
+{n:'デッドリフト',cat:['背中','脚','バーベル']},
+{n:'ダンベルデッドリフト',cat:['脚','背中','ダンベル']},
+{n:'スミスマシンスクワット',cat:['脚','スミス','マシン']},
+{n:'スミスマシンランジ',cat:['脚','尻','スミス','マシン']},
+
+{n:'チェストプレス',cat:['胸','マシン']},
+{n:'インクラインチェストプレス',cat:['胸','マシン']},
+{n:'デクラインチェストプレス',cat:['胸','マシン']},
+{n:'ペックフライ',cat:['胸','マシン']},
+{n:'ペクトラルフライ',cat:['胸','マシン']},
+{n:'ベンチプレス',cat:['胸','バーベル']},
+{n:'インクラインベンチプレス',cat:['胸','バーベル']},
+{n:'デクラインベンチプレス',cat:['胸','バーベル']},
+{n:'ダンベルプレス',cat:['胸','ダンベル']},
+{n:'インクラインダンベルプレス',cat:['胸','ダンベル']},
+{n:'デクラインダンベルプレス',cat:['胸','ダンベル']},
+{n:'ダンベルフライ',cat:['胸','ダンベル']},
+{n:'インクラインダンベルフライ',cat:['胸','ダンベル']},
+{n:'プッシュアップ',cat:['胸','腕','自重']},
+{n:'ナロープッシュアップ',cat:['胸','腕','三頭','自重']},
+{n:'インクラインプッシュアップ',cat:['胸','自重']},
+{n:'デクラインプッシュアップ',cat:['胸','自重']},
+{n:'ディップス',cat:['胸','三頭','自重']},
+{n:'アシストディップス',cat:['胸','三頭','マシン']},
+{n:'ケーブルクロスオーバー',cat:['胸','ケーブル']},
+{n:'ケーブルフライ',cat:['胸','ケーブル']},
+{n:'スミスマシンベンチプレス',cat:['胸','スミス','マシン']},
+
+{n:'ラットプルダウン',cat:['背中','マシン']},
+{n:'ワイドラットプルダウン',cat:['背中','マシン']},
+{n:'フロントラットプルダウン',cat:['背中','マシン']},
+{n:'シーテッドロー',cat:['背中','マシン']},
+{n:'ローロー',cat:['背中','マシン']},
+{n:'Tバーロー',cat:['背中','バーベル','マシン']},
+{n:'DYロー',cat:['背中','マシン']},
+{n:'ワンハンドダンベルロー',cat:['背中','ダンベル']},
+{n:'ダンベルロー',cat:['背中','ダンベル']},
+{n:'ベントオーバーロー',cat:['背中','バーベル']},
+{n:'ペンドレイロー',cat:['背中','バーベル']},
+{n:'ケーブルロー',cat:['背中','ケーブル']},
+{n:'フェイスプル',cat:['背中','肩','ケーブル']},
+{n:'チンニング',cat:['背中','自重']},
+{n:'プルアップ',cat:['背中','自重']},
+{n:'アシストチンニング',cat:['背中','マシン']},
+{n:'バックエクステンション',cat:['背中','自重','マシン']},
+
+{n:'ショルダープレス',cat:['肩','マシン']},
+{n:'ダンベルショルダープレス',cat:['肩','ダンベル']},
+{n:'アーノルドプレス',cat:['肩','ダンベル']},
+{n:'ミリタリープレス',cat:['肩','バーベル']},
+{n:'オーバーヘッドプレス',cat:['肩','バーベル']},
+{n:'サイドレイズ',cat:['肩','ダンベル']},
+{n:'ダンベルサイドレイズ',cat:['肩','ダンベル']},
+{n:'ケーブルサイドレイズ',cat:['肩','ケーブル']},
+{n:'フロントレイズ',cat:['肩','ダンベル']},
+{n:'ダンベルフロントレイズ',cat:['肩','ダンベル']},
+{n:'リアレイズ',cat:['肩','ダンベル']},
+{n:'リアデルト',cat:['肩','マシン']},
+{n:'リアデルトロー',cat:['肩','背中','マシン']},
+{n:'アップライトロー',cat:['肩','バーベル','ケーブル']},
+{n:'ダンベルシュラッグ',cat:['肩','僧帽筋','ダンベル']},
+{n:'バーベルシュラッグ',cat:['肩','僧帽筋','バーベル']},
+{n:'ケーブル外旋（ローテーターカフ）',en:'Cable External Rotation',cat:['肩','肩ケア','ケーブル'],aliases:['ケーブル外旋','ローテーターカフ外旋','external rotation'],trainingType:'care',routineTags:['shoulder-care'],targets:['ローテーターカフ','棘下筋','小円筋'],purpose:'肩のコンディショニング',form:['ケーブルを肘程度の高さに設定','マシンに対して横向き','肘を90度に曲げ、体側に固定','肘を動かさず前腕を外側へ回す','戻しは2〜3秒程度かける'],recommend:'0kgまたは最軽量・15〜20回 × 2セット。左右とも同重量・同回数を基本。',progression:'form-first',safety:'ピリッとした痛み・鋭い痛み・しびれ・引っ掛かりがある場合は中止。通常の筋肉の疲労感・熱感とは区別してください。'},
+
+{n:'アームカール',cat:['腕','二頭','マシン']},
+{n:'バイセップカール',cat:['腕','二頭','マシン']},
+{n:'プリーチャーカール',cat:['腕','二頭','マシン','バーベル']},
+{n:'ダンベルカール',cat:['腕','二頭','ダンベル']},
+{n:'ハンマーカール',cat:['腕','二頭','ダンベル']},
+{n:'インクラインダンベルカール',cat:['腕','二頭','ダンベル']},
+{n:'コンセントレーションカール',cat:['腕','二頭','ダンベル']},
+{n:'バーベルカール',cat:['腕','二頭','バーベル']},
+{n:'EZバーカール',cat:['腕','二頭','バーベル']},
+{n:'ケーブルカール',cat:['腕','二頭','ケーブル']},
+{n:'トライセプスエクステンション',cat:['腕','三頭','マシン']},
+{n:'ケーブルプレスダウン',cat:['腕','三頭','ケーブル']},
+{n:'ローププレスダウン',cat:['腕','三頭','ケーブル']},
+{n:'オーバーヘッドトライセプスエクステンション',cat:['腕','三頭','ダンベル','ケーブル']},
+{n:'フレンチプレス（ワンアーム）',cat:['腕','三頭','ダンベル']},
+{n:'フレンチプレス（両手）',cat:['腕','三頭','ダンベル']},
+{n:'ダンベルキックバック',cat:['腕','三頭','ダンベル']},
+{n:'スカルクラッシャー',cat:['腕','三頭','バーベル']},
+{n:'ナローベンチプレス',cat:['腕','三頭','胸','バーベル']},
+
+{n:'アブドミナル',cat:['腹','マシン']},
+{n:'アブドミナルクランチ',cat:['腹','マシン']},
+{n:'クランチ',cat:['腹','自重']},
+{n:'シットアップ',cat:['腹','自重']},
+{n:'レッグレイズ',cat:['腹','自重']},
+{n:'ハンギングレッグレイズ',cat:['腹','自重']},
+{n:'ニーレイズ',cat:['腹','自重']},
+{n:'プランク',cat:['腹','体幹','自重']},
+{n:'サイドプランク',cat:['腹','体幹','自重']},
+{n:'アブローラー',cat:['腹','体幹','自重']},
+{n:'トーソローテーション',cat:['腹','体幹','マシン']},
+{n:'ロータリートルソー',cat:['腹','体幹','マシン']},
+{n:'パロフプレス（ケーブル）',en:'Cable Pallof Press',cat:['体幹','ゴルフ／体幹','ゴルフ','ケーブル'],aliases:['パロフプレス','pallof press','cable pallof press'],trainingType:'stability',routineTags:['golf-core'],sideMode:'required',targets:['腹斜筋','腹横筋'],purpose:'抗回旋能力・体幹安定性',form:['ケーブルに対して横向きで姿勢を安定','胸前からまっすぐ前へプレス','身体を回転させず伸展位置で約2秒静止','ゆっくり胸前へ戻す'],recommend:'左右10〜12回 × 2セット。伸展位置で約2秒静止。',progression:'stability-first'},
+
+{n:'バーピー',cat:['全身','自重']},
+{n:'マウンテンクライマー',cat:['全身','自重']},
+{n:'ジャンピングスクワット',cat:['脚','全身','自重']},
+{n:'その他',cat:['その他']}
+];
+
+const exercises=exerciseDB.map(x=>x.n);
+
+const cardioActivities=[
+{label:'エアロバイク 普通',met:5.5,aliases:['エアロバイク','バイク','自転車','アップライトバイク']},
+{label:'エアロバイク 強め',met:8.0,aliases:['バイク強め','エアロバイク強め']},
+{label:'トレッドミル',met:5.0,aliases:['ランニングマシン','ランニングマシーン','トレッド','treadmill']},
+{label:'クロストレーナー',met:5.0,aliases:['エリプティカル','クロス']},
+{label:'アップライトバイク',met:5.5,aliases:['アップライト']},
+{label:'リカンベントバイク',met:5.0,aliases:['リカンベント']},
+{label:'ステアクライマー',met:8.0,aliases:['パワーミル','階段','ステップミル']},
+{label:'ローイングマシン',met:7.0,aliases:['ローイング','ローワー']},
+{label:'ウォーキング',met:3.5,aliases:['歩行','歩く']},
+{label:'ウォーキング 速め',met:4.8,aliases:['早歩き','速歩']},
+{label:'ランニング',met:8.0,aliases:['ジョギング','走る']},
+{label:'ランニング 軽め',met:8.0,aliases:['軽いランニング']},
+{label:'ゴルフ練習場',met:3.0,aliases:['打ちっぱなし','ゴルフ']},
+{label:'その他 有酸素',met:5.0,aliases:['その他有酸素']}
+];
+
+function populateCardioType(){
+ if(!window.cardioType)return;
+ const keep=cardioType.value;
+ cardioType.innerHTML=cardioActivities.map(a=>`<option value="${a.label}">${a.label}</option>`).join('');
+ if(keep && cardioActivities.some(a=>a.label===keep))cardioType.value=keep;
+}
+function cardioMeta(name){
+ return cardioActivities.find(a=>a.label===name)||null;
+}
+function canonicalCardioName(name){
+ if(!name)return '';
+ const exact=cardioMeta(name);if(exact)return exact.label;
+ const q=norm(name);
+ const hit=cardioActivities.find(a=>norm(a.label)===q||(a.aliases||[]).some(x=>norm(x)===q));
+ return hit?.label||name;
+}
+
+const aliases={
+'プリーチャー':'プリーチャーカール',
+'アームカール':'ダンベルカール',
+'ワンアームフレンチ':'フレンチプレス（ワンアーム）',
+'ワンハンドフレンチ':'フレンチプレス（ワンアーム）',
+'フレンチプレスワンアーム':'フレンチプレス（ワンアーム）',
+'フレンチプレス片手':'フレンチプレス（ワンアーム）',
+'プリチャー':'プリーチャーカール',
+'アブダクション':'ヒップアブダクション',
+'アダクション':'ヒップアダクション',
+'腹筋':'クランチ',
+'背筋':'バックエクステンション',
+'懸垂':'チンニング',
+'腕立て':'プッシュアップ',
+'腕立て伏せ':'プッシュアップ',
+'ブルガリアン':'ブルガリアンスクワット',
+'三頭':'トライセプスエクステンション',
+'二頭':'ダンベルカール',
+'ロングプル':'シーテッドロー',
+'プーリーロー':'シーテッドロー'
 };
 
-let foundationDeck=[],foundationDeckPos=0,foundationDeckKey='';
-let soundCategory=localStorage.getItem('thai_sound_category_v1')||'consonants';
-let soundClassFilter=localStorage.getItem('thai_sound_class_filter_v1')||'midhigh';
-let soundOrderMode=localStorage.getItem('thai_sound_order_v1')||'adaptive';
-let soundCurrentItem=null,soundLastId='',soundForcedItem=null;
-let readingOrderMode=localStorage.getItem('thai_reading_order_v1')||'adaptive';
-let readingCurrentItem=null,readingLastId='',readingOptions=[];
-const READING_PROFILE_KEY='thai_reading_skill_profile_v1';
-const FIELD_LIBRARY_KEY='thai_field_expression_library_v1';
-const FIELD_PROFILE_KEY='thai_field_expression_profile_v1';
-let fieldImportPreviewItems=[],fieldCurrent=null,fieldLastId='';
-const READING_KNOWN_BASIC=new Set(['ขอบคุณ','ขอบคุณครับ','ขอบคุณค่ะ','เข้าใจแล้ว','สวัสดี','สวัสดีครับ','สวัสดีค่ะ','ครับ','ค่ะ','ใช่','ไม่ใช่','โอเค','ไม่เป็นไร']);
-let wordOrderMode=localStorage.getItem('thai_word_order_v1')||'sequential';
-let wordDeck=[],wordDeckPos=0,wordDeckKey='';
-let wordAnswerMode=localStorage.getItem('thai_word_answer_mode_v1')||'choice';
-let currentWordOptions=[];let recordPrimary='all';
+const categoryTerms=['脚','胸','背中','肩','肩ケア','腕','腹','尻','自重','ダンベル','バーベル','ケーブル','マシン','二頭','三頭','体幹','ゴルフ','ゴルフ／体幹','全身'];
+let selected='';
+let previousSets=[];
+let current={date:localToday(),sets:[],cardio:[],memo:''};
+let editingLogId=null,editWorking=null,editSelected='',editPreviousSets=[];
+const HEALTH_SYNC='gym_health_sync_v1';
+const HEALTH_SHORTCUT_NAME='ジムをヘルスケアに記録';
+let pendingHealthSyncId=null;
+
+
+function uid(){return 'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function allLogs(){
+ let logs=JSON.parse(localStorage.getItem(STORE)||'[]'),changed=false;
+ logs.forEach(l=>{if(!l.id){l.id=uid();changed=true}});
+ if(changed)localStorage.setItem(STORE,JSON.stringify(logs));
+ return logs.sort((a,b)=>(b.savedAt||b.date||'').localeCompare(a.savedAt||a.date||''));
+}
+function writeLogs(logs){localStorage.setItem(STORE,JSON.stringify(logs))}
+function getCustomAliases(){return JSON.parse(localStorage.getItem(CUSTOM_ALIASES)||'{}')}
+function allAliases(){return {...aliases,...getCustomAliases()}}
+function resolveAlias(name){const a=allAliases();return a[name]||a[normalizeQ(name)]||name}
+
+function getRecent(){return JSON.parse(localStorage.getItem(RECENT)||'[]')}
+function saveRecent(name){
+ let r=getRecent().filter(x=>x!==name); r.unshift(name); r=r.slice(0,8);
+ localStorage.setItem(RECENT,JSON.stringify(r)); renderRecent();
+}
+function renderRecent(){
+ let r=getRecent(); if(!r.length) r=['レッグプレス','ショルダープレス','レッグレイズ','エアロバイク 普通'];
+ recentChips.innerHTML=r.map(x=>`<button class="chip ${selected===x?'active':''}" onclick="selectExercise('${x}')">${x}</button>`).join('');
+}
+function exerciseMeta(name){return exerciseDB.find(x=>x.n===resolveAlias(name))||null}
+function setSideVisibility(name,edit=false){
+ const meta=exerciseMeta(name),wrap=document.getElementById(edit?'editSideWrap':'sideWrap');
+ if(!wrap)return;wrap.classList.toggle('hidden',meta?.sideMode!=='required');
+}
+function renderExerciseMeta(name){
+ const el=document.getElementById('exerciseMetaPanel'),m=exerciseMeta(name);if(!el)return;
+ if(!m||(!m.en&&!m.purpose&&!m.recommend)){el.classList.add('hidden');el.innerHTML='';return}
+ const cats=(m.cat||[]).filter(x=>['肩ケア','ゴルフ／体幹','ゴルフ','肩','体幹','ケーブル'].includes(x));
+ const target=(m.targets||[]).join('・');
+ const form=(m.form||[]).map(x=>`<li>${escapeHtml(x)}</li>`).join('');
+ const special=m.trainingType==='care'?'肩ケア／コンディショニング種目：通常の重量アップ提案は行いません。':m.trainingType==='stability'?'安定性優先：重量より、身体を回転させず姿勢を維持できることを優先します。':'';
+ el.innerHTML=`${m.en?`<div><b>${escapeHtml(m.en)}</b></div>`:''}${cats.length?`<div>カテゴリー：${escapeHtml(cats.join(' ／ '))}</div>`:''}${m.purpose?`<div>目的：${escapeHtml(m.purpose)}</div>`:''}${target?`<div>主な対象：${escapeHtml(target)}</div>`:''}${m.recommend?`<div class="careNote">基本推奨：${escapeHtml(m.recommend)}${special?`<br>${escapeHtml(special)}`:''}</div>`:''}${form?`<details style="margin-top:8px"><summary><b>基本フォーム</b></summary><ul style="margin:6px 0 0;padding-left:20px">${form}</ul></details>`:''}${m.safety?`<div class="safetyNote">⚠️ ${escapeHtml(m.safety)}</div>`:''}`;
+ el.classList.remove('hidden');
+}
+function selectExercise(name){
+ name=resolveAlias(name);
+ if(name.startsWith('エアロバイク')){cardioType.selectedIndex=0; window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'});return}
+ selected=name; selectedExercise.textContent=name; exerciseSearch.value=name; suggestions.classList.add('hidden');
+ renderExerciseMeta(name);setSideVisibility(name,false);loadPrevious(name); renderRecent();
+}
+function loadPrevious(name){
+ previousSets=[]; const logs=allLogs();
+ for(const log of logs){const arr=(log.sets||[]).filter(s=>resolveAlias(s.exercise)===name); if(arr.length){previousSets=arr;break;}}
+ if(previousSets.length){
+  previousBox.textContent=previousSets.map(s=>`${s.side?`${s.side} `:''}${s.kg}kg×${s.reps}`).join(' / ');
+  const last=previousSets[previousSets.length-1]; kg.value=last.kg; reps.value=last.reps;if(last.side&&window.side)side.value=last.side;
+ } else { previousBox.textContent='記録なし'; kg.value=''; reps.value='';}
+}
+function copyPrevious(){ if(!previousSets.length)return; const last=previousSets[previousSets.length-1];kg.value=last.kg;reps.value=last.reps;if(last.side&&window.side)side.value=last.side}
+function normalizeQ(s){return (s||'').toLowerCase().replace(/\s+/g,'').replace(/[・ー\-]/g,'')}
+function findMatches(q){
+ const raw=(q||'').trim();
+ const n=normalizeQ(raw);
+ if(!n) return [];
+ const out=[];
+ const amap=allAliases();
+ const aliasTarget=amap[raw]||amap[n];
+ if(aliasTarget) out.push({label:aliasTarget,type:'strength'});
+
+ for(const item of exerciseDB){
+   const nameN=normalizeQ(item.n);
+   const extra=[item.en,...(item.aliases||[])].filter(Boolean).map(normalizeQ);
+   const catHit=item.cat.some(c=>normalizeQ(c).includes(n)||n.includes(normalizeQ(c)));
+   const extraHit=extra.some(x=>x.includes(n)||n.includes(x));
+   if(nameN.includes(n) || n.includes(nameN) || catHit || extraHit){
+     out.push({label:item.n,type:'strength'});
+   }
+ }
+ for(const c of cardioActivities){
+   const names=[c.label,...c.aliases];
+   if(names.some(a=>normalizeQ(a).includes(n)||n.includes(normalizeQ(a)))) out.push({label:c.label,type:'cardio'});
+ }
+ const seen=new Set();
+ return out.filter(x=>{const k=x.type+'|'+x.label;if(seen.has(k))return false;seen.add(k);return true}).slice(0,12);
+}
+function renderAliases(){
+ const custom=getCustomAliases();
+ const entries=Object.entries(custom);
+ aliasList.innerHTML=entries.length?entries.map(([a,b])=>`<div class="aliasRow"><span>${escapeHtml(a)}</span><span class="aliasArrow">→</span><b>${escapeHtml(b)}</b><button class="red" style="padding:7px 9px" onclick="deleteCustomAlias('${encodeURIComponent(a)}')">×</button></div>`).join(''):'<span class="small">追加した言い換えはまだありません</span>';
+ exerciseNames.innerHTML=exercises.map(x=>`<option value="${escapeHtml(x)}"></option>`).join('');
+}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
-function consonantClassOf(item){
- const ch=item?.ch||item?.display||'';
- if(THAI_CONSONANT_CLASSES.mid.has(ch))return 'mid';
- if(THAI_CONSONANT_CLASSES.high.has(ch))return 'high';
- if(THAI_CONSONANT_CLASSES.low.has(ch))return 'low';
- return '';
+function addCustomAlias(){
+ const a=aliasFrom.value.trim(),b=aliasTo.value.trim();
+ if(!a||!b){alert('呼び方と正式名を入れてください');return}
+ const match=exercises.find(x=>normalizeQ(x)===normalizeQ(b))||b;
+ if(!exercises.includes(match)){alert('正式名は種目リストから選んでください');return}
+ const m=getCustomAliases();m[a]=match;m[normalizeQ(a)]=match;localStorage.setItem(CUSTOM_ALIASES,JSON.stringify(m));aliasFrom.value='';aliasTo.value='';renderAliases();alert(`${a} → ${match} を登録しました`)
 }
-function consonantClassLabel(item){
- return ({mid:'中子音',high:'高子音',low:'低子音'}[consonantClassOf(item)]||'子音');
-}
-function updateConsonantClassUI(){
- const isConsonant=foundationCategory==='consonants';
- if(window.consonantClassRow)consonantClassRow.classList.toggle('hidden',!isConsonant);
- const map={all:'classAllBtn',mid:'classMidBtn',high:'classHighBtn',low:'classLowBtn'};
- Object.entries(map).forEach(([k,id])=>{const b=document.getElementById(id);if(b)b.classList.toggle('active',consonantClassFilter===k)});
-}
-function setConsonantClassFilter(v){
- if(!['all','mid','high','low'].includes(v))v='all';
- consonantClassFilter=v;
- localStorage.setItem('thai_consonant_class_filter_v1',v);
- foundationI=0;foundationDeck=[];foundationDeckPos=0;foundationDeckKey='';
- updateConsonantClassUI();showLetterPage();
-}
-function applyThaiGlyphStyle(){
- const useModern=thaiGlyphStyle==='modern';
- ['letterPageChar','letterGhost','letterChar','ghost'].forEach(id=>{
-   const el=document.getElementById(id);if(el){el.classList.toggle('thaiGlyphModern',useModern);el.classList.toggle('thaiGlyphLooped',!useModern)}
- });
- if(window.glyphLoopedBtn)glyphLoopedBtn.classList.toggle('active',!useModern);
- if(window.glyphModernBtn)glyphModernBtn.classList.toggle('active',useModern);
-}
-function setThaiGlyphStyle(v){
- thaiGlyphStyle=v==='modern'?'modern':'looped';
- localStorage.setItem('thai_glyph_style_v1',thaiGlyphStyle);
- applyThaiGlyphStyle();
-}
-function setFoundationOrder(mode){
- foundationOrderMode=mode;
- localStorage.setItem('thai_foundation_order_v1',mode);
- foundationI=0;foundationDeck=[];foundationDeckPos=0;foundationDeckKey='';
- updateOrderButtons();showLetterPage();
-}
-function setWordOrder(mode){
- wordOrderMode=mode;
- localStorage.setItem('thai_word_order_v1',mode);
- resetWordSequence();updateOrderButtons();showWord();
-}
-function updateOrderButtons(){
- if(window.foundationOrderBtn){
-   foundationOrderBtn.classList.toggle('active',foundationOrderMode==='sequential');
-   foundationRandomBtn.classList.toggle('active',foundationOrderMode==='random');
- }
- if(window.wordOrderBtn){
-   wordOrderBtn.classList.toggle('active',wordOrderMode==='sequential');
-   wordRandomBtn.classList.toggle('active',wordOrderMode==='random');
- }
+function deleteCustomAlias(enc){const a=decodeURIComponent(enc),m=getCustomAliases(),n=normalizeQ(a);delete m[a];delete m[n];localStorage.setItem(CUSTOM_ALIASES,JSON.stringify(m));renderAliases()}
 
- updateConsonantClassUI();applyThaiGlyphStyle();
+exerciseSearch.addEventListener('input',()=>{
+ const q=exerciseSearch.value.trim();
+ if(!q){suggestions.classList.add('hidden');return}
+ const hits=findMatches(q);
+ suggestions.innerHTML=hits.map(x=>`<button onclick="${x.type==='cardio'?`selectCardioActivity('${x.label}')`:`selectExercise('${x.label}')`}">${x.label}${x.type==='cardio'?'　<span style="color:#6d7687">有酸素</span>':''}</button>`).join('');
+ suggestions.classList.toggle('hidden',!hits.length);
+});
+
+document.addEventListener('input',e=>{
+ if(e.target?.id!=='editExerciseSearch')return;
+ const q=e.target.value.trim();
+ if(!q){editSuggestions.classList.add('hidden');return}
+ const hits=findMatches(q).filter(x=>x.type==='strength');
+ editSuggestions.innerHTML=hits.map(x=>`<button onclick="selectEditExercise('${x.label.replace(/'/g,"\\'")}')">${escapeHtml(x.label)}</button>`).join('');
+ editSuggestions.classList.toggle('hidden',!hits.length);
+});
+
+function selectCardioActivity(name){
+ name=canonicalCardioName(name);
+ exerciseSearch.value=name;
+ suggestions.classList.add('hidden');
+ selectedExercise.textContent=name+'（有酸素）';
+ selected='';
+ if(cardioActivities.some(a=>a.label===name))cardioType.value=name;
+ document.querySelector('#cardioType').scrollIntoView({behavior:'smooth',block:'center'});
 }
-function ensureFoundationDeck(list){
- const key=foundationCategory+':'+consonantClassFilter+':'+list.length;
- if(foundationDeckKey!==key || foundationDeck.length!==list.length){
-   foundationDeck=shuffle([...Array(list.length).keys()]);
-   foundationDeckPos=0;foundationDeckKey=key;
+function voiceSearch(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){alert('この環境では音声認識を利用できません');return}
+ const r=new SR(); r.lang='ja-JP'; r.interimResults=false; r.maxAlternatives=1;
+ r.onresult=e=>{
+  const text=e.results[0][0].transcript.trim(); exerciseSearch.value=text;
+  const hits=findMatches(text);
+  if(hits.length){
+    if(hits[0].type==='cardio') selectCardioActivity(hits[0].label);
+    else selectExercise(hits[0].label);
+  } else {
+    const ev=new Event('input'); exerciseSearch.dispatchEvent(ev);
+  }
+ };
+ r.onerror=()=>alert('音声入力に失敗しました');
+ r.start();
+}
+function bump(id,d){const el=document.getElementById(id);el.value=Math.max(0,(parseFloat(el.value)||0)+d)}
+function localToday(){
+ const d=new Date(),y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');
+ return `${y}-${m}-${day}`;
+}
+function dayDiff(from,to=localToday()){
+ const a=new Date(from+'T12:00:00'),b=new Date(to+'T12:00:00');
+ return Math.max(0,Math.round((b-a)/86400000));
+}
+function mainBodyPart(name){
+ const item=exerciseDB.find(x=>x.n===resolveAlias(name));
+ if(!item)return 'その他';
+ const order=['脚','胸','背中','肩','腕','尻','腹','体幹'];
+ return order.find(x=>item.cat.includes(x))||'その他';
+}
+function exerciseHistoryStats(){
+ const map={};
+ for(const log of allLogs()){
+  const date=log.date||'';
+  const grouped={};
+  for(const s of (log.sets||[])){
+   const name=resolveAlias(s.exercise);
+   if(!name)continue;
+   (grouped[name]??=[]).push({kg:parseFloat(s.kg)||0,reps:parseInt(s.reps)||0});
+  }
+  for(const [name,sets] of Object.entries(grouped)){
+   (map[name]??=[]).push({date,sets,savedAt:log.savedAt||date});
+  }
+ }
+ for(const arr of Object.values(map))arr.sort((a,b)=>(b.savedAt||b.date).localeCompare(a.savedAt||a.date));
+ return map;
+}
+function sessionVolume(session){return (session?.sets||[]).reduce((n,s)=>n+(s.kg||0)*(s.reps||0),0)}
+function formatSuggestionSets(sets){
+ if(!sets?.length)return '前回セットなし';
+ return sets.map(s=>`${s.side?`${s.side} `:''}${s.kg}kg×${s.reps}`).join(' / ');
+}
+function suggestionTarget(name,lastSets){
+ const m=exerciseMeta(name);
+ if(m?.progression==='form-first')return '15〜20回×2セットを正確なフォームで。0kgまたは最軽量から。重量増加は自動推奨しません。';
+ if(m?.progression==='stability-first')return '左右10〜12回×2セット。伸展位置で約2秒静止。身体を回転させず姿勢を維持できる重量を優先。';
+ return lastSets?.length?'前回をベースに再現。余裕があれば最終セットで+1回を目安。':'前回実績を確認して入力。';
+}
+function buildWorkoutSuggestions(){
+ const hist=exerciseHistoryStats(),today=localToday(),currentNames=new Set(current.sets.map(s=>resolveAlias(s.exercise)));
+ const rows=[];
+ for(const [name,sessions] of Object.entries(hist)){
+  if(!sessions.length)continue;
+  const last=sessions[0],days=dayDiff(last.date,today);
+  const recent28=sessions.filter(x=>dayDiff(x.date,today)<=28).length;
+  const recent7=sessions.filter(x=>dayDiff(x.date,today)<=7).length;
+  const prev=sessions[1];
+  const vLast=sessionVolume(last),vPrev=sessionVolume(prev);
+  let trend='';
+  if(prev&&vPrev>0){
+   const ratio=vLast/vPrev;
+   if(ratio>=1.08)trend='直近は前回よりボリューム増';
+   else if(ratio<=0.92)trend='直近は前回よりボリューム控えめ';
+   else trend='直近2回はほぼ同水準';
+  }
+  let score=Math.min(days,14)*4 + Math.max(0,4-recent28)*5 - recent7*7;
+  if(days>=7)score+=15; else if(days>=4)score+=8; else if(days<=1)score-=22;
+  if(currentNames.has(name))score-=100;
+  const reason=[];
+  reason.push(days===0?'今日すでに実施':`${days}日ぶり`);
+  reason.push(`直近28日 ${recent28}回`);
+  if(trend)reason.push(trend);
+  rows.push({name,sessions,last,days,recent28,score,reason,body:mainBodyPart(name)});
+ }
+ rows.sort((a,b)=>b.score-a.score||b.days-a.days);
+ const picked=[],bodyCount={};
+ for(const r of rows){
+  if(picked.length>=5)break;
+  if(r.score<-20)continue;
+  const c=bodyCount[r.body]||0;
+  if(c>=2&&rows.length>5)continue;
+  picked.push(r);bodyCount[r.body]=c+1;
+ }
+ if(picked.length<3){
+  for(const r of rows){if(picked.length>=5)break;if(!picked.includes(r)&&r.score>-80)picked.push(r)}
+ }
+ // Shoulder-care warm-up: surface when today's work or today's suggestions include chest/shoulder.
+ const plannedNames=[...currentNames,...picked.map(x=>x.name)];
+ const shoulderDay=plannedNames.some(n=>{const m=exerciseMeta(n);return m?.cat?.some(c=>c==='胸'||c==='肩')});
+ const extName='ケーブル外旋（ローテーターカフ）';
+ if(shoulderDay&&!currentNames.has(extName)&&!picked.some(x=>x.name===extName)){
+  const extSessions=hist[extName]||[],last=extSessions[0]||{date:'',sets:[]};
+  picked.unshift({name:extName,sessions:extSessions,last,days:last.date?dayDiff(last.date,today):0,recent28:extSessions.filter(x=>dayDiff(x.date,today)<=28).length,score:999,reason:['肩・胸トレ日のウォームアップ候補'],body:'肩',specialTag:'肩ケア'});
+ }
+ // Golf/core anti-rotation: roughly twice weekly, but never force it if already done today.
+ const pallof='パロフプレス（ケーブル）',ps=hist[pallof]||[],pRecent7=ps.filter(x=>dayDiff(x.date,today)<=7).length;
+ if(!currentNames.has(pallof)&&pRecent7<2&&!picked.some(x=>x.name===pallof)){
+  const last=ps[0]||{date:'',sets:[]};
+  picked.push({name:pallof,sessions:ps,last,days:last.date?dayDiff(last.date,today):0,recent28:ps.filter(x=>dayDiff(x.date,today)<=28).length,score:50,reason:[`体幹候補・直近7日 ${pRecent7}回`],body:'体幹',specialTag:'ゴルフ／体幹'});
+ }
+ return picked.slice(0,6);
+}
+function renderWorkoutSuggestions(){
+ if(!window.workoutSuggestions)return;
+ const picks=buildWorkoutSuggestions();
+ if(!picks.length){
+  workoutSuggestions.innerHTML='<div class="suggestEmpty">筋トレ履歴がまだ少ないため、十分なおすすめを作れません。数回記録すると、休養日数や頻度を見て候補が出るようになります。</div>';
+  return;
+ }
+ workoutSuggestions.innerHTML=picks.map((r,i)=>{
+  const priority=r.specialTag|| (i===0?'優先度 高':i<3?'おすすめ':'候補');
+  const lastText=formatSuggestionSets(r.last.sets);
+  const target=suggestionTarget(r.name,r.last.sets);
+  const safeName=encodeURIComponent(r.name);
+  return `<div class="suggestCard"><div class="suggestTop"><div><div class="suggestName">${escapeHtml(r.name)}</div><div class="suggestReason">${escapeHtml(r.reason.join(' ・ '))}</div></div><span class="suggestScore">${priority}</span></div><div class="suggestSets">前回：${escapeHtml(lastText)}</div><div class="suggestReason">提案：${escapeHtml(target)}</div><div class="suggestActions"><button class="primary" onclick="useWorkoutSuggestion('${safeName}')">この種目を入力</button></div></div>`;
+ }).join('');
+}
+function bodySessionCounts28(hist,today=localToday()){
+ const counts={脚:0,胸:0,背中:0,肩:0,腕:0,尻:0,腹:0,体幹:0,その他:0};
+ for(const [name,sessions] of Object.entries(hist)){
+  const body=mainBodyPart(name);
+  counts[body]=(counts[body]||0)+sessions.filter(x=>dayDiff(x.date,today)<=28).length;
+ }
+ return counts;
+}
+function buildNewExerciseSuggestions(){
+ const hist=exerciseHistoryStats(),today=localToday();
+ const done=new Set(Object.keys(hist).map(resolveAlias));
+ for(const s of current.sets)done.add(resolveAlias(s.exercise));
+ const bodyCounts=bodySessionCounts28(hist,today);
+ const candidates=[];
+ for(const item of exerciseDB){
+  const name=resolveAlias(item.n);
+  if(!name||name==='その他'||done.has(name))continue;
+  const body=mainBodyPart(name);
+  let score=40-Math.min(bodyCounts[body]||0,10)*4;
+  if(item.cat.includes('マシン'))score+=5;
+  else if(item.cat.includes('自重'))score+=4;
+  else if(item.cat.includes('ダンベル'))score+=2;
+  else if(item.cat.includes('バーベル'))score-=2;
+  candidates.push({name,body,score,count:bodyCounts[body]||0,cat:item.cat});
+ }
+ candidates.sort((a,b)=>b.score-a.score||a.count-b.count||a.name.localeCompare(b.name,'ja'));
+ const picked=[],bodyUsed={};
+ for(const c of candidates){
+  if(picked.length>=4)break;
+  if((bodyUsed[c.body]||0)>=1)continue;
+  picked.push(c);bodyUsed[c.body]=(bodyUsed[c.body]||0)+1;
+ }
+ if(picked.length<4){
+  for(const c of candidates){if(picked.length>=4)break;if(!picked.includes(c))picked.push(c)}
+ }
+ return picked;
+}
+function renderNewExerciseSuggestions(){
+ const el=document.getElementById('newExerciseSuggestions');
+ if(!el)return;
+ const picks=buildNewExerciseSuggestions();
+ if(!picks.length){
+  el.innerHTML='<div class="suggestEmpty">未実施の登録種目はありません。かなり網羅してます。強い。</div>';
+  return;
+ }
+ el.innerHTML=picks.map((r,i)=>{
+  const meta=exerciseMeta(r.name);
+  const tag=meta?.trainingType==='care'?'肩ケア':meta?.trainingType==='stability'?'ゴルフ／体幹':i===0?'新規候補':'試す候補';
+  const reason=`未実施 ・ 最近28日で${r.body}は${r.count}回`;
+  const target=meta?.progression?suggestionTarget(r.name,[]):'初回は軽め・余力を残してフォーム確認。重量は自動設定しません。';
+  const safeName=encodeURIComponent(r.name);
+  return `<div class="suggestCard"><div class="suggestTop"><div><div class="suggestName">${escapeHtml(r.name)}</div><div class="suggestReason">${escapeHtml(reason)}</div></div><span class="suggestScore">${tag}</span></div><div class="suggestReason">提案：${escapeHtml(target)}</div><div class="suggestActions"><button class="soft" onclick="useWorkoutSuggestion('${safeName}')">この種目を入力</button></div></div>`;
+ }).join('');
+}
+function renderAllSuggestions(){renderWorkoutSuggestions();renderNewExerciseSuggestions()}
+function useWorkoutSuggestion(encoded){
+ const name=decodeURIComponent(encoded);
+ selectExercise(name);
+ document.querySelector('#selectedExercise')?.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function addSet(){
+ if(!selected){alert('種目を選んでください');return}
+ const k=parseFloat(kg.value),r=parseInt(reps.value); if(isNaN(k)||isNaN(r)){alert('重量と回数を入れてください');return}
+ if(k<0||r<1){alert('重量は0kg以上、回数は1回以上で入力してください');return}
+ const m=exerciseMeta(selected),set={exercise:selected,kg:k,reps:r};
+ if(m?.sideMode==='required')set.side=side.value;
+ current.sets.push(set); saveRecent(selected); render();renderAllSuggestions();saveDraft(false);
+}
+function setMinutes(m){cardioMin.value=m}
+function addCardio(){
+ const name=cardioType.value,min=parseInt(cardioMin.value),act=cardioMeta(name);
+ if(!min){alert('時間を入れてください');return}
+ current.cardio.push({name,met:act?.met||5,minutes:min});render();saveDraft(false)
+}
+function removeSet(i){current.sets.splice(i,1);render();renderAllSuggestions();saveDraft(false)} function removeCardio(i){current.cardio.splice(i,1);render();saveDraft(false)}
+// Active calories: subtract resting 1 MET. Strength uses estimated lifting time only,
+// not the whole rest interval between sets.
+function activeKcal(met,kg,min){return Math.max(0,met-1)*3.5*kg/200*min}
+function strengthActiveMinutes(setCount){return Math.round(setCount*0.75*10)/10}
+function derivedStats(log,profileIntensity){
+ const wt=parseFloat(log.weight)||0;
+ const strengthMet=parseFloat(log.strengthIntensity||log.intensity||profileIntensity)||5;
+ const sm=strengthActiveMinutes((log.sets||[]).length);
+ const cm=(log.cardio||[]).reduce((a,c)=>a+(parseFloat(c.minutes)||0),0);
+ let total=wt?activeKcal(strengthMet,wt,sm):0;
+ for(const c of (log.cardio||[])){
+   const name=canonicalCardioName(c.name);
+   const met=cardioMeta(name)?.met||parseFloat(c.met)||5;
+   total+=wt?activeKcal(met,wt,parseFloat(c.minutes)||0):0;
+ }
+ return{total:Math.round(total),minutes:Math.round((sm+cm)*10)/10,strengthMinutes:sm,cardioMinutes:cm}
+}
+function estimate(){return derivedStats({...current,weight:parseFloat(weight.value)||0,strengthIntensity:parseFloat(intensity.value)||5},parseFloat(intensity.value)||5)}
+function render(){
+ if(!current.sets.length)setsList.innerHTML='<span class="small">まだ記録なし</span>';else{
+  const groups={};current.sets.forEach((s,i)=>{(groups[s.exercise]??=[]).push({...s,i})});
+  setsList.innerHTML=Object.entries(groups).map(([name,arr])=>`<div class="exercise"><div class="name">${name}</div>${arr.map(s=>`<div class="setrow"><input value="${s.kg}" readonly><span>kg ×</span><input value="${s.reps}" readonly><button class="red" onclick="removeSet(${s.i})">×</button></div>${s.side?`<div class="small" style="margin-top:3px">左右：${escapeHtml(s.side)}</div>`:''}`).join('')}</div>`).join('');
+ }
+ cardioList.innerHTML=current.cardio.map((c,i)=>`<div class="exercise"><b>${c.name}</b> ${c.minutes}分 <button class="red" style="float:right;padding:8px 10px" onclick="removeCardio(${i})">削除</button></div>`).join('');
+ const e=estimate();sumSets.textContent=current.sets.length;sumMin.textContent=e.minutes;sumKcal.textContent=e.total;
+}
+function draftPayload(){
+ return {...JSON.parse(JSON.stringify(current)),memo:memo.value.trim(),weight:weight.value,intensity:intensity.value,draftSavedAt:new Date().toISOString()}
+}
+function saveDraft(showMsg=true){
+ if(!current.sets.length&&!current.cardio.length&&!memo.value.trim()){if(showMsg)alert('一時保存する記録がありません');return}
+ localStorage.setItem(DRAFT,JSON.stringify(draftPayload()));showDraftNotice();if(showMsg)alert('一時保存しました')
+}
+function showDraftNotice(){
+ const d=JSON.parse(localStorage.getItem(DRAFT)||'null');
+ if(!d){draftNotice.classList.add('hidden');return}
+ draftNotice.classList.remove('hidden');draftTime.textContent=`${d.date} / 最終保存 ${new Date(d.draftSavedAt||Date.now()).toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})}`
+}
+function resumeDraft(){
+ const d=JSON.parse(localStorage.getItem(DRAFT)||'null');if(!d)return;
+ current={date:d.date||localToday(),sets:d.sets||[],cardio:d.cardio||[],memo:d.memo||''};
+ memo.value=d.memo||'';if(d.weight)weight.value=d.weight;if(d.intensity)intensity.value=d.intensity;render();draftNotice.classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'})
+}
+function discardDraft(){if(confirm('一時保存データを破棄しますか？')){localStorage.removeItem(DRAFT);showDraftNotice()}}
+function saveProfile(){localStorage.setItem(PROFILE,JSON.stringify({weight:weight.value,intensity:intensity.value}));alert('保存しました')}
+function toggleHealthSetup(){if(window.healthSetup)healthSetup.classList.toggle('hidden')}
+function openShortcutsApp(){location.href='shortcuts://'}
+function getHealthSyncMap(){try{return JSON.parse(localStorage.getItem(HEALTH_SYNC)||'{}')}catch(e){return {}}}
+function setHealthSynced(id){if(!id)return;const m=getHealthSyncMap();m[id]={syncedAt:new Date().toISOString()};localStorage.setItem(HEALTH_SYNC,JSON.stringify(m))}
+function isHealthSynced(id){return !!getHealthSyncMap()[id]}
+function healthPayload(l){return ['GYMLOG_V1',l.id,l.date,Math.round(Number(l.kcal)||0),Math.round(Number(l.minutes)||0)].join('~')}
+function appBaseUrl(){return location.origin+location.pathname}
+async function copyHealthPayload(text){
+ try{
+  if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true}
+ }catch(e){}
+ try{
+  const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';ta.style.pointerEvents='none';document.body.appendChild(ta);ta.focus();ta.select();const ok=document.execCommand('copy');ta.remove();return !!ok;
+ }catch(e){return false}
+}
+async function launchHealthShortcut(l){
+ if(!l||!l.id){alert('連携する記録が見つかりません');return}
+ if(!(Number(l.kcal)>0)){alert('消費カロリーが0kcalのため連携できません');return}
+ pendingHealthSyncId=l.id;
+ const payload=healthPayload(l);
+ const copied=await copyHealthPayload(payload);
+ if(!copied){alert('連携データをクリップボードへコピーできませんでした。Safari/PWAのクリップボード許可を確認してください。');return}
+ const success=appBaseUrl()+'?healthSync='+encodeURIComponent(l.id)+'&healthTab=history';
+ const cancel=appBaseUrl()+'?healthCancel=1&healthTab=history';
+ const error=appBaseUrl()+'?healthError=1&healthTab=history';
+ const url='shortcuts://x-callback-url/run-shortcut?name='+encodeURIComponent(HEALTH_SHORTCUT_NAME)+'&input=clipboard&x-success='+encodeURIComponent(success)+'&x-cancel='+encodeURIComponent(cancel)+'&x-error='+encodeURIComponent(error);
+ location.href=url;
+}
+function handleHealthCallback(){
+ const q=new URLSearchParams(location.search);const id=q.get('healthSync');
+ if(id){setHealthSynced(id);history.replaceState({},document.title,location.pathname);setTimeout(()=>{showTab('history');renderHistory();alert('ヘルスケア連携が完了しました')},80);return}
+ if(q.get('healthCancel')){history.replaceState({},document.title,location.pathname);setTimeout(()=>{showTab('history');alert('ヘルスケア連携をキャンセルしました')},80);return}
+ if(q.get('healthError')){history.replaceState({},document.title,location.pathname);setTimeout(()=>{showTab('history');alert('ヘルスケア連携でエラーが出ました。初回設定のショートカット名と手順を確認してください')},80);return}
+}
+function finishSessionToHealth(){
+ if(!current.sets.length&&!current.cardio.length){alert('記録がありません');return}
+ const e=estimate(),wt=parseFloat(weight.value)||0;
+ const saved={...JSON.parse(JSON.stringify(current)),id:uid(),memo:memo.value.trim(),weight:wt,strengthIntensity:parseFloat(intensity.value)||5,kcal:e.total,minutes:e.minutes,savedAt:new Date().toISOString()};
+ const logs=allLogs();logs.unshift(saved);writeLogs(logs);localStorage.setItem(PROFILE,JSON.stringify({weight:weight.value,intensity:intensity.value}));localStorage.removeItem(DRAFT);
+ current={date:localToday(),sets:[],cardio:[],memo:''};memo.value='';render();renderAllSuggestions();showDraftNotice();
+ launchHealthShortcut(saved);
+}
+function syncHistoryToHealth(id){
+ const l=allLogs().find(x=>x.id===id);if(!l)return;
+ if(isHealthSynced(id)){alert('この記録は連携済みです');return}
+ launchHealthShortcut(l)
+}
+function finishSession(){
+ if(!current.sets.length&&!current.cardio.length){alert('記録がありません');return}
+ const e=estimate(),wt=parseFloat(weight.value)||0;
+ current.id=uid();current.memo=memo.value.trim();current.weight=wt;current.strengthIntensity=parseFloat(intensity.value)||5;current.kcal=e.total;current.minutes=e.minutes;current.savedAt=new Date().toISOString();
+ const logs=allLogs();logs.unshift(JSON.parse(JSON.stringify(current)));writeLogs(logs);saveProfile();localStorage.removeItem(DRAFT);
+ alert('保存しました');current={date:localToday(),sets:[],cardio:[],memo:''};memo.value='';render();renderAllSuggestions();showDraftNotice();
+}
+function groupedLogs(){
+ const groups={};for(const l of allLogs())(groups[l.date]??=[]).push(l);return groups
+}
+function renderHistory(){
+ const groups=groupedLogs(),dates=Object.keys(groups).sort((a,b)=>b.localeCompare(a));
+ if(!dates.length){historyList.innerHTML='<span class="small">まだ履歴なし</span>';return}
+ historyList.innerHTML=dates.map((date,di)=>{
+   const logs=groups[date],sets=logs.reduce((n,l)=>n+(l.sets||[]).length,0),mins=logs.reduce((n,l)=>n+(l.minutes||0),0),kcal=logs.reduce((n,l)=>n+(l.kcal||0),0);
+   const names=[...new Set(logs.flatMap(l=>(l.sets||[]).map(s=>resolveAlias(s.exercise))))];
+   return `<div class="historyDay"><button class="historyHead" onclick="toggleDay('${date}')"><span><b>${date}</b><div class="small">${sets}セット・${mins}分・${kcal}kcal</div></span><span>▼</span></button><div id="day-${date}" class="historyBody hidden"><div class="small" style="padding:8px 0">${escapeHtml(names.join(' / ')||'有酸素のみ')}</div>${logs.map((l,idx)=>renderHistorySession(l,idx+1,logs.length)).join('')}</div></div>`
+ }).join('')
+}
+function renderHistorySession(l,num,total){
+ const grouped={};(l.sets||[]).forEach(s=>(grouped[resolveAlias(s.exercise)]??=[]).push(s));
+ const setHtml=Object.entries(grouped).map(([name,arr])=>`<div class="detailExercise"><b>${escapeHtml(name)}</b><div class="detailSets">${arr.map(s=>`${s.side?`${s.side} `:''}${s.kg}kg × ${s.reps}`).join(' / ')}</div></div>`).join('');
+ const cardio=(l.cardio||[]).map(c=>`<div class="detailExercise"><b>${escapeHtml(c.name)}</b><div class="detailSets">${c.minutes}分</div></div>`).join('');
+ const synced=isHealthSynced(l.id);
+ return `<div class="historySession">${total>1?`<span class="badge">記録 ${num}</span>`:''}${setHtml}${cardio}${l.memo?`<div class="small" style="margin-top:8px">メモ：${escapeHtml(l.memo)}</div>`:''}<div class="small" style="margin-top:6px">${Math.round(Number(l.minutes)||0)}分・${Math.round(Number(l.kcal)||0)}kcal</div><div class="rowBtns"><button class="${synced?'healthBtnSynced':'healthBtn'}" ${synced?'disabled':''} onclick="syncHistoryToHealth('${l.id}')">${synced?'✅ 連携済み':'❤️ ヘルスケア'}</button><button class="soft" onclick="editHistory('${l.id}')">修正</button><button class="red" onclick="deleteHistory('${l.id}')">削除</button></div></div>`
+}
+function toggleDay(date){document.getElementById('day-'+date).classList.toggle('hidden')}
+function editHistory(id){
+ const l=allLogs().find(x=>x.id===id);if(!l)return;
+ editingLogId=id;
+ editWorking=JSON.parse(JSON.stringify(l));
+ historyMain.classList.add('hidden');editHistoryCard.classList.remove('hidden');
+ renderHistoryEditor();window.scrollTo({top:0,behavior:'smooth'})
+}
+function renderHistoryEditor(){
+ if(!editWorking)return;
+ editHistoryDateInput.value=editWorking.date;
+ editSetsList.innerHTML=(editWorking.sets||[]).map((s,i)=>{const sm=exerciseMeta(s.exercise),sideRow=sm?.sideMode==='required'?`<div class="editSideRow"><span class="small">左右</span><select data-set-side="${i}" onchange="syncEditWorking()"><option value="左" ${s.side==='左'?'selected':''}>左</option><option value="右" ${s.side==='右'?'selected':''}>右</option></select></div>`:'';return `<div class="editSetRow"><select data-set-ex="${i}" onchange="syncEditWorking()"><option value="" ${!s.exercise?'selected':''}>種目を選択</option>${exercises.map(x=>`<option value="${escapeHtml(x)}" ${resolveAlias(s.exercise)===x?'selected':''}>${escapeHtml(x)}</option>`).join('')}</select><input data-set-kg="${i}" type="number" min="0" inputmode="decimal" placeholder="kg" value="${s.kg??''}" onchange="syncEditWorking()"><input data-set-reps="${i}" type="number" min="1" inputmode="numeric" placeholder="回" value="${s.reps??''}" onchange="syncEditWorking()"><button class="red" onclick="removeEditSet(${i})">×</button></div>${sideRow}`}).join('')||'<span class="small">筋トレ記録なし</span>';
+ editCardioList.innerHTML=(editWorking.cardio||[]).map((c,i)=>{const cname=canonicalCardioName(c.name);const legacy=cname&&!cardioActivities.some(a=>a.label===cname)?`<option value="${escapeHtml(cname)}" selected>${escapeHtml(cname)}</option>`:'';return `<div class="editSetRow"><select data-cardio-name="${i}" onchange="syncEditWorking()"><option value="" ${!cname?'selected':''}>種目を選択</option>${legacy}${cardioActivities.map(a=>`<option value="${escapeHtml(a.label)}" ${cname===a.label?'selected':''}>${escapeHtml(a.label)}</option>`).join('')}</select><input data-cardio-min="${i}" type="number" inputmode="numeric" placeholder="分" value="${c.minutes??''}" onchange="syncEditWorking()"><span class="small">分</span><button class="red" onclick="removeEditCardio(${i})">×</button></div>`}).join('')||'<span class="small">有酸素記録なし</span>';
+ editMemo.value=editWorking.memo||'';
+ renderEditRecent();
+}
+
+function toggleEditAddPanel(show){
+ if(!window.editAddPanel)return;
+ editAddPanel.classList.toggle('hidden',!show);
+ if(show){
+  editSelected='';
+  editSelectedExercise.textContent='未選択';
+  editExerciseSearch.value='';
+  editKg.value='';
+  editReps.value='';
+  editPreviousBox.textContent='—';
+  if(window.editSideWrap)editSideWrap.classList.add('hidden');
+  editSuggestions.classList.add('hidden');
+  renderEditRecent();
+  setTimeout(()=>editExerciseSearch.focus(),80);
  }
 }
-function currentFoundationIndex(list){
- if(!list.length)return 0;
- if(foundationOrderMode!=='random')return foundationI%list.length;
- ensureFoundationDeck(list);
- return foundationDeck[foundationDeckPos%foundationDeck.length];
+function renderEditRecent(){
+ if(!window.editRecentChips)return;
+ let r=getRecent(); if(!r.length)r=['レッグプレス','ショルダープレス','レッグレイズ','ダンベルカール'];
+ editRecentChips.innerHTML=r.filter(x=>!x.startsWith('エアロバイク')).map(x=>`<button class="chip ${editSelected===x?'active':''}" onclick="selectEditExercise('${x.replace(/'/g,"\\'")}')">${escapeHtml(x)}</button>`).join('');
 }
-function advanceFoundation(step=1){
- const list=foundationList();if(!list.length)return;
- if(foundationOrderMode==='random'){
-   ensureFoundationDeck(list);
-   foundationDeckPos+=step;
-   if(foundationDeckPos>=foundationDeck.length){
-     foundationDeck=shuffle([...Array(list.length).keys()]);
-     foundationDeckPos=0;
-   }
-   if(foundationDeckPos<0)foundationDeckPos=0;
+function selectEditExercise(name){
+ name=resolveAlias(name);
+ editSelected=name;
+ editSelectedExercise.textContent=name;
+ editExerciseSearch.value=name;
+ editSuggestions.classList.add('hidden');
+ setSideVisibility(name,true);loadEditPrevious(name);
+ renderEditRecent();
+}
+function loadEditPrevious(name){
+ editPreviousSets=[];
+ for(const log of allLogs()){
+  const arr=(log.sets||[]).filter(s=>resolveAlias(s.exercise)===name);
+  if(arr.length){editPreviousSets=arr;break}
+ }
+ if(editPreviousSets.length){
+  editPreviousBox.textContent=editPreviousSets.map(s=>`${s.side?`${s.side} `:''}${s.kg}kg×${s.reps}`).join(' / ');
+  const last=editPreviousSets[editPreviousSets.length-1];
+  editKg.value=last.kg; editReps.value=last.reps;if(last.side&&window.editSide)editSide.value=last.side;
  }else{
-   foundationI=(foundationI+step+list.length)%list.length;
- }
- showLetterPage();
-}
-function resetWordSequence(){
- wordI=0;wordDeck=[];wordDeckPos=0;wordDeckKey='';
-}
-function wordPoolKey(all){
- return `${getLessonFilter('word')}:${all.length}:${all.map(x=>x.id).join('|')}`;
-}
-function ensureWordDeck(all){
- const key=wordPoolKey(all);
- if(wordDeckKey!==key || wordDeck.length!==all.length){
-   wordDeck=shuffle([...Array(all.length).keys()]);
-   wordDeckPos=0;wordDeckKey=key;
+  editPreviousBox.textContent='記録なし';editKg.value='';editReps.value='';
  }
 }
-function currentWordFromPool(all){
- if(!all.length)return null;
- if(wordOrderMode!=='random')return all[wordI%all.length];
- ensureWordDeck(all);
- return all[wordDeck[wordDeckPos%wordDeck.length]];
+function copyEditPrevious(){
+ if(!editPreviousSets.length)return;
+ const last=editPreviousSets[editPreviousSets.length-1];
+ editKg.value=last.kg;editReps.value=last.reps;if(last.side&&window.editSide)editSide.value=last.side;
 }
-function nextWordQuestion(){
- if(reviewQueueActive){reviewQueueNext();return}
- const all=lessonFiltered(buildWords(),'word');if(!all.length)return;
- if(wordOrderMode==='random'){ensureWordDeck(all);wordDeckPos++;if(wordDeckPos>=wordDeck.length){wordDeck=shuffle([...Array(all.length).keys()]);wordDeckPos=0}}else wordI++;
- showWord();
-} 
-
-function setWordAnswerMode(mode){wordAnswerMode=mode;localStorage.setItem('thai_word_answer_mode_v1',mode);if(window.wordChoiceArea)wordChoiceArea.classList.toggle('hidden',mode!=='choice');if(window.wordInputArea)wordInputArea.classList.toggle('hidden',mode!=='input');if(window.wordChoiceModeBtn)wordChoiceModeBtn.classList.toggle('active',mode==='choice');if(window.wordInputModeBtn)wordInputModeBtn.classList.toggle('active',mode==='input');if(mode==='choice')renderWordChoices()}
-function saveChoiceAssist(){localStorage.setItem('thai_choice_assist_v1',choiceAssist.value)}
-function choiceAssistMode(){return localStorage.getItem('thai_choice_assist_v1')||'roman'}
-function buildWordChoices(){const pool=lessonFiltered(buildWords(),'word').filter(x=>x.id!==currentItem.id);let candidates=pool.filter(x=>x.lesson===currentItem.lesson);if(candidates.length<3)candidates=pool;return shuffle([currentItem,...shuffle(candidates).slice(0,3)])}
-function renderWordChoices(){if(!currentItem||wordAnswerMode!=='choice'||!window.wordChoices)return;if(!String(currentItem.th||'').trim()){wordChoices.innerHTML='<div class="answer"><b>教材データエラー</b><div class="small">この問題のタイ語本文がありません。教材パックを読み込み直してください。</div></div>';return}const mode=choiceAssistMode();if(window.choiceAssist)choiceAssist.value=mode;currentWordOptions=buildWordChoices();wordChoices.innerHTML=currentWordOptions.map((x,i)=>{const r=(mode==='roman'||mode==='romanOnly')?`<div class="choiceRoman">${escapeHtml(x.roman||'')}</div>`:'';const k=(mode==='roman'&&x.kana)?`<div class="choiceKana">${escapeHtml(x.kana)}</div>`:'';return `<button class="choiceBtn" onclick="chooseWord(${i})"><div class="choiceThai">${escapeHtml(x.th)}</div>${r}${k}</button>`}).join('')}
-function chooseWord(i){const s=currentWordOptions[i];if(!s||!currentItem)return;const ok=normalizeThai(s.th)===normalizeThai(currentItem.th);register(currentItem.id,ok,currentItem.type==='chunk'?'chunk':'word',{question:currentItem.jp,userAnswer:s.th,correctAnswer:currentItem.th,mode:currentItem.type==='chunk'?'chunk':'word',lesson:lessonNumberOf(currentItem)});document.querySelectorAll('#wordChoices .choiceBtn').forEach((b,idx)=>{b.disabled=true;const x=currentWordOptions[idx];if(normalizeThai(x.th)===normalizeThai(currentItem.th))b.classList.add('correct');else if(idx===i)b.classList.add('wrong')});renderWordResult(ok,s.th)}
-function openNativeDictationHint(){
-  if(window.wordInput){
-    wordInput.focus();
-    if(window.wordVoiceStatus)wordVoiceStatus.textContent='キーボードをタイ語に切り替え、iPhoneキーボードのマイクをタップして話してください。';
-  }
+function editBump(id,d){
+ const el=document.getElementById(id);
+ el.value=Math.max(0,(parseFloat(el.value)||0)+d);
+}
+function commitEditAddedSet(){
+ if(!editWorking)return;
+ if(!editSelected){alert('種目を選んでください');return}
+ const k=parseFloat(editKg.value),r=parseInt(editReps.value);
+ if(isNaN(k)||isNaN(r)){alert('重量と回数を入れてください');return}
+ if(k<0||r<1){alert('重量は0kg以上、回数は1回以上で入力してください');return}
+ syncEditWorking();
+ const m=exerciseMeta(editSelected),set={exercise:editSelected,kg:k,reps:r};if(m?.sideMode==='required')set.side=editSide.value;
+ editWorking.sets.push(set);
+ saveRecent(editSelected);
+ renderHistoryEditor();
+ toggleEditAddPanel(false);
 }
 
-function getLessonFilter(mode){const el=document.getElementById(mode+'LessonFilter');return el?el.value:'all'}
-function lessonFiltered(arr, mode){
- const f=getLessonFilter(mode);if(f==='all')return arr;
- const n=Number(String(f).replace(/\D/g,''));
- return arr.filter(x=>(x.lesson||'')===f||(Array.isArray(x.lessons)&&x.lessons.includes(n)));
+function syncEditWorking(){
+ if(!editWorking)return;
+ const sets=[];
+ document.querySelectorAll('[data-set-ex]').forEach(el=>{const i=el.dataset.setEx,kgEl=document.querySelector(`[data-set-kg="${i}"]`),rEl=document.querySelector(`[data-set-reps="${i}"]`),sideEl=document.querySelector(`[data-set-side="${i}"]`);if(kgEl&&rEl){const set={exercise:el.value,kg:kgEl.value===''?'':parseFloat(kgEl.value),reps:rEl.value===''?'':parseInt(rEl.value)};if(sideEl)set.side=sideEl.value;sets.push(set)}});
+ const cardio=[];
+ document.querySelectorAll('[data-cardio-name]').forEach(el=>{const i=el.dataset.cardioName,m=document.querySelector(`[data-cardio-min="${i}"]`);if(m){const name=canonicalCardioName(el.value),act=cardioMeta(name);cardio.push({name,met:act?.met||(editWorking.cardio?.[i]?.met)||5,minutes:m.value===''?'':parseInt(m.value)})}});
+ editWorking.sets=sets;editWorking.cardio=cardio;editWorking.memo=editMemo.value.trim();
+ if(editHistoryDateInput.value)editWorking.date=editHistoryDateInput.value;
 }
-function buildPhraseList(){
- const ss=Array.isArray(DATA?.sentences)?DATA.sentences:[];
- const ps=Array.isArray(DATA?.phrases)?DATA.phrases:[];
- if(!ss.length)return ps;
- if(!ps.length)return ss;
- const pm=new Map(ps.map(p=>[p.id||p.sentence_id,p]));
- const used=new Set();
- const out=ss.map(s=>{
-   const key=s.id||s.sentence_id,p=pm.get(key);if(p)used.add(key);
-   return p?{...p,...s,chunks:Array.isArray(p.chunks)?p.chunks:(s.chunks||[])}:s;
- });
- for(const p of ps){const key=p.id||p.sentence_id;if(!used.has(key))out.push(p)}
- return out;
+function addEditSet(){toggleEditAddPanel(true)}
+function addEditCardio(){
+ syncEditWorking();if(!editWorking)return;
+ editWorking.cardio.push({name:'',met:5,minutes:''});
+ renderHistoryEditor();
+ setTimeout(()=>editCardioList.lastElementChild?.scrollIntoView({behavior:'smooth',block:'center'}),0)
 }
-function fillLessonFilters(){const opts=['<option value="all">全Lesson</option>'].concat((DATA.materials?.[0]?.lessons||[]).filter(x=>/^lesson-/.test(x.id)).map((x,i)=>`<option value="Lesson ${i+1}">Lesson ${i+1}</option>`)).join(''); ['wordLessonFilter','pronLessonFilter','compLessonFilter','recordLessonFilter'].forEach(id=>{const el=document.getElementById(id); if(el) el.innerHTML=opts;}); }
-
-function foundationList(){
- if(!DATA)return[];
- if(foundationCategory==='vowels')return (DATA.vowels||[]).map(x=>({...x,_kind:'vowel',display:x.symbol,name:'母音 '+x.roman,jp:x.kana||'',roman:x.roman||'',kana:x.kana||'',class:'母音',initial:'—',final:'—',word:'',ch:x.symbol}));
- if(foundationCategory==='digits')return (DATA.digits||[]).map(x=>({...x,id:'digit-'+x.digit,_kind:'digit',display:x.thai,name:x.name,jp:x.digit,roman:x.roman||'',kana:'数字 '+x.digit,class:'数字',initial:'—',final:'—',word:x.name,ch:x.thai}));
- if(foundationCategory==='tones')return (DATA.tones_marks||[]).map(x=>({...x,_kind:'tone',display:x.symbol,name:x.name,jp:x.jp||'',roman:x.name||'',kana:x.jp||'',class:'声調・記号',initial:'—',final:'—',word:x.name,ch:x.symbol}));
- let letters=(DATA.letters||[]).map(x=>({...x,_kind:'consonant',display:x.ch}));
- if(consonantClassFilter!=='all')letters=letters.filter(x=>consonantClassOf(x)===consonantClassFilter);
- return letters;
-}
-function setFoundationCategory(cat){
- foundationCategory=cat;foundationI=0;foundationDeck=[];foundationDeckPos=0;foundationDeckKey='';
- ['Consonant','Vowel','Digit','Tone'].forEach(k=>{const b=document.getElementById('foundation'+k+'Btn');if(b)b.classList.toggle('active',cat===({Consonant:'consonants',Vowel:'vowels',Digit:'digits',Tone:'tones'}[k]))});
- updateConsonantClassUI();showLetterPage()
-}
-function foundationSourceLabel(item){if(item?._kind==='consonant')return '出典：ニューエクスプレス「発音と文字」';if(item?._kind==='vowel')return '出典：ニューエクスプレス「母音」';if(item?._kind==='digit')return '出典：ニューエクスプレス 数字・語彙';if(item?._kind==='tone')return '出典：ニューエクスプレス「声調・記号」';return '出典：ニューエクスプレス'}
-function sourceTag(item){const l=item?.source_lesson||parseInt(String(item?.lesson||'').replace(/\D/g,''));return `<span class="sourceTag">📚 ニューエクスプレス${l?' Lesson '+l:''}${item?.source_type==='dialogue'||item?.type==='phrase'?' / Dialogue':''}</span>`}
-
-function sentenceById(id){return buildPhraseList().find(x=>x.id===id||x.sentence_id===id)||null}
-function sentenceForItem(item){if(!item)return null;if(item.source_type==='dialogue'&&item.th)return item;if(item.source_id)return sentenceById(item.source_id);if(item.sentence_id)return sentenceById(item.sentence_id);if(item.id?.startsWith('phraseword:'))return sentenceById(item.id.replace('phraseword:',''));return null}
-const THAI_TTS_ALIASES={
- 'ม.ค.':'มกราคม','ก.พ.':'กุมภาพันธ์','มี.ค.':'มีนาคม','เม.ย.':'เมษายน','พ.ค.':'พฤษภาคม','มิ.ย.':'มิถุนายน',
- 'ก.ค.':'กรกฎาคม','ส.ค.':'สิงหาคม','ก.ย.':'กันยายน','ต.ค.':'ตุลาคม','พ.ย.':'พฤศจิกายน','ธ.ค.':'ธันวาคม',
- 'พ.ศ.':'พอ สอ','ค.ศ.':'คอ สอ'
-};
-function ttsTextForItem(item){const th=String(item?.th||item?.thai||'').trim();return THAI_TTS_ALIASES[th]||th}
-function applyRuntimeDataCorrections(data){
- if(!data)return data;
- const w=(data.words||[]).find(x=>x.th==='ค.ศ.'||x.thai==='ค.ศ.');
- if(w){
-   const corrected='คริสต์ศักราช（西暦）の略';
-   w.jp=corrected;w.japanese=corrected;
-   if(Array.isArray(w.appendix_entries))w.appendix_entries.forEach(x=>{x.japanese=corrected});
-   const vocab=w.explanation?.vocabulary;if(Array.isArray(vocab))vocab.forEach(v=>{if(v.thai==='ค.ศ.')v.japanese=corrected});
+function removeEditSet(i){syncEditWorking();if(!editWorking)return;editWorking.sets.splice(i,1);renderHistoryEditor()}
+function removeEditCardio(i){syncEditWorking();if(!editWorking)return;editWorking.cardio.splice(i,1);renderHistoryEditor()}
+function saveHistoryEdit(){
+ syncEditWorking();if(!editWorking)return;
+ const badSet=(editWorking.sets||[]).find(s=>!s.exercise||s.kg===''||s.reps===''||Number(s.kg)<0||Number(s.reps)<1||(exerciseMeta(s.exercise)?.sideMode==='required'&&!s.side));
+ if(badSet){alert('筋トレセットの「種目・重量（0kg可）・回数」と、必要な種目は「左右」を確認してください');return}
+ const badCardio=(editWorking.cardio||[]).find(c=>!c.name||c.minutes==='');
+ if(badCardio){alert('追加した有酸素の「種目・時間」を入力してください');return}
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(editWorking.date)||Number.isNaN(new Date(editWorking.date+'T12:00:00').getTime())){
+   alert('有効なトレーニング日を指定してください');return;
  }
- return data;
+ const original=allLogs().find(x=>x.id===editWorking.id);
+ const l={...editWorking,editedAt:new Date().toISOString()};
+ if(original&&original.date!==l.date){
+   l.dateEditPrevious=original.date;
+   l.dateEditAt=l.editedAt;
+ }
+ if(!l.strengthIntensity)l.strengthIntensity=parseFloat(intensity.value)||5;
+ const d=derivedStats(l,parseFloat(intensity.value)||5);
+ l.minutes=d.minutes;l.kcal=d.total;
+ writeLogs(allLogs().map(x=>x.id===l.id?l:x));cancelHistoryEdit();renderHistory();alert('修正しました')
 }
-async function playLearningAudio(item=currentItem){
- const s=sentenceForItem(item)||item;
- if(s?.audio_file){await playAssetAudio(s.audio_file);return}
- const text=ttsTextForItem(item)||ttsTextForItem(s);
- if(text)speakThai(text,.78);
-}
-function renderExplanation(item){const s=sentenceForItem(item)||item,ex=item?.explanation||s?.explanation;if(!ex)return'';if(!(ex.vocabulary||[]).length&&!(ex.grammar||[]).length)return'';const vocab=(ex.vocabulary||[]).map(v=>`<div class="explainRow"><div class="explainThai">${escapeHtml(v.thai||'')} ${v.pos?`<span class="posTag">${escapeHtml(v.pos)}</span>`:''}</div>${v.roman?`<div class="explainRoman">${escapeHtml(v.roman)}</div>`:''}<div class="explainJP">${escapeHtml(v.japanese||'')}</div>${v.note?`<div class="explainNote">${escapeHtml(v.note)}</div>`:''}</div>`).join('');const grammar=(ex.grammar||[]).map(g=>`<div class="grammarRow">・${escapeHtml(g)}</div>`).join('');return `<div class="explainBox"><div class="explainTitle">📘 語句・フレーズ解説</div>${vocab}${grammar?`<div class="pointBox"><b>💡 文法・構文ポイント</b>${grammar}</div>`:''}</div>`}
-function resultAudioHtml(item){const s=sentenceForItem(item)||item;if(s?.audio_file)return `<button class="soft learningAudioBtn" onclick="playLearningAudio(currentItem)">🔊 教材音声</button>`;if(s?.th||item?.th)return `<button class="soft learningAudioBtn" onclick="playLearningAudio(currentItem)">🔊 読み上げ</button>`;return ''}
-function typeLabel(t){return ({word:'単語',phrase:'例文',chunk:'チャンク',composition:'タイ作文','thai-writing':'タイ作文',pron:'発音',letter:'文字',foundation:'文字・基礎',sound:'文字→発音',reading:'実単語リーディング',field:'実戦表現'}[t]||t||'学習')}
-function directChunkById(id){
- const c=buildChunkItems().find(x=>x.id===id);
- return c||null;
-}
-function directPhraseWordById(id){
- const sid=id.replace(/^phraseword:/,'');
- const p=sentenceById(sid);
- return p?{id,th:p.th,jp:p.jp||p.japanese||'',type:'phrase',lesson:p.lesson||'',
-   source_lesson:p.source_lesson||p.lesson_number,roman:p.roman||'',kana:p.kana||'',source:'textbook',
-   source_type:'dialogue',source_id:p.id,sentence_id:p.id,audio_file:p.audio_file||p.audio||'',explanation:p.explanation||null}:null;
-}
-function directWordById(id){
- const w=(DATA.words||[]).find(x=>x.id===id);
- return w?{...w,id:w.id||id,type:'word'}:null;
-}
-function allFoundationItems(){
- return [
-   ...(DATA.letters||[]).map(x=>({...x,_kind:'consonant',display:x.ch,_class:consonantClassOf(x)})),
-   ...(DATA.vowels||[]).map(x=>({...x,_kind:'vowel',display:x.symbol,name:'母音 '+(x.roman||''),jp:x.kana||'',roman:x.roman||'',kana:x.kana||'',class:'母音',initial:'—',final:'—',word:'',ch:x.symbol})),
-   ...(DATA.tones_marks||[]).map(x=>({...x,_kind:'tone',display:x.symbol,name:x.name,jp:x.jp||'',roman:x.name||'',kana:x.jp||'',class:'声調・記号',initial:'—',final:'—',word:x.name,ch:x.symbol})),
-   ...(DATA.digits||[]).map(x=>({...x,id:'digit-'+x.digit,_kind:'digit',display:x.thai,name:x.name,jp:x.digit,roman:x.roman||'',kana:'数字 '+x.digit,class:'数字',initial:'—',final:'—',word:x.name,ch:x.thai}))
- ];
-}
-function resolveStudyItem(id){
- if(id.startsWith('field:')){
-   const f=getFieldExpressions().find(x=>x.id===id);
-   return f?{id,title:f.thai||id,subtitle:f.jp||'',type:'field',lesson:null,item:f}:null;
- }
- if(!DATA)return {id,title:'学習項目',subtitle:'',type:'',lesson:null,item:null};
- if(id.startsWith('sound:')){
-   const base=id.slice(6),f=allFoundationItems().find(x=>x.id===base);
-   return f?{id,title:f.ch||f.symbol||base,subtitle:`${f.roman||''} ${f.kana||''}`.trim(),type:'sound',lesson:null,item:f}:null;
- }
- if(id.startsWith('reading:')){
-   const base=id.slice(8),w=(DATA.words||[]).find(x=>(x.id||('word:'+x.th))===base||x.id===base);
-   return w?{id,title:w.th||w.thai||base,subtitle:w.jp||w.japanese||'',type:'reading',lesson:lessonNumberOf(w),item:{...w,id:w.id||('word:'+w.th),type:'word'}}:null;
- }
- if(id.startsWith('pron:')){
-   const s=sentenceById(id.slice(5));
-   return s?{id,title:s.th,subtitle:s.jp||s.japanese||'',type:'pron',lesson:s.lesson_number||lessonNumberOf(s),item:s}:null;
- }
- if(id.startsWith('phraseword:')){
-   const w=directPhraseWordById(id);
-   return w?{id,title:w.th,subtitle:w.jp,type:'phrase',lesson:lessonNumberOf(w),item:w}:null;
- }
- if(id.startsWith('word:')){
-   const w=directWordById(id);
-   return w?{id,title:w.th,subtitle:w.jp||w.japanese||'',type:'word',lesson:lessonNumberOf(w),item:w}:null;
- }
- if(id.startsWith('chunk:')){
-   const w=directChunkById(id);
-   return w?{id,title:w.th,subtitle:w.jp,type:'chunk',lesson:lessonNumberOf(w),item:w}:null;
- }
- if(id.startsWith('comp-')){
-   const c=(DATA.compositions||[]).find(x=>x.id===id);
-   if(c){
-     const s=sentenceForItem(c);
-     return {id,title:c.answers?.[0]||s?.th||'',subtitle:c.jp||s?.jp||'',type:'composition',lesson:lessonNumberOf(c)||lessonNumberOf(s),item:c};
+function cancelHistoryEdit(){editingLogId=null;editWorking=null;editSelected='';if(window.editAddPanel)editAddPanel.classList.add('hidden');editHistoryCard.classList.add('hidden');historyMain.classList.remove('hidden')}
+function deleteHistory(id){if(!confirm('この保存記録を削除しますか？'))return;writeLogs(allLogs().filter(x=>x.id!==id));renderHistory()}
+function showTab(t){todayTab.classList.toggle('hidden',t!=='today');historyTab.classList.toggle('hidden',t!=='history');if(t==='history'){cancelHistoryEdit();renderHistory()}else cancelHistoryEdit()}
+// One-time, conservative correction for v0.13.0 and older UTC-derived workout dates.
+// Only records saved in the JST 00:00-08:59 window with an exact UTC date match qualify.
+// Existing manually edited records are excluded; all original logs are backed up first.
+const DATE_FIX_MIGRATION='gym-date-fix-v0132';
+const DATE_FIX_BACKUP='gym-date-fix-v0132-backup';
+function migrateLegacyWorkoutDates(){
+ if(localStorage.getItem(DATE_FIX_MIGRATION)==='1')return;
+ const raw=localStorage.getItem(STORE);
+ if(!raw){localStorage.setItem(DATE_FIX_MIGRATION,'1');return}
+ let logs;
+ try{logs=JSON.parse(raw);if(!Array.isArray(logs))return}catch(e){return}
+ const fixes=[];
+ for(const l of logs){
+   if(!l||typeof l.date!=='string'||typeof l.savedAt!=='string')continue;
+   if(l.editedAt||l.dateEditAt||l.dateFixV0132)continue;
+   const d=new Date(l.savedAt);
+   if(Number.isNaN(d.getTime()))continue;
+   const jst=new Date(d.getTime()+9*60*60*1000);
+   const correct=jst.toISOString().slice(0,10);
+   const utc=d.toISOString().slice(0,10);
+   if(l.date===utc&&correct!==utc){
+     fixes.push({log:l,old:l.date,correct});
    }
  }
- const f=allFoundationItems().find(x=>x.id===id);
- if(f)return {id,title:f.ch||f.symbol||f.thai||f.name||id,subtitle:f.jp||f.name||'',type:'foundation',lesson:null,item:f};
- return {id,title:'学習項目',subtitle:'過去の集計記録',type:'',lesson:null,item:null};
+ if(fixes.length){
+   try{
+     // Preserve the exact pre-migration serialized history, without overwriting backups.
+     if(!localStorage.getItem(DATE_FIX_BACKUP))localStorage.setItem(DATE_FIX_BACKUP,raw);
+     for(const f of fixes){
+       f.log.date=f.correct;
+       f.log.dateFixV0132={previousDate:f.old,correctedAt:new Date().toISOString(),basis:'savedAt UTC/JST rollover'};
+     }
+     localStorage.setItem(STORE,JSON.stringify(logs));
+   }catch(e){return}
+ }
+ localStorage.setItem(DATE_FIX_MIGRATION,'1');
+ if(fixes.length){
+   setTimeout(()=>alert(`${fixes.length}件の記録日を日本時間に自動補正しました。補正前の履歴は端末内にバックアップ済みです。Appleヘルスケアの登録日は自動変更されません。`),200);
+ }
 }
-
-
-const KEY='thai_training_records_v2';
-const getRec=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}};
-const saveRec=r=>{localStorage.setItem(KEY,JSON.stringify(r));updateHome()};
-function isWeakRecord(x){
- return !!x && (x.wrong||0)>0 && (x.streak||0)<3;
-}
-function attemptsOf(r){const a=Number(r?.attempts);return Number.isFinite(a)&&a>0?a:(Number(r?.correct)||0)+(Number(r?.wrong)||0)}
-function stat(id){const r=getRec()[id]||{};return {attempts:attemptsOf(r),correct:r.correct||0,wrong:r.wrong||0,streak:r.streak||0,last:r.last||'',next:r.next||'',history:Array.isArray(r.history)?r.history:[]}}
-function lessonNumberOf(item){return Number(item?.source_lesson||item?.lesson_number||String(item?.lesson||'').replace(/\D/g,''))||null}
-function register(id,ok,type,detail={}){
- const R=getRec(),old=R[id]||{};
- const x={...old,attempts:attemptsOf(old),correct:old.correct||0,wrong:old.wrong||0,streak:old.streak||0,type:old.type||type,history:Array.isArray(old.history)?old.history:[]};
- x.attempts++;if(ok){x.correct++;x.streak=(x.streak||0)+1}else{x.wrong++;x.streak=0}
- const now=new Date();x.last=now.toISOString();const d=new Date(now);d.setDate(d.getDate()+(ok?Math.min(14,Math.max(2,x.streak*2)):1));x.next=d.toISOString().slice(0,10);
- x.history.push({itemId:id,timestamp:x.last,question:String(detail.question??''),userAnswer:String(detail.userAnswer??''),correctAnswer:String(detail.correctAnswer??''),isCorrect:!!ok,mode:detail.mode||type||'',lesson:detail.lesson??null});
- R[id]=x;saveRec(R);return x
-}
-function tab(t,fromReview=false){
- if(!fromReview&&reviewQueueActive)stopReviewQueue();
- if(!MATERIAL_READY && !['home','material','backup'].includes(t)){document.getElementById('materialNeeded').classList.remove('hidden');t='home';}
- ['home','letters','study','review','record','audio','lessons','pages','books','material','backup'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('hidden',x!==t));
- document.querySelectorAll('.nav button').forEach(b=>b.className=b.dataset.tab===t?'main':'soft');
- if(t==='letters'){showLetterPage();resizeDrawingCanvases();renderFieldLibrary();}
- if(t==='review'){renderReviewSummary();}if(t==='record')renderRecord();if(t==='audio')renderAudio();if(t==='lessons')renderLessons();if(t==='pages')renderPage();if(t==='books')renderBooks();
-}
-function hideModes(){['letter','sound','reading','word','field','pron','comp'].forEach(x=>document.getElementById(x+'Mode').classList.add('hidden'))}
-function openMode(m){tab('study');hideModes();currentMode=m;document.getElementById(m+'Mode').classList.remove('hidden');if(m==='letter'){showLetter();resizeDrawingCanvases();}if(m==='sound')showSoundQuestion();if(m==='reading')showReadingQuestion();if(m==='word')showWord();if(m==='field')showFieldExpression();if(m==='pron')showPron();if(m==='comp')showComp()}
-function normalizeThai(s){return(s||'').trim().replace(/[\s\u200bๆฯ,.!?'"“”\-]/g,'')}
-function lev(a,b){a=normalizeThai(a);b=normalizeThai(b);const m=a.length,n=b.length,d=Array.from({length:m+1},()=>Array(n+1).fill(0));for(let i=0;i<=m;i++)d[i][0]=i;for(let j=0;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return {dist:d[m][n],score:Math.max(0,Math.round((1-d[m][n]/Math.max(1,m,n))*100))}}
-function mini(id){const s=stat(id),a=s.attempts?Math.round(s.correct/s.attempts*100):0;return `累計 ${s.attempts}回 / 正解 ${s.correct} / ミス ${s.wrong} / 正答率 ${s.attempts?a+'%':'—'} / 連続正解 ${s.streak}`}
-function updateHome(){
- const R=getRec(),vals=Object.values(R),att=vals.reduce((a,x)=>a+attemptsOf(x),0),cor=vals.reduce((a,x)=>a+(x.correct||0),0),wr=vals.reduce((a,x)=>a+(x.wrong||0),0);
- totalAttempts.textContent=att;totalWrong.textContent=wr;accuracy.textContent=att?Math.round(cor/att*100)+'%':'—';const wc=vals.filter(isWeakRecord).length;weakCount.textContent=wc;if(window.reviewWeakCount)reviewWeakCount.textContent=wc
-}
-function thaiLetterSpokenName(x){return `${x.ch}อ ${x.word}`}
-function speakThai(text,rate=.72){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=rate;speechSynthesis.speak(u)}
-
-const VOWEL_SPEAK_EXAMPLE={
- 'v-a-short':'อะ','v-a-long':'อา',
- 'v-i-short':'อิ','v-i-long':'อี',
- 'v-ue-short':'อึ','v-ue-long':'อือ',
- 'v-u-short':'อุ','v-u-long':'อู',
- 'v-e-short':'เอะ','v-e-long':'เอ',
- 'v-ae-short':'แอะ','v-ae-long':'แอ',
- 'v-o-short':'โอะ','v-o-long':'โอ',
- 'v-aw-short':'เอาะ','v-aw-long':'ออ',
- 'v-oe-short':'เออะ','v-oe-long':'เออ',
- 'v-ia-short':'เอียะ','v-ia-long':'เอีย',
- 'v-uea-short':'เอือะ','v-uea-long':'เอือ',
- 'v-ua-short':'อัวะ','v-ua-long':'อัว',
- 'v-ai-maimuan':'ใจ','v-ai-maimalai':'ไอ',
- 'v-ao':'เอา','v-am':'อำ'
-};
-function vowelSpeakText(x){return VOWEL_SPEAK_EXAMPLE[x.id]||''}
-
-function showLetter(){
- currentItem=DATA.letters[letterI%DATA.letters.length];
- letterChar.textContent='？';ghost.textContent=currentItem.ch;ghost.classList.add('hidden');
- letterName.textContent=`${currentItem.name}（${currentItem.jp}）`;
- letterRoman.textContent=`${currentItem.roman||''}　頭:${currentItem.initial||'—'} / 末:${currentItem.final||'—'}`;
- letterKana.textContent=currentItem.kana||'';letterWord.textContent='';letterJP.textContent='タイ文字を書いてから「正解表示」';
- itemMiniStats.textContent=mini(currentItem.id);clearCv();
-}
-function revealSmallLetterAnswer(){if(!currentItem)return;letterChar.textContent=currentItem.ch;letterWord.textContent=`${currentItem.word}（${currentItem.jp}）`;letterJP.textContent='';ghost.classList.remove('hidden')}
-function letterSound(){if(currentItem)speakThai(thaiLetterSpokenName(currentItem),.68)}
-function gradeCurrent(ok){register(currentItem.id,ok,'letter',{question:'タイ文字を書き取り',userAnswer:ok?'自己評価：正解':'自己評価：不正解',correctAnswer:currentItem.ch||'',mode:'letter',lesson:null});letterI++;showLetter()}
-
-function soundPool(){
- if(!DATA)return[];
- const consonants=(DATA.letters||[]).map(x=>({...x,_kind:'consonant',display:x.ch})).filter(x=>{
-   const c=consonantClassOf(x);
-   return soundClassFilter==='all'||c===soundClassFilter||(soundClassFilter==='midhigh'&&(c==='mid'||c==='high'));
- });
- const vowels=(DATA.vowels||[]).map(x=>({...x,_kind:'vowel',display:x.symbol,name:'母音 '+(x.roman||''),jp:x.kana||'',ch:x.symbol}));
- if(soundCategory==='vowels')return vowels;
- if(soundCategory==='mixed')return [...consonants,...vowels];
- return consonants;
-}
-function setSoundCategory(v){
- if(!['consonants','vowels','mixed'].includes(v))v='consonants';soundCategory=v;localStorage.setItem('thai_sound_category_v1',v);soundForcedItem=null;soundLastId='';updateSoundUI();showSoundQuestion();
-}
-function setSoundClassFilter(v){
- if(!['midhigh','mid','high','low','all'].includes(v))v='midhigh';soundClassFilter=v;localStorage.setItem('thai_sound_class_filter_v1',v);soundForcedItem=null;soundLastId='';updateSoundUI();showSoundQuestion();
-}
-function setSoundOrder(v){soundOrderMode=v==='random'?'random':'adaptive';localStorage.setItem('thai_sound_order_v1',soundOrderMode);updateSoundUI();showSoundQuestion()}
-function updateSoundUI(){
- const cats={consonants:'soundConsonantBtn',vowels:'soundVowelBtn',mixed:'soundMixedBtn'};Object.entries(cats).forEach(([k,id])=>{const b=document.getElementById(id);if(b)b.classList.toggle('active',soundCategory===k)});
- const cls={midhigh:'soundClassMidHighBtn',mid:'soundClassMidBtn',high:'soundClassHighBtn',low:'soundClassLowBtn',all:'soundClassAllBtn'};Object.entries(cls).forEach(([k,id])=>{const b=document.getElementById(id);if(b)b.classList.toggle('active',soundClassFilter===k)});
- if(window.soundClassRow)soundClassRow.classList.toggle('hidden',soundCategory==='vowels');
- if(window.soundAdaptiveBtn){soundAdaptiveBtn.classList.toggle('active',soundOrderMode==='adaptive');soundRandomBtn.classList.toggle('active',soundOrderMode==='random')}
-}
-function lastWrongBonus(rec){const h=Array.isArray(rec?.history)?rec.history:[];const z=[...h].reverse().find(x=>x&&typeof x.isCorrect==='boolean');return z&&!z.isCorrect?2:0}
-function soundWeight(item){
- const base=stat(item.id),skill=stat('sound:'+item.id),a=base.attempts?base.correct/base.attempts:null,sa=skill.attempts?skill.correct/skill.attempts:null;
- let w=1;
- if(base.attempts===0)w+=2;else if(a<.5)w+=6;else if(a<.7)w+=4;else if(a<.85)w+=2;
- if((base.wrong||0)>0&&(base.streak||0)<3)w+=3;
- if(skill.attempts===0)w+=1;else if(sa<.5)w+=4;else if(sa<.75)w+=2;
- w+=lastWrongBonus(base)+lastWrongBonus(skill);
- return Math.max(1,w);
-}
-function weightedSoundPick(pool){
- const candidates=pool.length>1?pool.filter(x=>x.id!==soundLastId):pool;if(!candidates.length)return pool[0]||null;
- if(soundOrderMode==='random')return candidates[Math.floor(Math.random()*candidates.length)];
- const weights=candidates.map(soundWeight),total=weights.reduce((a,b)=>a+b,0);let r=Math.random()*total;
- for(let i=0;i<candidates.length;i++){r-=weights[i];if(r<=0)return candidates[i]}return candidates[candidates.length-1];
-}
-const ROMAN_ALIASES={
- 'ŋ':['ng'],'ʉ':['ue','ɯ'],'ʉʉ':['uee','ɯɯ','ɯ:','ɯː'],'ɛ':['ae'],'ɛɛ':['aae','aee','ae:','aeː'],'ɔ':['aw'],'ɔɔ':['aaw','aww','aw:','awː'],'ə':['oe'],'əə':['oee','oe:','oeː']
-};
-function normalizeRoman(v){return String(v||'').trim().toLowerCase().replace(/\s+/g,'').replace(/[\/\[\]]/g,'').replace(/ː/g,':')}
-function acceptedRoman(item){
- const raw=String(item?.roman||item?.initial||'').trim(),out=[raw];
- (ROMAN_ALIASES[raw]||[]).forEach(x=>out.push(x));
- if(raw.includes('ŋ'))out.push(raw.replaceAll('ŋ','ng'));
- if(raw.includes('ʉ'))out.push(raw.replaceAll('ʉ','ue'));
- if(raw.includes('ɛ'))out.push(raw.replaceAll('ɛ','ae'));
- if(raw.includes('ɔ'))out.push(raw.replaceAll('ɔ','aw'));
- if(raw.includes('ə'))out.push(raw.replaceAll('ə','oe'));
- return [...new Set(out.map(normalizeRoman).filter(Boolean))];
-}
-function asciiRomanHint(item){const raw=String(item?.roman||'');const a=(ROMAN_ALIASES[raw]||[])[0]||raw.replaceAll('ŋ','ng').replaceAll('ʉ','ue').replaceAll('ɛ','ae').replaceAll('ɔ','aw').replaceAll('ə','oe');return a!==raw?a:''}
-function soundExampleText(item){if(!item)return'';if(item._kind==='vowel')return vowelSpeakText(item);return thaiLetterSpokenName(item)}
-function renderSoundItem(item,label=''){
- soundCurrentItem=item;currentItem=item;soundLastId=item?.id||soundLastId;if(!item)return;
- soundPrompt.textContent=item.ch||item.symbol||'—';soundPrompt.classList.toggle('thaiGlyphModern',thaiGlyphStyle==='modern');soundPrompt.classList.toggle('thaiGlyphLooped',thaiGlyphStyle!=='modern');
- const kind=item._kind==='vowel'?'母音':consonantClassLabel(item);soundQuestionMeta.textContent=`${label?label+' / ':''}${kind}`;
- soundInput.value='';soundInput.disabled=false;soundResult.classList.add('hidden');soundNextBtn.classList.add('hidden');soundStats.innerHTML=`文字練習：${mini(item.id)}<br>文字→発音：${mini('sound:'+item.id)}`;setTimeout(()=>soundInput?.focus(),30);
-}
-function showSoundQuestion(){updateSoundUI();const pool=soundPool();if(!pool.length){if(window.soundQuestionMeta)soundQuestionMeta.textContent='対象なし';return}const item=soundForcedItem||weightedSoundPick(pool);soundForcedItem=null;renderSoundItem(item,soundOrderMode==='adaptive'?'🎯 弱点優先':'🔀 ランダム')}
-function checkSoundAnswer(forceWrong=false){
- if(!soundCurrentItem||!window.soundInput)return;const user=soundInput.value,accepted=acceptedRoman(soundCurrentItem),ok=!forceWrong&&accepted.includes(normalizeRoman(user)),expected=String(soundCurrentItem.roman||soundCurrentItem.initial||'');
- register('sound:'+soundCurrentItem.id,ok,'sound',{question:(soundCurrentItem.ch||soundCurrentItem.symbol||'')+' → 発音',userAnswer:forceWrong?'わからない':user,correctAnswer:expected,mode:'sound',lesson:null});
- const alias=asciiRomanHint(soundCurrentItem),ex=soundExampleText(soundCurrentItem),cls=soundCurrentItem._kind==='consonant'?consonantClassLabel(soundCurrentItem):'母音';
- soundInput.disabled=true;soundResult.classList.remove('hidden');soundResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}</b><div class="roman" style="font-size:24px;margin-top:6px">${escapeHtml(expected)}</div>${alias?`<div class="small">簡易入力：${escapeHtml(alias)}</div>`:''}<div class="kana">${escapeHtml(soundCurrentItem.kana||'')}</div><div class="soundMeta"><div><span class="small">種類</span><br><b>${escapeHtml(cls)}</b></div><div><span class="small">例音</span><br><b class="thai">${escapeHtml(ex||'—')}</b></div></div>${soundCurrentItem._kind==='consonant'?`<div class="small" style="margin-top:8px">代表語：${escapeHtml(soundCurrentItem.word||'')}（${escapeHtml(soundCurrentItem.jp||'')}）</div>`:'<div class="small" style="margin-top:8px">母音の音声は อ を母音の台にした例音です。記号単独の読み上げではありません。</div>'}`;
- soundNextBtn.classList.remove('hidden');soundStats.innerHTML=`文字練習：${mini(soundCurrentItem.id)}<br>文字→発音：${mini('sound:'+soundCurrentItem.id)}`;
-}
-function nextSoundQuestion(){if(reviewQueueActive){reviewQueueNext();return}showSoundQuestion()}
-function playSoundExample(){if(!soundCurrentItem)return;const t=soundExampleText(soundCurrentItem);if(t)speakThai(t,.68)}
-
-
-function getReadingProfile(){try{return JSON.parse(localStorage.getItem(READING_PROFILE_KEY)||'{}')}catch(e){return {}}}
-function saveReadingProfile(p){localStorage.setItem(READING_PROFILE_KEY,JSON.stringify(p));renderReviewSummary()}
-function setReadingOrder(v){readingOrderMode=v==='random'?'random':'adaptive';localStorage.setItem('thai_reading_order_v1',readingOrderMode);if(window.readingAdaptiveBtn)readingAdaptiveBtn.classList.toggle('active',readingOrderMode==='adaptive');if(window.readingRandomBtn)readingRandomBtn.classList.toggle('active',readingOrderMode==='random');showReadingQuestion()}
-function readingPool(){return (DATA?.words||[]).filter(w=>String(w.th||w.thai||'').trim()&&String(w.roman||'').trim()&&String(w.jp||w.japanese||'').trim()).map(w=>({...w,id:w.id||('word:'+w.th)}))}
-function readingIssueScore(id){const p=getReadingProfile()[id]||{};return (p.reading||0)*3+(p.meaning||0)*3+(p.spelling||0)*2+(p.tone||0)*2}
-function readingWeight(w){const rid='reading:'+w.id,s=stat(rid);let weight=1;if(s.attempts){const acc=s.correct/s.attempts;weight+=Math.max(0,1-acc)*5+Math.min(4,s.wrong*.6)}else weight+=1.5;weight+=Math.min(8,readingIssueScore(w.id));if(READING_KNOWN_BASIC.has(String(w.th||'')))weight*=.18;if(s.streak>=4)weight*=.45;return Math.max(.08,weight)}
-function pickReading(pool){let c=pool.length>1?pool.filter(x=>x.id!==readingLastId):pool;if(!c.length)return null;if(readingOrderMode==='random')return c[Math.floor(Math.random()*c.length)];const ws=c.map(readingWeight),total=ws.reduce((a,b)=>a+b,0);let r=Math.random()*total;for(let i=0;i<c.length;i++){r-=ws[i];if(r<=0)return c[i]}return c[c.length-1]}
-function readingChoicePool(item,pool){let c=pool.filter(x=>x.id!==item.id&&x.jp!==item.jp);return shuffle([item,...shuffle(c).slice(0,3)])}
-function visibleThaiComposition(th){const cons=(DATA?.letters||[]).filter(l=>th.includes(l.ch)).map(l=>`${l.ch}(${consonantClassLabel(l)})`);const vowels=[...new Set([...String(th)].filter(ch=>'ะาิีึืุูเแโใไำั'.includes(ch)))];const tones=[...new Set([...String(th)].filter(ch=>'่้๊๋'.includes(ch)))];return `子音字：${cons.length?cons.join('・'):'—'}<br>見えている母音記号：${vowels.length?vowels.join(' '):'—'}<br>声調記号：${tones.length?tones.join(' '):'なし'}`}
-function showReadingQuestion(){if(!DATA)return;const pool=readingPool();if(!pool.length)return;const item=pickReading(pool);readingCurrentItem=item;currentItem=item;readingLastId=item.id;readingPrompt.textContent=item.th||item.thai;readingResult.classList.add('hidden');readingNextBtn.classList.add('hidden');readingOptions=readingChoicePool(item,pool);readingChoices.innerHTML=readingOptions.map((x,i)=>`<button onclick="chooseReading(${i})">${escapeHtml(x.jp||x.japanese||'')}</button>`).join('');const s=stat('reading:'+item.id);readingStats.innerHTML=`${readingOrderMode==='adaptive'?'🎯 弱点優先':'🔀 ランダム'} / ${mini('reading:'+item.id)}`;if(window.readingAdaptiveBtn)readingAdaptiveBtn.classList.toggle('active',readingOrderMode==='adaptive');if(window.readingRandomBtn)readingRandomBtn.classList.toggle('active',readingOrderMode==='random')}
-function chooseReading(i){if(!readingCurrentItem)return;const picked=readingOptions[i],ok=picked&&picked.id===readingCurrentItem.id;register('reading:'+readingCurrentItem.id,ok,'reading',{question:(readingCurrentItem.th||'')+' の意味',userAnswer:picked?.jp||'',correctAnswer:readingCurrentItem.jp||readingCurrentItem.japanese||'',mode:'reading',lesson:lessonNumberOf(readingCurrentItem)});document.querySelectorAll('#readingChoices button').forEach((b,idx)=>{b.disabled=true;if(readingOptions[idx].id===readingCurrentItem.id)b.classList.add('correct');else if(idx===i)b.classList.add('wrong')});renderReadingResult(ok)}
-function renderReadingResult(ok){const w=readingCurrentItem;readingResult.classList.remove('hidden');readingResult.innerHTML=`<b>${ok?'✅ 意味も正解':'❌ 意味を確認'}</b><div class="thai" style="font-size:34px;margin-top:7px">${escapeHtml(w.th||'')}</div><div class="roman">${escapeHtml(w.roman||'')}</div><div>${escapeHtml(w.jp||w.japanese||'')}</div><button class="soft" style="width:100%;margin-top:9px" onclick="speakThai('${String(w.th||'').replaceAll("'","\\'")}',.72)">🔊 発音を確認</button><div class="readingBreakdown"><b>文字構成チェック</b><div class="small" style="margin-top:5px">${visibleThaiComposition(w.th||'')}</div></div><div class="small" style="margin-top:9px">どこで詰まりましたか？（複数回記録可）</div><div class="skillIssueGrid"><button class="bad" onclick="markReadingIssue('reading')">文字が読めない</button><button class="bad" onclick="markReadingIssue('meaning')">読めるが意味不明</button><button class="soft" onclick="markReadingIssue('spelling')">意味は分かるが綴り不安</button><button class="soft" onclick="markReadingIssue('tone')">声調を間違えた</button></div><button class="good" style="width:100%;margin-top:7px" onclick="markReadingIssue('ok')">問題なし</button>`;readingNextBtn.classList.remove('hidden');readingStats.innerHTML=mini('reading:'+w.id)}
-function markReadingIssue(kind){if(!readingCurrentItem)return;const P=getReadingProfile(),id=readingCurrentItem.id,x=P[id]||{reading:0,meaning:0,spelling:0,tone:0,ok:0,last:''};x[kind]=(x[kind]||0)+1;x.last=new Date().toISOString();P[id]=x;saveReadingProfile(P);const labels={reading:'「読めない」',meaning:'「意味不明」',spelling:'「綴り不安」',tone:'「声調ミス」',ok:'「問題なし」'};readingStats.innerHTML=`${labels[kind]}を記録しました。<br>${mini('reading:'+id)}`}
-function nextReadingQuestion(){if(reviewQueueActive){reviewQueueNext();return}showReadingQuestion()}
-function renderReviewSummary(){const R=getRec(),wc=Object.values(R).filter(isWeakRecord).length;if(window.reviewWeakCount)reviewWeakCount.textContent=wc;const P=getReadingProfile(),sum={reading:0,meaning:0,spelling:0,tone:0};Object.values(P).forEach(x=>Object.keys(sum).forEach(k=>sum[k]+=Number(x[k]||0)));if(window.skillProfileSummary)skillProfileSummary.innerHTML=`読めない ${sum.reading} / 意味不明 ${sum.meaning} / 綴り不安 ${sum.spelling} / 声調ミス ${sum.tone}`}
-function showWeakRecords(){recordPrimary='weak';tab('record');renderRecord()}
-
-function getFieldExpressions(){try{const x=JSON.parse(localStorage.getItem(FIELD_LIBRARY_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
-function saveFieldExpressions(arr){localStorage.setItem(FIELD_LIBRARY_KEY,JSON.stringify(arr));renderFieldLibrary();updateHome()}
-function normalizeFieldKey(s){return String(s||'').trim().toLowerCase().replace(/[\s　。、,.!?！？「」『』（）()\-ー]/g,'')}
-function fieldKey(x){return normalizeFieldKey(x.jp)+'|'+normalizeFieldKey(x.thai)}
-function makeFieldId(x){let h=2166136261;const t=fieldKey(x);for(const ch of t){h^=ch.codePointAt(0);h=Math.imul(h,16777619)}return 'field:'+((h>>>0).toString(36))}
-function parseFieldBulkText(text){
- const lines=String(text||'').replace(/\r/g,'').split('\n'),out=[];let cur=null,key='';
- const labels=[['jp',/^\s*(?:日本語)\s*[：:]\s*(.*)$/],['thai',/^\s*(?:自然なタイ語|タイ語)\s*[：:]\s*(.*)$/],['roman',/^\s*(?:発音|IPA|ローマ字)\s*[：:]\s*(.*)$/i],['explanation',/^\s*(?:解説|ポイント)\s*[：:]\s*(.*)$/]];
- const push=()=>{if(cur&&(cur.jp||cur.thai)){cur.jp=String(cur.jp||'').trim();cur.thai=String(cur.thai||'').trim();cur.roman=String(cur.roman||'').trim();cur.explanation=String(cur.explanation||'').trim();out.push(cur)}cur=null;key=''};
- for(const raw of lines){let matched=false;for(const [k,re] of labels){const m=raw.match(re);if(m){if(k==='jp'&&cur&&(cur.jp||cur.thai))push();if(!cur)cur={jp:'',thai:'',roman:'',explanation:''};key=k;cur[k]=m[1]||'';matched=true;break}}if(matched)continue;if(cur&&key){const v=raw.trimEnd();if(v.trim()||key==='explanation')cur[key]+=(cur[key]?'\n':'')+v}}
- push();return out.filter(x=>x.jp&&x.thai);
-}
-function previewFieldImport(){
- const parsed=parseFieldBulkText(fieldBulkInput.value),existing=getFieldExpressions(),map=new Map(existing.map(x=>[fieldKey(x),x]));
- fieldImportPreviewItems=parsed.map(x=>({...x,id:map.get(fieldKey(x))?.id||makeFieldId(x),_status:map.has(fieldKey(x))?'update':'new'}));
- const invalid=Math.max(0,(String(fieldBulkInput.value).match(/^\s*日本語\s*[：:]/gm)||[]).length-parsed.length);
- fieldImportMsg.textContent=parsed.length?`${parsed.length}件を解析しました。新規 ${fieldImportPreviewItems.filter(x=>x._status==='new').length} / 既存更新 ${fieldImportPreviewItems.filter(x=>x._status==='update').length}${invalid?` / 不完全 ${invalid}`:''}`:'登録できる形式が見つかりません。';
- fieldImportPreview.innerHTML=fieldImportPreviewItems.map(x=>`<div class="fieldPreviewItem"><div class="fieldPreviewStatus">${x._status==='new'?'🆕 新規':'♻️ 既存を更新'}</div><b>${escapeHtml(x.jp)}</b><div class="thai" style="font-size:23px">${escapeHtml(x.thai)}</div>${x.roman?`<div class="roman">${escapeHtml(x.roman)}</div>`:''}${x.explanation?`<div class="small" style="white-space:pre-wrap;margin-top:5px">${escapeHtml(x.explanation)}</div>`:''}</div>`).join('');
- fieldCommitBtn.disabled=!fieldImportPreviewItems.length;
-}
-function commitFieldImport(){
- if(!fieldImportPreviewItems.length)return;const arr=getFieldExpressions(),map=new Map(arr.map((x,i)=>[x.id,i]));let added=0,updated=0;
- for(const x of fieldImportPreviewItems){const item={id:x.id,jp:x.jp,thai:x.thai,roman:x.roman||'',explanation:x.explanation||'',created_at:new Date().toISOString()};if(map.has(item.id)){const i=map.get(item.id);arr[i]={...arr[i],...item,created_at:arr[i].created_at||item.created_at,updated_at:new Date().toISOString()};updated++}else{arr.push(item);map.set(item.id,arr.length-1);added++}}
- saveFieldExpressions(arr);fieldImportMsg.textContent=`登録しました：新規 ${added}件 / 更新 ${updated}件`;fieldImportPreviewItems=[];fieldImportPreview.innerHTML='';fieldCommitBtn.disabled=true;fieldBulkInput.value='';
-}
-function renderFieldLibrary(){
- if(!window.fieldLibraryList)return;const arr=getFieldExpressions(),q=normalizeFieldKey(window.fieldSearch?.value||'');fieldCount.textContent=arr.length;const f=q?arr.filter(x=>normalizeFieldKey(x.jp+' '+x.thai+' '+x.roman+' '+x.explanation).includes(q)):arr;
- fieldLibraryList.innerHTML=f.length?f.slice().reverse().map(x=>`<details class="fieldListItem"><summary><b>${escapeHtml(x.jp)}</b><div class="thai" style="font-size:21px">${escapeHtml(x.thai)}</div></summary>${x.roman?`<div class="roman">${escapeHtml(x.roman)}</div>`:''}${x.explanation?`<div class="small" style="white-space:pre-wrap;margin-top:6px">${escapeHtml(x.explanation)}</div>`:''}<button class="bad" style="width:100%;margin-top:8px" onclick="deleteFieldExpression('${x.id}')">削除</button></details>`).join(''):'<div class="small" style="margin-top:8px">登録済みの実戦表現はありません。</div>';
-}
-function deleteFieldExpression(id){if(!confirm('この実戦表現を削除しますか？'))return;saveFieldExpressions(getFieldExpressions().filter(x=>x.id!==id));const R=getRec();if(R[id]){delete R[id];saveRec(R)}try{const P=JSON.parse(localStorage.getItem(FIELD_PROFILE_KEY)||'{}');if(P[id]){delete P[id];localStorage.setItem(FIELD_PROFILE_KEY,JSON.stringify(P))}}catch(e){}}
-function fieldPracticeWeight(x){const r=stat(x.id);if(!r.attempts)return 5;const acc=r.correct/Math.max(1,r.attempts);return 1+(1-acc)*5+(isWeakRecord(r)?4:0)}
-function pickFieldExpression(arr){let c=arr.length>1?arr.filter(x=>x.id!==fieldLastId):arr;if(!c.length)return null;const ws=c.map(fieldPracticeWeight),total=ws.reduce((a,b)=>a+b,0);let r=Math.random()*total;for(let i=0;i<c.length;i++){r-=ws[i];if(r<=0)return c[i]}return c[c.length-1]}
-function showFieldExpression(forced=null){const arr=getFieldExpressions();fieldCurrent=forced||pickFieldExpression(arr);currentItem=fieldCurrent;if(!fieldCurrent){fieldPracticeCount.textContent='0件';fieldPracticePrompt.textContent='「学ぶ」→ 実戦表現から一括登録してください。';fieldPracticeAnswer.classList.add('hidden');fieldRevealBtn.classList.add('hidden');fieldGradeArea.classList.add('hidden');fieldNextBtn.classList.add('hidden');fieldPracticeStats.innerHTML='';return}fieldLastId=fieldCurrent.id;fieldPracticeCount.textContent=`登録 ${arr.length}件 / 弱点優先`;fieldPracticePrompt.textContent=fieldCurrent.jp;fieldPracticeAnswer.classList.add('hidden');fieldRevealBtn.classList.remove('hidden');fieldGradeArea.classList.add('hidden');fieldNextBtn.classList.add('hidden');fieldPracticeStats.innerHTML=mini(fieldCurrent.id)}
-function revealFieldAnswer(){if(!fieldCurrent)return;fieldPracticeAnswer.classList.remove('hidden');fieldPracticeAnswer.innerHTML=`<div class="fieldAnswerThai">${escapeHtml(fieldCurrent.thai)}</div>${fieldCurrent.roman?`<div class="roman" style="text-align:center">${escapeHtml(fieldCurrent.roman)}</div>`:''}<button class="soft" style="width:100%;margin-top:8px" onclick="speakThai('${String(fieldCurrent.thai).replaceAll("'","\\'")}',.75)">🔊 読み上げ</button>${fieldCurrent.explanation?`<div class="fieldExplanation"><b>📘 解説</b>\n${escapeHtml(fieldCurrent.explanation)}</div>`:''}`;fieldRevealBtn.classList.add('hidden');fieldGradeArea.classList.remove('hidden')}
-function gradeFieldExpression(kind){if(!fieldCurrent)return;const ok=kind==='ok',label={ok:'使えた',uncertain:'あやしい',no:'言えなかった'}[kind];register(fieldCurrent.id,ok,'field',{question:fieldCurrent.jp,userAnswer:'自己評価：'+label,correctAnswer:fieldCurrent.thai,mode:'field',lesson:null});const P=(()=>{try{return JSON.parse(localStorage.getItem(FIELD_PROFILE_KEY)||'{}')}catch(e){return{}}})();const x=P[fieldCurrent.id]||{ok:0,uncertain:0,no:0};x[kind]=(x[kind]||0)+1;x.last=new Date().toISOString();P[fieldCurrent.id]=x;localStorage.setItem(FIELD_PROFILE_KEY,JSON.stringify(P));if(reviewQueueActive&&!ok&&!reviewQueue.slice(reviewQueuePos+1).includes(fieldCurrent.id))reviewQueue.push(fieldCurrent.id);fieldGradeArea.classList.add('hidden');fieldNextBtn.classList.remove('hidden');fieldPracticeStats.innerHTML=`${label}を記録しました。<br>${mini(fieldCurrent.id)}`}
-function nextFieldExpression(){if(reviewQueueActive){reviewQueueNext();return}showFieldExpression()}
-
-function buildChunkItems(){
- const out=[],referenced=new Set();
- const master=new Map((DATA?.chunks||[]).map(c=>[String(c.th||c.text||'').trim(),c]));
- for(const s of buildPhraseList()){
-   const refs=Array.isArray(s.chunks)?s.chunks:[];
-   for(const raw of refs){
-     const obj=raw&&typeof raw==='object'?raw:null;
-     const th=String(obj?.th||obj?.text||raw||'').trim();
-     if(!th)continue;
-     const c=master.get(th)||obj||{};
-     out.push({
-       id:c.id||obj?.id||('chunk:'+th),th,
-       jp:c.jp||c.japanese||obj?.jp||obj?.japanese||s.jp||s.japanese||'',
-       type:'chunk',lesson:s.lesson||'',source_lesson:s.source_lesson||s.lesson_number||lessonNumberOf(s),
-       roman:c.roman||obj?.roman||s.roman||'',kana:c.kana||obj?.kana||s.kana||'',
-       source:'textbook',source_type:'dialogue_chunk',source_id:s.id||s.sentence_id||'',sentence_id:s.id||s.sentence_id||'',
-       audio_file:s.audio_file||s.audio||'',audio_source:s.audio_source||'',audio_track:s.audio_track||'',
-       explanation:s.explanation||null
-     });
-     referenced.add(th);
+const DERIVED_MIGRATION='gym-derived-v09';
+function migrateDerivedStatsV09(){
+ if(localStorage.getItem(DERIVED_MIGRATION)==='1')return;
+ const profile=JSON.parse(localStorage.getItem(PROFILE)||'{}');
+ const pmet=parseFloat(profile.intensity)||5;
+ const logs=allLogs();
+ let changed=false;
+ for(const l of logs){
+   if(!(parseFloat(l.weight)>0))continue;
+   const d=derivedStats(l,pmet);
+   if(l.kcal!==d.total||l.minutes!==d.minutes){
+     if(l.kcalLegacy===undefined)l.kcalLegacy=l.kcal;
+     if(l.minutesLegacy===undefined)l.minutesLegacy=l.minutes;
+     l.kcal=d.total;l.minutes=d.minutes;
+     if(!l.strengthIntensity)l.strengthIntensity=pmet;
+     for(const c of (l.cardio||[])){
+       c.name=canonicalCardioName(c.name);
+       const act=cardioMeta(c.name);if(act)c.met=act.met;
+     }
+     changed=true;
    }
  }
- // Defensive fallback: retain master chunks even if a future pack contains an orphan chunk.
- for(const c of (DATA?.chunks||[])){
-   const th=String(c.th||c.text||'').trim();
-   if(!th||referenced.has(th))continue;
-   out.push({...c,id:c.id||('chunk:'+th),th,type:'chunk',lesson:c.lesson||'',source_lesson:c.source_lesson||c.lesson_number||null});
-   referenced.add(th);
- }
- return out;
-}
-function buildWords(){
- const arr=[];const seen=new Set();
- const filter=window.wordTypeFilter?.value||'word';
- if(filter==='word'||filter==='all'){
-   for(const w of (DATA.words||[])){
-     if(!w.th||!w.roman||seen.has('w:'+w.th))continue;
-     arr.push({...w,id:w.id||('word:'+w.th),type:'word'});
-     seen.add('w:'+w.th);
-   }
- }
- if(filter==='chunk'||filter==='all'){
-    for(const c of buildChunkItems()){
-      const ck='c:'+c.id+':'+(c.source_id||c.lesson||'');
-      if(!c.th||seen.has(ck))continue;
-      arr.push(c);seen.add(ck);
-    }
-  }
- if(filter==='phrase'||filter==='all'){
-   for(const p of buildPhraseList()){
-     arr.push({id:'phraseword:'+p.id,th:p.th,jp:p.jp||p.japanese||'',type:'phrase',lesson:p.lesson||'',
-       source_lesson:p.source_lesson||p.lesson_number,roman:p.roman||'',kana:p.kana||'',source:'textbook',
-       source_type:'dialogue',source_id:p.id,sentence_id:p.id,audio_file:p.audio_file||p.audio||'',explanation:p.explanation||null});
-   }
- }
- return arr
-}
-function renderWordCurrent(item,all,label=''){currentItem=item;wordPrompt.textContent=currentItem.jp;wordInput.value='';wordResult.classList.add('hidden');wordNextBtn.classList.add('hidden');const pos=wordOrderMode==='random'?(wordDeckPos%Math.max(1,all.length))+1:(wordI%Math.max(1,all.length))+1;const wt=window.wordTypeFilter?.value||'word';const typeTxt=wt==='word'?'付録単語':wt==='chunk'?'チャンク':wt==='phrase'?'例文':'全部';wordCountInfo.textContent=label||`${typeTxt} ${all.length}件 / ${getLessonFilter('word')==='all'?'全範囲':getLessonFilter('word')} / ${wordOrderMode==='random'?'🔀 ランダム':'順番'} ${pos}/${all.length}`;if(window.wordVoiceStatus)wordVoiceStatus.textContent='';setWordAnswerMode(wordAnswerMode);updateOrderButtons();updateSoundUI()}
-function showWord(){
- const all=lessonFiltered(buildWords(),'word');
- if(!all.length){
-   currentItem=null;
-   const wt=window.wordTypeFilter?.value||'word';
-   const typeTxt=wt==='word'?'付録単語':wt==='chunk'?'チャンク':wt==='phrase'?'例文':'全部';
-   const range=getLessonFilter('word')==='all'?'全範囲':getLessonFilter('word');
-   wordCountInfo.textContent=`${typeTxt} 0件 / ${range}`;
-   wordPrompt.textContent='この条件の問題はありません';
-   wordInput.value='';wordChoices.innerHTML='';wordResult.classList.add('hidden');wordNextBtn.classList.add('hidden');
-   return;
- }
- renderWordCurrent(currentWordFromPool(all),all);
-}
-function renderWordResult(ok,userAnswer){wordResult.classList.remove('hidden');wordResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}</b><div class="thai">${escapeHtml(currentItem.th)}</div><div class="roman">${escapeHtml(currentItem.roman||'')}</div>${currentItem.kana?`<div class="kana">${escapeHtml(currentItem.kana)}</div>`:''}<div>${escapeHtml(currentItem.jp||'')}</div>${resultAudioHtml(currentItem)}${renderExplanation(currentItem)}<div>${mini(currentItem.id)}</div>${sourceTag(currentItem)}`;wordNextBtn.classList.remove('hidden')}
-function checkWord(){const raw=wordInput.value,a=normalizeThai(raw),b=normalizeThai(currentItem.th),ok=a===b;register(currentItem.id,ok,currentItem.type==='chunk'?'chunk':'word',{question:currentItem.jp,userAnswer:raw,correctAnswer:currentItem.th,mode:currentItem.type==='chunk'?'chunk':'word',lesson:lessonNumberOf(currentItem)});renderWordResult(ok,raw)}
-function showPron(){const all=lessonFiltered(buildPhraseList(),'pron');if(!all.length){pronThai.textContent='';pronResult.innerHTML='<span class="small">データなし</span>';return}pronI=(pronI+all.length)%all.length;currentItem=all[pronI];pronThai.textContent=currentItem.th;pronRoman.textContent=currentItem.roman||'';pronKana.textContent=currentItem.kana||'';pronJP.textContent=currentItem.jp||currentItem.japanese||'';pronCountInfo.textContent=`${pronI+1} / ${all.length}　${getLessonFilter('pron')==='all'?'全Lesson':getLessonFilter('pron')}`;pronResult.innerHTML='<span class="small">この文の教材公式音声を聞いてから録音し、自分の発音を聞き比べます。</span>'+sourceTag(currentItem);if(window.pronRecordBox)pronRecordBox.classList.add('hidden')}
-function nextPron(){if(reviewQueueActive){reviewQueueNext();return}const all=lessonFiltered(buildPhraseList(),'pron');if(!all.length)return;pronI=(pronI+1)%all.length;showPron()}
-function prevPron(){if(reviewQueueActive){reviewQueuePrev();return}const all=lessonFiltered(buildPhraseList(),'pron');if(!all.length)return;pronI=(pronI-1+all.length)%all.length;showPron()}
-async function playPron(){
- if(!currentItem)return;
- if(currentItem.audio_file){
-   await playAssetAudio(currentItem.audio_file);
- }else if(currentItem.th){
-   speakThai(currentItem.th,.78);
- }
+ if(changed)writeLogs(logs);
+ localStorage.setItem(DERIVED_MIGRATION,'1');
 }
 
-let pronRecorder=null,pronStream=null,pronChunks=[],pronRecording=false,pronObjectUrl=null;
-async function togglePronRecording(){
-  if(pronRecording){ stopPronRecording(); return; }
-  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder){
-    pronResult.innerHTML='<b>このSafariでは録音機能を利用できません</b>';
-    return;
-  }
-  try{
-    pronStream=await navigator.mediaDevices.getUserMedia({audio:true});
-    const types=['audio/mp4','audio/webm;codecs=opus','audio/webm'];
-    const mime=types.find(t=>MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t))||'';
-    pronRecorder=mime?new MediaRecorder(pronStream,{mimeType:mime}):new MediaRecorder(pronStream);
-    pronChunks=[];
-    pronRecorder.ondataavailable=e=>{if(e.data&&e.data.size)pronChunks.push(e.data)};
-    pronRecorder.onstop=()=>{
-      const blob=new Blob(pronChunks,{type:pronRecorder.mimeType||'audio/mp4'});
-      if(pronObjectUrl)URL.revokeObjectURL(pronObjectUrl);
-      pronObjectUrl=URL.createObjectURL(blob);
-      pronPlayback.src=pronObjectUrl;
-      pronRecordBox.classList.remove('hidden');
-      pronResult.innerHTML='<b>録音できました</b><div class="small">教材音声 → 自分の録音の順に聞き比べてください。</div>';
-      cleanupPronStream();
-    };
-    pronRecorder.onerror=()=>{pronRecording=false;recordPronBtn.textContent='🎤 録音する';cleanupPronStream();pronResult.innerHTML='<b>録音に失敗しました</b>'};
-    pronRecorder.start();
-    pronRecording=true;
-    recordPronBtn.textContent='⏹ 録音停止';
-    pronResult.innerHTML='<b>🎤 録音中…</b><div class="small">発音したら「録音停止」を押してください。</div>';
-  }catch(e){
-    cleanupPronStream();
-    pronRecording=false;
-    recordPronBtn.textContent='🎤 録音する';
-    pronResult.innerHTML=`<b>マイクを開始できませんでした</b><div class="small">${escapeHtml(e.name||'error')}</div>`;
-  }
-}
-function stopPronRecording(){
-  if(pronRecorder && pronRecorder.state!=='inactive')pronRecorder.stop();
-  pronRecording=false;
-  recordPronBtn.textContent='🎤 録音する';
-}
-function cleanupPronStream(){
-  if(pronStream){pronStream.getTracks().forEach(t=>t.stop());pronStream=null}
-}
-function gradePronManual(ok){
- register('pron:'+currentItem.id,ok,'pron',{question:currentItem.th,userAnswer:ok?'自己評価：できた':'自己評価：もう一度',correctAnswer:currentItem.th,mode:'pron',lesson:lessonNumberOf(currentItem)});
- if(reviewQueueActive){reviewQueueNext();return}
- if(ok){pronI++;showPron()}
- else{pronRecordBox.classList.add('hidden');pronResult.innerHTML='<b>もう一度やってみよう</b><div class="small">教材音声を聞いてから録音してください。</div>'}
-} 
-
-function renderCompCurrent(item,all,label=''){currentItem=item;compJP.textContent=currentItem.jp;compInput.value='';compResult.classList.add('hidden');compCountInfo.textContent=label||`対象 ${all.length}件 / ${getLessonFilter('comp')==='all'?'全Lesson':getLessonFilter('comp')}`}
-function showComp(){const all=lessonFiltered(DATA.compositions||[],'comp');if(!all.length){compJP.textContent='データなし';compResult.classList.add('hidden');return}compI=(compI+all.length)%all.length;renderCompCurrent(all[compI],all)}
-function checkComp(){const val=compInput.value;let best={score:-1,ans:''};for(const ans of currentItem.answers||[]){const z=lev(val,ans);if(z.score>best.score)best={score:z.score,ans}}const ok=best.score>=94;register(currentItem.id,ok,'composition',{question:currentItem.jp,userAnswer:val,correctAnswer:best.ans,mode:'thai-writing',lesson:lessonNumberOf(currentItem)});compResult.classList.remove('hidden');compResult.innerHTML=`<b>${ok?'✅ 正解':'❌ 不正解'}　類似度 ${best.score}%</b><div class="small">模範解答例</div><div class="thai">${escapeHtml(best.ans)}</div><div class="roman">${escapeHtml(currentItem.roman||'')}</div>${currentItem.kana?`<div class="kana">${escapeHtml(currentItem.kana)}</div>`:''}<div>${escapeHtml(currentItem.jp||'')}</div>${resultAudioHtml(currentItem)}${renderExplanation(currentItem)}<div class="small" style="margin-top:8px">教科書掲載Dialogueの日本語訳から出題しています。</div><div>${mini(currentItem.id)}</div>${sourceTag(currentItem)}<button class="soft" style="width:100%;margin-top:8px" onclick="nextComp()">次の問題 →</button>`;compI=(compI+1)%Math.max(1,lessonFiltered(DATA.compositions||[],'comp').length)}
-function nextComp(){if(reviewQueueActive){reviewQueueNext();return}showComp()}
-
-let letterPageI=0,kanaVisible=true;
-function toggleKana(){kanaVisible=!kanaVisible;letterPageKana.classList.toggle('hidden',!kanaVisible);letterKana&&letterKana.classList.toggle('hidden',!kanaVisible);pronKana&&pronKana.classList.toggle('hidden',!kanaVisible)}
-function showLetterPage(){
- if(!DATA)return;resizeDrawingCanvases();const list=foundationList();if(!list.length){letterPageChar.textContent='—';letterPageName.textContent='対象なし';return}const idx=currentFoundationIndex(list),x=list[idx];currentItem=x;
- letterPageChar.textContent='？';letterGhost.textContent=x.ch||x.symbol||x.thai;letterGhost.classList.add('hidden');
- letterPageName.textContent=x._kind==='consonant'?`${x.name}（${x.jp}）`:`${x.name||''}${x.jp?'（'+x.jp+'）':''}`;
- letterPageRoman.textContent=x._kind==='consonant'?`${x.roman||''}　｜ 頭子音 ${x.initial||'—'}　末子音 ${x.final||'—'}`:(x.roman||'');
- if(window.letterClassBadge){letterClassBadge.textContent=x._kind==='consonant'?consonantClassLabel(x):(x.class||'基礎');letterClassBadge.classList.toggle('hidden',x._kind!=='consonant')}
- letterPageKana.textContent=x.kana||'';letterClass.textContent=x._kind==='consonant'?consonantClassLabel(x):(x.class||'—');letterInitial.textContent=x.initial||'—';letterFinal.textContent=x.final||'—';letterExample.textContent=x._kind==='consonant'?`意味：${x.jp}`:foundationSourceLabel(x);
- if(window.glyphLoopedSample)glyphLoopedSample.textContent=x.ch||x.symbol||x.thai||'';
- if(window.glyphModernSample)glyphModernSample.textContent=x.ch||x.symbol||x.thai||'';
- const pos=foundationOrderMode==='random'?(foundationDeckPos%list.length)+1:(foundationI%list.length)+1;
- const group=foundationCategory==='consonants'?(consonantClassFilter==='all'?'全44':({mid:'中子音',high:'高子音',low:'低子音'}[consonantClassFilter])):'';
- letterPageStats.innerHTML=`${mini(x.id)}<div class="foundationCount">${group?group+' / ':''}${foundationOrderMode==='random'?'🔀 ランダム':'順番'} ${pos} / ${list.length}</div>`;
- if(window.vowelAudioNote){vowelAudioNote.classList.toggle('hidden',x._kind!=='vowel');if(x._kind==='vowel'){const ex=vowelSpeakText(x);vowelAudioNote.innerHTML=`🔊 母音記号単独ではなく、<b class="thai">${escapeHtml(ex||'例音')}</b> のように อ を母音の台にした例音を再生します。`;}}
- clearLetterCv();updateOrderButtons();updateConsonantClassUI();applyThaiGlyphStyle();
-}
-function revealLetterAnswer(){const list=foundationList(),x=list[currentFoundationIndex(list)];letterPageChar.textContent=x.ch||x.symbol||x.thai;letterGhost.classList.remove('hidden');letterExample.textContent=x._kind==='consonant'?`${x.word}（${x.jp}）`:foundationSourceLabel(x)}
-function nextLetterPage(){if(reviewQueueActive){reviewQueueNext();return}advanceFoundation(1)}
-function prevLetterPage(){if(reviewQueueActive){reviewQueuePrev();return}advanceFoundation(-1)}
-function letterPageSound(){
- const list=foundationList(),x=list[currentFoundationIndex(list)];
- if(x._kind==='consonant')speakThai(thaiLetterSpokenName(x),.68);
- else if(x._kind==='digit')speakThai(x.name,.68);
- else if(x._kind==='tone')speakThai(x.name,.68);
- else {
-   const t=vowelSpeakText(x);
-   if(t)speakThai(t,.68);
- }
-}
-function gradeLetterPage(ok){
- const list=foundationList(),x=list[currentFoundationIndex(list)];
- register(x.id,ok,'foundation',{question:'文字・発音トレーニング',userAnswer:ok?'自己評価：できた':'自己評価：まだ無理',correctAnswer:x.ch||x.symbol||x.thai||x.name||'',mode:'foundation',lesson:null});
- if(reviewQueueActive){reviewQueueNext();return}advanceFoundation(1);
-} 
-
-function setRecordPrimary(v){recordPrimary=v;['All','Weak','Miss','Recent'].forEach(k=>{const b=document.getElementById('rf'+k);if(b)b.classList.toggle('active',v===({All:'all',Weak:'weak',Miss:'miss',Recent:'recent'}[k]))});renderRecord()}
-function hasRecentWrong(x){const cutoff=Date.now()-7*24*3600*1000;return (x.history||[]).some(h=>!h.isCorrect&&new Date(h.timestamp).getTime()>=cutoff)}
-function recordPasses(id,x,r){const att=attemptsOf(x),acc=att?(x.correct||0)/att:0;if(recordPrimary==='weak'&&!isWeakRecord(x))return false;if(recordPrimary==='miss'&&!(x.wrong||0))return false;if(recordPrimary==='recent'&&!hasRecentWrong(x))return false;const lf=recordLessonFilter?.value||'all';if(lf!=='all'&&Number(String(lf).replace(/\D/g,''))!==Number(r.lesson))return false;const tf=recordTypeFilter?.value||'all';if(tf!=='all'){if(tf==='word'&&!['word','phrase'].includes(r.type))return false;else if(tf!=='word'&&r.type!==tf)return false;}return true}
-function fmtDate(v){if(!v)return'—';const d=new Date(v);if(Number.isNaN(d.getTime()))return v;return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function renderHistoryEntries(x){const h=Array.isArray(x.history)?[...x.history].reverse():[];if(!h.length)return'<div class="small" style="margin-top:10px">個別回答履歴はv1.24以降の回答から保存されます。これまでの正解数・ミス数はそのまま残っています。</div>';return `<div style="margin-top:12px"><b>▼ 学習履歴</b>${h.map(e=>`<div class="historyEntry ${e.isCorrect?'':'wrong'}"><b>${fmtDate(e.timestamp)}　${e.isCorrect?'✅':'❌'}</b>${e.question?`<div class="historyQA"><div class="historyLabel">問題</div><div class="historyValue">${escapeHtml(e.question)}</div></div>`:''}${e.userAnswer?`<div class="historyQA"><div class="historyLabel">自分の回答</div><div class="historyValue">${escapeHtml(e.userAnswer)}</div></div>`:''}${e.correctAnswer?`<div class="historyQA"><div class="historyLabel">正解</div><div class="historyValue thai" style="font-size:19px">${escapeHtml(e.correctAnswer)}</div></div>`:''}<div class="small" style="margin-top:5px">${escapeHtml(typeLabel(e.mode))}</div></div>`).join('')}</div>`}
-function renderRecord(){const R=getRec(),rows=Object.entries(R).map(([id,x])=>[id,x,resolveStudyItem(id)]).filter(([id,x,r])=>r&&recordPasses(id,x,r)).sort((a,b)=>new Date(b[1].last||0)-new Date(a[1].last||0));recordList.innerHTML=rows.length?rows.map(([id,x,r])=>{const att=attemptsOf(x),a=att?Math.round((x.correct||0)/att*100):0;return `<details class="answer recordCard"><summary><div class="recordTitle">${escapeHtml(r.title)}</div><div class="recordSub">${escapeHtml(r.subtitle||'')}</div><div class="small" style="margin-top:5px">${typeLabel(r.type)}${r.lesson?' / Lesson '+r.lesson:''}</div><div class="recordMeta"><div><span class="small">正解</span><b>${x.correct||0}</b></div><div><span class="small">ミス</span><b>${x.wrong||0}</b></div><div><span class="small">正答率</span><b>${a}%</b></div><div><span class="small">連続正解</span><b>${x.streak||0}</b></div></div><div class="small" style="margin-top:7px">最終学習 ${fmtDate(x.last)}</div><div class="bar"><i style="width:${a}%"></i></div></summary>${renderHistoryEntries(x)}${(['foundation','sound','reading','word','chunk','phrase','composition','pron','field'].includes(r.type))?`<button class="main" style="width:100%;margin-top:10px" onclick="practiceRecordItem('${encodeURIComponent(id)}')">🔁 この問題を練習</button>`:''}</details>`}).join(''):'<span class="small">条件に合う記録はありません</span>'}
-function practiceFoundationItem(item,fromReview=false){
- tab('letters',fromReview);
- if(item._kind==='vowel')foundationCategory='vowels';
- else if(item._kind==='digit')foundationCategory='digits';
- else if(item._kind==='tone')foundationCategory='tones';
- else{foundationCategory='consonants';consonantClassFilter='all'}
- foundationOrderMode='sequential';foundationDeck=[];foundationDeckPos=0;foundationDeckKey='';
- const list=foundationList();foundationI=Math.max(0,list.findIndex(x=>x.id===item.id));
- ['Consonant','Vowel','Digit','Tone'].forEach(k=>{const b=document.getElementById('foundation'+k+'Btn');if(b)b.classList.toggle('active',foundationCategory===({Consonant:'consonants',Vowel:'vowels',Digit:'digits',Tone:'tones'}[k]));});
- updateConsonantClassUI();showLetterPage();
-}
-function practiceRecordItem(enc,fromQueue=false){
- const id=decodeURIComponent(enc),r=resolveStudyItem(id);if(!r||!r.item)return;
- if(!fromQueue)stopReviewQueue();
- if(r.type==='foundation'){practiceFoundationItem(r.item,fromQueue);updateReviewQueueBar();return}
- if(r.type==='sound'){
-   tab('study',fromQueue);hideModes();currentMode='sound';soundMode.classList.remove('hidden');
-   soundForcedItem=r.item;renderSoundItem(r.item,reviewQueueActive?'🔁 苦手復習':'🔁 誤答復習');updateReviewQueueBar();return;
- }
- if(r.type==='reading'){tab('study',fromQueue);hideModes();currentMode='reading';readingMode.classList.remove('hidden');readingCurrentItem=r.item;readingLastId=r.item.id;readingPrompt.textContent=r.item.th||r.item.thai;const pool=readingPool();readingOptions=readingChoicePool(r.item,pool);readingChoices.innerHTML=readingOptions.map((x,i)=>`<button onclick="chooseReading(${i})">${escapeHtml(x.jp||x.japanese||'')}</button>`).join('');readingResult.classList.add('hidden');readingNextBtn.classList.add('hidden');updateReviewQueueBar();return;}
- if(r.type==='word'||r.type==='chunk'||r.type==='phrase'){
-   tab('study',fromQueue);hideModes();currentMode='word';wordMode.classList.remove('hidden');
-   renderWordCurrent(r.item,[r.item],reviewQueueActive?'🔁 苦手復習':'🔁 誤答復習');updateReviewQueueBar();return;
- }
- if(r.type==='field'){
-   tab('study',fromQueue);hideModes();currentMode='field';fieldMode.classList.remove('hidden');showFieldExpression(r.item);updateReviewQueueBar();return;
- }
- if(r.type==='composition'){
-   tab('study',fromQueue);hideModes();currentMode='comp';compMode.classList.remove('hidden');
-   renderCompCurrent(r.item,[r.item],reviewQueueActive?'🔁 苦手復習':'🔁 誤答復習');updateReviewQueueBar();return;
- }
- if(r.type==='pron'){
-   tab('study',fromQueue);hideModes();currentMode='pron';pronMode.classList.remove('hidden');
-   const s=r.item,lesson=s.lesson_number||lessonNumberOf(s);pronLessonFilter.value=lesson?('Lesson '+lesson):'all';
-   const all=lessonFiltered(buildPhraseList(),'pron');pronI=Math.max(0,all.findIndex(x=>x.id===s.id));showPron();updateReviewQueueBar();
- }
-} 
-
-function reviewTypeLabel(r){return ({foundation:'文字',sound:'文字→発音',word:'単語',chunk:'チャンク',phrase:'例文',composition:'タイ作文',pron:'発音',reading:'実単語',field:'実戦表現'}[r?.type]||'復習')}
-function updateReviewQueueBar(){
- if(!window.reviewQueueBar)return;
- document.body.classList.toggle('reviewActive',!!(reviewQueueActive&&reviewQueue.length));
- if(!reviewQueueActive||!reviewQueue.length){reviewQueueBar.classList.remove('active');return}
- const r=resolveStudyItem(reviewQueue[reviewQueuePos]);
- reviewQueueBar.classList.add('active');
- reviewQueueProgress.textContent=`${reviewQueuePos+1} / ${reviewQueue.length}`;
- reviewQueueType.textContent=reviewTypeLabel(r);
-}
-function launchReviewQueueItem(){
- if(!reviewQueueActive||!reviewQueue.length)return;
- reviewQueuePos=Math.max(0,Math.min(reviewQueuePos,reviewQueue.length-1));
- const id=reviewQueue[reviewQueuePos],r=resolveStudyItem(id);
- if(!r||!r.item){if(reviewQueuePos<reviewQueue.length-1){reviewQueuePos++;launchReviewQueueItem()}else stopReviewQueue();return}
- practiceRecordItem(encodeURIComponent(id),true);updateReviewQueueBar();
-}
-function reviewQueueNext(){
- if(!reviewQueueActive)return;
- if(reviewQueuePos<reviewQueue.length-1){
-   reviewQueuePos++;launchReviewQueueItem();return;
- }
- stopReviewQueue();
- tab('home');
- const remain=Object.values(getRec()).filter(isWeakRecord).length;
- if(window.appStatus)appStatus.innerHTML=`✅ 苦手復習を1周しました。現在の要復習は ${remain}件です。`;
-}
-function reviewQueuePrev(){if(reviewQueueActive&&reviewQueuePos>0){reviewQueuePos--;launchReviewQueueItem()}}
-function stopReviewQueue(){
- reviewQueueActive=false;reviewQueue=[];reviewQueuePos=0;
- document.body.classList.remove('reviewActive');
- updateReviewQueueBar();
-}
-function startWeak(){
- const R=getRec();
- const ranked=Object.entries(R)
-   .filter(([id,x])=>isWeakRecord(x))
-   .map(([id,x])=>({id,x,r:resolveStudyItem(id)}))
-   .filter(o=>o.r&&o.r.item&&['foundation','sound','reading','word','chunk','phrase','composition','pron','field'].includes(o.r.type))
-   .sort((a,b)=>(b.x.wrong||0)-(a.x.wrong||0)||new Date(b.x.last||0)-new Date(a.x.last||0));
- if(!ranked.length){
-   stopReviewQueue();
-   if(window.appStatus)appStatus.innerHTML='🎉 現在、苦手問題はありません。';
-   return;
- }
- reviewQueue=ranked.map(o=>o.id);reviewQueuePos=0;reviewQueueActive=true;launchReviewQueueItem();
-}
-function renderAudio(){if(!DATA)return;const q=(audioSearch.value||'').toLowerCase(),arr=(DATA.audio||[]).filter(x=>(x.track+' '+x.label).toLowerCase().includes(q));audioList.innerHTML=arr.map(x=>`<div class="answer"><b>${String(x.track).padStart(2,'0')} ${x.label}</b><button class="soft" style="width:100%;margin-top:8px" onclick="playAssetAudio('${x.file}')">▶︎ 再生</button></div>`).join('')}
-
-let PAGES=[],pageNo=1,pageZoom=1,LESSONS=[],activeLesson=null;
-function openAppendixVocabulary(){
- const idx=PAGES.findIndex(x=>Number(x.page)===144);
- pageNo=idx>=0?idx+1:Math.max(1,PAGES.length-19);
- pageZoom=1;tab('pages');renderPage();
-}
-async function renderPage(){
- if(!PAGES.length)return;
- const x=PAGES[pageNo-1]||PAGES[0];
- pageJump.value=pageNo;pageLabel.textContent=`撮影 #${pageNo}`;
- const url=await getAssetURL(x.file); if(url) pageImage.src=url;
- pageImage.style.maxWidth=(100*pageZoom)+'%';pageImage.style.width=pageZoom>1?(100*pageZoom)+'%':'auto';
-}
-function jumpPage(){let n=parseInt(pageJump.value)||1;n=Math.max(1,Math.min(157,n));pageNo=n;pageZoom=1;renderPage()}
-function prevPage(){if(pageNo>1){pageNo--;pageZoom=1;renderPage()}}
-function nextPage(){if(pageNo<157){pageNo++;pageZoom=1;renderPage()}}
-function zoomPage(f){pageZoom=Math.max(.6,Math.min(3,pageZoom*f));renderPage()}
-function fitPage(){pageZoom=1;renderPage()}
-
-
-function renderLessons(){
- if(!LESSONS.length)return;
- lessonDetail.classList.add('hidden');lessonList.classList.remove('hidden');
- lessonList.innerHTML=LESSONS.map(l=>`<div class="answer" onclick="openLesson(${l.lesson})" style="cursor:pointer">
- <b>Lesson ${l.lesson}　${l.title}</b>
- <div class="small">印刷 p.${l.print_start}〜${l.print_end}　🔊 DL ${l.dialogue_track}/${l.words_track}</div>
- <div class="small">${l.structured_count?`✅ 構造化 ${l.structured_count}文`: '本文画像のみ'} </div>
- </div>`).join('');
-}
-function openLesson(n){
- activeLesson=LESSONS.find(x=>x.lesson===n); if(!activeLesson)return;
- lessonList.classList.add('hidden');lessonDetail.classList.remove('hidden');
- lessonTitle.textContent=`Lesson ${activeLesson.lesson}　${activeLesson.title}`;
- lessonMeta.textContent=`印刷 p.${activeLesson.print_start}〜${activeLesson.print_end} / Dialogue DL ${activeLesson.dialogue_track} / Words DL ${activeLesson.words_track}`; lessonSummary.classList.add('hidden');
- if(activeLesson.structured){
-   const s=activeLesson.structured;
-   lessonDialogue.innerHTML=`<div class="answer"><b>${s.scene}</b></div>`+s.dialogue.map(x=>`
-   <div class="answer"><div class="small">${x.speaker}</div><div class="thai">${x.th}</div><div class="roman">${x.roman}</div><div class="kana">${x.jp}</div></div>`).join(''); const phraseCount=buildPhraseList().filter(x=>x.lesson===`Lesson ${activeLesson.lesson}`).length;const wordCount=buildWords().filter(x=>x.lesson===`Lesson ${activeLesson.lesson}`).length;const compCount=(DATA.compositions||[]).filter(x=>x.lesson===`Lesson ${activeLesson.lesson}`).length;lessonSummary.classList.remove('hidden');lessonSummary.innerHTML=`<b>このLessonで練習できる項目</b><div class="small">Dialogue・発音 ${phraseCount}件 / 単語・フレーズ ${wordCount}件 / 作文 ${compCount}件 / 発音記号つき</div>`;
- }else{
-   lessonDialogue.innerHTML=`<div class="answer"><b>本文は画像から学習できます</b><div class="small">このLessonの会話・単語・文法データは順次構造化中です。音声と本文画像はすでに利用できます。</div></div>`;
- }
-}
-function openLessonPractice(mode){
- if(!activeLesson)return;
- openMode(mode);
- const id=mode+'LessonFilter', el=document.getElementById(id);
- if(el){el.value=`Lesson ${activeLesson.lesson}`;if(mode==='pron'){pronI=0;showPron()}if(mode==='comp'){compI=0;showComp()}if(mode==='word'){resetWordSequence();showWord()}}
-}
-function closeLesson(){lessonDetail.classList.add('hidden');lessonList.classList.remove('hidden')}
-function playLessonAudio(kind){
- if(!activeLesson)return; const t=kind==='dialogue'?activeLesson.dialogue_track:activeLesson.words_track;
- playAssetAudio(`audio/${String(t).padStart(2,'0')}.mp3`);
-}
-function openLessonPage(){
- if(!activeLesson)return;
- pageNo=Math.max(1,activeLesson.capture_start-6+1); // capture file page-029 => displayed capture #23 under legacy manifest
- // safer direct lookup by legacy stored page number:
- const idx=PAGES.findIndex(x=>x.page===activeLesson.capture_start);
- pageNo=idx>=0?idx+1:1;
- tab('pages');renderPage();
-}
-
-function renderBooks(){
- if(!DATA)return;bookList.innerHTML=DATA.materials.map(b=>`<div class="answer"><b>${b.title}</b><div>${b.description}</div><div class="small">${b.lessons.length}セクション</div></div>`).join('');
- if(window.coverageBox)coverageBox.innerHTML=`<b>教材DB収録</b><div>子音 ${(DATA.letters||[]).length} / 母音 ${(DATA.vowels||[]).length} / 数字 ${(DATA.digits||[]).length} / 声調・記号 ${(DATA.tones_marks||[]).length}</div><div>単語 ${(DATA.words||[]).length}語 / Dialogue ${(DATA.phrases||[]).length}文 / 作文問題 ${(DATA.compositions||[]).length}問 / 撮影ページ ${PAGES.length}枚 / 音声 ${(DATA.audio||[]).length}本</div><div class="small">問題は source=textbook の教材由来データから出題します。</div>`;
-}
-function searchTextbook(){
- if(!window.textbookSearchResults)return;const q=(textbookSearch.value||'').trim().toLowerCase();if(!q){textbookSearchResults.innerHTML='';textbookSearchInfo.textContent='';return}
- const hits=PAGES.map((p,i)=>({p,i,text:p.ocr_text||''})).filter(x=>x.text.toLowerCase().includes(q)).slice(0,30);textbookSearchInfo.textContent=`${hits.length}件表示（最大30件）`;
- textbookSearchResults.innerHTML=hits.map(x=>{const low=x.text.toLowerCase(),pos=low.indexOf(q),start=Math.max(0,pos-80),sn=x.text.slice(start,start+260);return `<div class="answer searchHit" onclick="openSearchPage(${x.i})"><b>撮影 #${x.i+1}${x.p.lesson?' / Lesson '+x.p.lesson:''}</b><div class="small">${x.p.section||''}</div><div class="searchSnippet">${escapeHtml(sn)}</div></div>`}).join('')||'<div class="small" style="margin-top:10px">該当なし</div>';
-}
-function openSearchPage(i){pageNo=i+1;tab('pages');renderPage()}
-function collectThaiLocalStorage(){const out={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('thai_'))out[k]=localStorage.getItem(k)}return out}
-function exportData(){const payload={format:'thai-training-backup',version:3,created_at:new Date().toISOString(),app_version:'1.29',material_version:MATERIAL_META?.pack_version||null,localStorage:collectThaiLocalStorage()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');const u=URL.createObjectURL(blob);a.href=u;a.download='thai_training_backup_v3.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1500)}
-function restoreData(){const f=restoreFile.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(x&&x.format==='thai-training-backup'&&x.localStorage){Object.entries(x.localStorage).forEach(([k,v])=>{if(k.startsWith('thai_'))localStorage.setItem(k,String(v))})}else if(x&&x.records){localStorage.setItem(KEY,JSON.stringify(x.records))}else{localStorage.setItem(KEY,JSON.stringify(x))}updateHome();renderReviewSummary();alert('学習データを復元しました。教材パックは必要に応じて再読み込みしてください。')}catch(e){console.error(e);alert('読み込み失敗：'+e.message)}};r.readAsText(f)}
-function bindCanvas(c,clearName){
- const ctx=c.getContext('2d');let draw=false,last=null,lastTouch=0;
- function size(){const r=c.getBoundingClientRect();if(r.width<10||r.height<10)return;const d=Math.min(window.devicePixelRatio||1,3),w=Math.round(r.width*d),h=Math.round(r.height*d);if(c.width===w&&c.height===h)return;c.width=w;c.height=h;ctx.setTransform(d,0,0,d,0,0);ctx.lineWidth=7;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#17302d'}
- function pos(x,y){const r=c.getBoundingClientRect();return{x:x-r.left,y:y-r.top}}
- function begin(x,y){size();draw=true;last=pos(x,y);ctx.beginPath();ctx.arc(last.x,last.y,3,0,Math.PI*2);ctx.fillStyle='#17302d';ctx.fill()}
- function move(x,y){if(!draw)return;const q=pos(x,y);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(q.x,q.y);ctx.stroke();last=q}
- function end(){draw=false;last=null}
- c.addEventListener('touchstart',e=>{lastTouch=Date.now();e.preventDefault();const t=e.changedTouches[0];if(t)begin(t.clientX,t.clientY)},{passive:false});
- c.addEventListener('touchmove',e=>{lastTouch=Date.now();e.preventDefault();const t=e.changedTouches[0];if(t)move(t.clientX,t.clientY)},{passive:false});
- c.addEventListener('touchend',e=>{lastTouch=Date.now();e.preventDefault();end()},{passive:false});
- c.addEventListener('touchcancel',end,{passive:false});
- c.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'||Date.now()-lastTouch<500)return;e.preventDefault();begin(e.clientX,e.clientY)});
- c.addEventListener('pointermove',e=>{if(e.pointerType==='touch'||Date.now()-lastTouch<500)return;if(draw){e.preventDefault();move(e.clientX,e.clientY)}});
- c.addEventListener('pointerup',e=>{if(e.pointerType!=='touch')end()});c.addEventListener('pointercancel',end);
- window.addEventListener('resize',size);window[clearName]=()=>{size();ctx.clearRect(0,0,c.width,c.height)};c._resizeDrawingCanvas=size;
-}
-function resizeDrawingCanvases(){requestAnimationFrame(()=>{cv?._resizeDrawingCanvas?.();letterCv?._resizeDrawingCanvas?.()})}
-function setupCanvas(){bindCanvas(cv,'clearCv');bindCanvas(letterCv,'clearLetterCv')}
-
-const DB_NAME='thai_training_materials_v1', DB_VERSION=1;
-let MATERIAL_READY=false, MATERIAL_META=null, ASSET_URLS=new Map();
-function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{const db=r.result;if(!db.objectStoreNames.contains('assets'))db.createObjectStore('assets');if(!db.objectStoreNames.contains('meta'))db.createObjectStore('meta')};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
-async function dbPut(store,key,val){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(val,key);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
-async function dbGet(store,key){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly');const r=tx.objectStore(store).get(key);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
-async function dbClear(){const db=await openDB();return Promise.all(['assets','meta'].map(store=>new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})))}
-async function getAssetURL(path){if(ASSET_URLS.has(path))return ASSET_URLS.get(path);const blob=await dbGet('assets',path);if(!blob)return null;const u=URL.createObjectURL(blob);ASSET_URLS.set(path,u);return u}
-async function playAssetAudio(path){try{const u=await getAssetURL(path);if(!u)throw new Error('missing');if(window._materialAudio){window._materialAudio.pause()}window._materialAudio=new Audio(u);await window._materialAudio.play()}catch(e){alert('音声データが見つからないか、再生できません。教材パックを再読み込みしてください。')}}
-function refreshMaterialUI(){const needed=document.getElementById('materialNeeded'),status=document.getElementById('materialStatus'),home=document.getElementById('homeMaterialSummary');if(needed)needed.classList.toggle('hidden',MATERIAL_READY);const ver=parseFloat(MATERIAL_META?.pack_version||0);if(home)home.textContent=MATERIAL_READY?`教材パックv${MATERIAL_META?.pack_version||'?'}：全157枚を教材DB化 / 子音44字 / 母音・数字・声調 / Lesson 1〜20`:'教材パック：未読み込み';if(status){status.innerHTML=MATERIAL_READY?`<b>✅ 読み込み済み</b><div>${MATERIAL_META?.title||'教材'} / v${MATERIAL_META?.pack_version||''}</div>${ver<20?'<div class="answer"><b>⚠️ 教材パックv20へ更新してください</b><div class="small">Lesson 15の年号読みなど、元テキスト照合を反映した最新版です。</div></div>':''}<div class="small">画像・音声・学習データはこの端末内だけに保存されています。</div>`:'<b>未読み込み</b><div class="small">専用教材パックZIPを選んでください。</div>'}}
-async function importMaterialPack(file){if(!file)return;const prog=document.getElementById('importProgress'),bar=document.getElementById('importBar');try{prog.textContent='ZIPを開いています…';bar.style.width='2%';const zip=await JSZip.loadAsync(file);const pkg=JSON.parse(await zip.file('package.json').async('string'));if(pkg.format!=='thai-training-material-pack')throw new Error('このZIPは教材パックではありません');const data=applyRuntimeDataCorrections(JSON.parse(await zip.file(pkg.data_file||'data.json').async('string')));const lessons=JSON.parse(await zip.file(pkg.lessons_file||'lessons.json').async('string'));const pages=JSON.parse(await zip.file(pkg.pages_file||'pages.json').async('string'));
-const ss=Array.isArray(data.sentences)?data.sentences:[];
-if(ss.length!==153)throw new Error(`Sentence数が不正です（${ss.length}/153）`);
-const broken=ss.filter(s=>!String(s.id||'').trim()||!String(s.th||'').trim()||!String(s.roman||'').trim()||!String(s.jp||s.japanese||'').trim()||!String(s.audio_file||'').trim());
-if(broken.length)throw new Error(`教材Sentenceデータが不完全です（${broken.length}件）。現在の教材データは変更していません。`);
-const appendixWords=Array.isArray(data.words)?data.words:[];
-if(appendixWords.length<836)throw new Error(`付録単語DBが不完全です（${appendixWords.length}/836）。現在の教材データは変更していません。`);
-const badWords=appendixWords.filter(w=>!String(w.th||'').trim()||!String(w.roman||'').trim()||!String(w.jp||w.japanese||'').trim());
-if(badWords.length)throw new Error(`付録単語DBに欠損があります（${badWords.length}件）。現在の教材データは変更していません。`);
-const names=new Set(Object.keys(zip.files));
-const missingAudio=ss.filter(s=>!names.has(s.audio_file));
-if(missingAudio.length)throw new Error(`Sentence音声が不足しています（${missingAudio.length}件）。現在の教材データは変更していません。`);
-await dbClear();await dbPut('meta','package',pkg);await dbPut('meta','data',data);await dbPut('meta','lessons',lessons);await dbPut('meta','pages',pages);const files=Object.keys(zip.files).filter(n=>!zip.files[n].dir&&(n.startsWith('audio/')||n.startsWith('sentence_audio/')||n.startsWith('pages/')));let done=0;for(const name of files){const blob=await zip.file(name).async('blob');await dbPut('assets',name,blob);done++;if(done%3===0||done===files.length){const pct=Math.round(done/files.length*95)+5;bar.style.width=Math.min(100,pct)+'%';prog.textContent=`教材データを保存中… ${done}/${files.length}`;await new Promise(r=>setTimeout(r,0));}}bar.style.width='100%';prog.textContent='読み込み完了';await loadMaterialFromDB();alert('教材データを端末に保存しました。次回から読み込み不要です。')}catch(e){console.error(e);prog.textContent='読み込みに失敗しました';bar.style.width='0%';alert('教材パックを読み込めませんでした：'+e.message)}}
-async function loadMaterialFromDB(){const pkg=await dbGet('meta','package');if(!pkg){MATERIAL_READY=false;MATERIAL_META=null;refreshMaterialUI();return false}DATA=applyRuntimeDataCorrections(await dbGet('meta','data'));LESSONS=await dbGet('meta','lessons')||[];PAGES=await dbGet('meta','pages')||[];MATERIAL_META=pkg;MATERIAL_READY=!!DATA;refreshMaterialUI();if(MATERIAL_READY){fillLessonFilters();updateHome();renderBooks();showLetterPage();renderPage();renderLessons();setWordAnswerMode(wordAnswerMode);updateOrderButtons();updateSoundUI()}return MATERIAL_READY}
-async function deleteMaterialPack(){if(!confirm('この端末内の教材画像・音声・Lessonデータを削除しますか？ 学習履歴は残ります。'))return;ASSET_URLS.forEach(u=>URL.revokeObjectURL(u));ASSET_URLS.clear();await dbClear();DATA=null;LESSONS=[];PAGES=[];MATERIAL_READY=false;MATERIAL_META=null;refreshMaterialUI();alert('教材データを削除しました。')}
-async function bootApp(){try{setupCanvas();updateHome();await loadMaterialFromDB()}catch(e){console.error(e);refreshMaterialUI()}}
-
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&currentMode==='sound'&&document.activeElement===window.soundInput){e.preventDefault();if(soundNextBtn&&!soundNextBtn.classList.contains('hidden'))nextSoundQuestion();else checkSoundAnswer(false)}});
-
-bootApp();
-if('serviceWorker'in navigator){
- navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>{
-   reg.update().catch(()=>{});
- }).catch(()=>{});
-}
-</script></body></html>
+(function load(){const p=JSON.parse(localStorage.getItem(PROFILE)||'{}');if(p.weight)weight.value=p.weight;if(p.intensity)intensity.value=p.intensity;populateCardioType();migrateDerivedStatsV09();migrateLegacyWorkoutDates();renderRecent();render();renderAliases();renderAllSuggestions();showDraftNotice();memo.addEventListener('input',()=>{if(current.sets.length||current.cardio.length)saveDraft(false)});handleHealthCallback();})();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
+</script>
+</body>
+</html>

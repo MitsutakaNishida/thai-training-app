@@ -1,20 +1,13 @@
-タイ語トレーニング 公開版 v1.28
+Gym Log beta v0.13.2
+Base: v0.13.1
+- One-time conservative automatic correction for legacy UTC calendar date bug.
+- Only fixes logs with savedAt and an exact previous-day UTC/JST mismatch.
+- Excludes edited logs; leaves ambiguous records unchanged.
+- Original full history is backed up in localStorage key gym-date-fix-v0132-backup before changes.
+- Manual training date editor added to existing history edit screen.
+- Does not alter savedAt, set details, calories, Health payload or Shortcuts.
+- Existing Health entries are NOT modified; handle those separately.
+- Existing localStorage keys and all previous features preserved.
+- Updated service worker cache to gym-log-v0.13.2.
 
-基準: v1.27 の既存機能・localStorage互換性を維持。
-
-v1.28:
-- 画面上のバージョン表記を統一
-- Service Worker cache を v1.28 に更新
-- apple-touch-icon を明示し、PWAアイコン参照を整理
-- v1.27のUX（ホーム/学ぶ/練習/復習/成績）、実単語リーディング、文字→発音、弱点優先、バックアップ/復元を維持
-- 教材パック v19 と組み合わせて使用
-
-既存localStorageキーは変更していません。
-
-
-v1.29
-- 実戦表現ライブラリを追加。ChatGPT等で整形した「日本語／自然なタイ語／発音／解説」フォーマットを複数件まとめてコピペ登録可能。
-- 登録前プレビュー・重複更新・検索・削除に対応。
-- 実戦表現トレーニングを既存の「練習」「復習」「成績」に統合。新しい下部ナビは追加していない。
-- 自己評価「使えた／あやしい／言えなかった」を弱点復習へ連携。
-- 実戦表現データは thai_ localStorage に保存され、既存の学習データバックアップ対象。
+Upload all files in the ZIP to the root of the GitHub Pages repository.
