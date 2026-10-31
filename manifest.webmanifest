@@ -1,14 +1,20 @@
 {
-  "name": "運動記録 β",
-  "short_name": "運動記録",
+  "name": "タイ語トレーニング",
+  "short_name": "Thai Training",
   "start_url": "./",
-  "scope": "./",
   "display": "standalone",
-  "background_color": "#f5f7fb",
-  "theme_color": "#2f6fed",
-  "lang": "ja",
+  "background_color": "#eef8f5",
+  "theme_color": "#0b7f74",
   "icons": [
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
